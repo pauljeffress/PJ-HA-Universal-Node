@@ -465,7 +465,7 @@ Message mes;
   int   RMT_PWR_State = 0; // status of remote ATX PSU, according to this node. Set it to off by default.
 #endif  //RMT_PWR
 
-#ifdef PING1  // dev064 - distance sensor cm reading (RO - tells you last sensor sample)
+#ifdef PING1x  // dev064 - distance sensor cm reading (RO - tells you last sensor sample)
   int ping1Distance=0;
   int ping1RangeMin=PING1MIN; // set to a starting default, but can be updated as dev065 later.
   int ping1RangeMax=PING1MAX; // set to a starting default, but can be updated as dev066 later.

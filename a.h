@@ -94,16 +94,16 @@
 //#define PIR2          // Have I attached a 2nd PIR
 
 //#define BUTTON1       // Have I attached some buttons/switches...
-//    #define BUTTON1PIN 30      // signal pin from 1st BUTTON
+//   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
 //#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
 //    #define ACTUATOR1PIN A8    // contol pin for 1st ACTUATOR if attached, else ignored.
 //#define ACTUATOR2
-//    #define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
+    //#define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
 //#define ACTUATOR3
-//    #define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
+    //#define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
 //#define ACTUATOR4
 //    #define ACTUATOR4PIN 999    // contol pin for 4th ACTUATOR if attached, else ignored.
 
@@ -128,7 +128,7 @@
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types.  
-//#define PING1         // Have I got a PING/HC-SR04 distance sensor attached to this node?
+//#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
 //    #define PING1TRIGGERPIN A12
 //    #define PING1ECHOPIN A11
 //    #define PING1MIN 10     // range min, in cm, to consider a detection.
@@ -139,12 +139,12 @@
 //
 //#define LCDGENERIC  // is there one of my generic conforming LCDs attached to this node.
 //  #define LCDGENERIC_SFGLCD   // am I using a SparkFun graphical LCD-09351 as my generic LCD on this node. (PICK only ONE!)
-  //  #define LCDGENERIC_BLAH     // am I using a blah LCD as my generic LCD on this node? (PICK only ONE!)
+//    #define LCDGENERIC_BLAH     // am I using a blah LCD as my generic LCD on this node? (PICK only ONE!)
 //  #define LCDGENERIC_BRIGHTNESS 50  // Brightness in range 0 - 100, if LCD has a backlight. 
 //  #ifdef LCDGENERIC_SFGLCD  // items specific to the SparkFun LCD-09351
-    // Important Note: The SparkFunSerialGraphicLCD.h library ASSUMES we need SoftSerial, because it was developed
-    //                 for a Uno only!  It also assumes you have selected D3 as the TX to the LCD's RX.  You don't
-    //                 even really need to connect D2 as the RX to the LCD's TX as it doesn't send anything back.
+//    // Important Note: The SparkFunSerialGraphicLCD.h library ASSUMES we need SoftSerial, because it was developed
+//    //                 for a Uno only!  It also assumes you have selected D3 as the TX to the LCD's RX.  You don't
+//    //                 even really need to connect D2 as the RX to the LCD's TX as it doesn't send anything back.
 //    #define LCDGENERIC_XMAX 20 // Number of char columns on this particular LCD 
 //    #define LCDGENERIC_YMAX 8  // Number of char rows on this particular LCD
 //  #endif // LCDGENERIC_SFGLCD
@@ -159,10 +159,10 @@
 //
 //#define FINGER  // is there one of my Finger Print Scanners attached to this node?
 //  #define FINGERSERIALPORT Serial1  // Which port is it attached to. Serial, Serial1..3 (Megga only) or SoftSerial etc
-                                    // Mega TX1 pin 18 <-> FPS Red wire
-                                    // Mega RX1 pin 19 <-> FPS Dark Blue wire
-                                    //             +5V <-> FPS Green wire
-                                    //             GND <-> FPS White wire
+//                                    // Mega TX1 pin 18 <-> FPS Red wire
+//                                    // Mega RX1 pin 19 <-> FPS Dark Blue wire
+//                                    //             +5V <-> FPS Green wire
+//                                    //             GND <-> FPS White wire
 //  #define FPS_MODE_RUN		0	// operating as normal
 //  #define FPS_MODE_DB			1	// allowing fingerprint database changes
 //  #define FPS_FOOTLIGHT_LED_ACTUATOR_STATUS actuator3status // assign this FPS function to one of the nodes ACTUATORs.  

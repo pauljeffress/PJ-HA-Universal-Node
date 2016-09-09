@@ -2,6 +2,7 @@
 //
 // ======== localactions()
 //
+
 #include "a.h" // My global defines and extern variables to help multi file comilation.
 
 void localactions(){
@@ -103,7 +104,7 @@ void localactions(){
 #endif  
 
 //Do we need to do fire up the FPS?
-#ifdef PING1 && FINGER && BUTTON1   // All three of these DEVices need to be present.
+#ifdef FINGER   // All three of these DEVices need to be present.
   // We need to determine if we should start the FPS Run Mode State Machine...
   // but once we have enabled it, we should not 
   if (!EnableFPSRunModeStateMachine && ping1Detect && (lastBtn1State == FPS_MODE_RUN)) 

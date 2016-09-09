@@ -4,7 +4,7 @@
 //
 #include "a.h" // My global defines and extern variables to help multi file comilation.
 
-#ifdef PING1
+#ifdef PING1x
 
 bool checkPINGs()
 {
