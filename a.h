@@ -33,12 +33,12 @@
 
 
 
-#define VERSION "UNIv5_02"  // this value can be queried as device 3
+#define VERSION "UNIvGitHub"  // this value can be queried as device 3
 
 /* NODE CORE CONFIGURATION PARAMETERS */
-#define NODEID           10       // unique node ID within the closed network
-#define NODEIDSTRING node10       // as per above.  
-#define SUBTOPICSTR "home/rfm_gw/sb/node10/#"   // MQTT topic, only used in ETH Node type
+#define NODEID           99       // unique node ID within the closed network
+#define NODEIDSTRING node99       // as per above.  
+#define SUBTOPICSTR "home/rfm_gw/sb/node99/#"   // MQTT topic, only used in ETH Node type
 //#define CLIENTNAMESTR "PJ_HA_Eth_Node_22_ShedLock"  // MQTT topic, only used in ETH Node type
 //#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
 #define COMMS_LED_PIN 15         // RED - Comms traffic IP or RF for/from this node, activity indicator.
@@ -123,8 +123,8 @@
 //#define I2CLCD             // Have I attached one of my i2c LCDs to this node?
 //#define TSL2651           // PJ - is there an Adafruit TSL2561 breakout board (light sensors) present?
 //#define MOTEINOWEATHER    // PJ - is there a Moteino WeatherShield present? (http://lowpowerlab.com/blog/2015/01/30/weathershield-is-here/)
-#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
-    #define RMT_PWR_ENA_PIN 3 // The pin to set high when I want to switch on a remote ATX PC power supply
+//#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
+    //#define RMT_PWR_ENA_PIN 3 // The pin to set high when I want to switch on a remote ATX PC power supply
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types.  
@@ -169,11 +169,11 @@
 //  #define FPS_DOOR_LATCH_ACTUATOR_STATUS actuator2status // assign this FPS function to one of the nodes ACTUATORs.
 
 
-#define EXTVAR40X  // is this Node interested in External Variables 00 thru 09?  i.e. Dev 400-409
+//  #define EXTVAR40X  // is this Node interested in External Variables 00 thru 09?  i.e. Dev 400-409
 //  #define EXTVAR41X  // is this Node interested in External Variables 10 thru 19?  i.e. Dev 410-419
 //  #define EXTVAR42X  // is this Node interested in External Variables 20 thru 29?  i.e. Dev 420-429
 
-#define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
+//  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
 //-------------------------------------------------------------------------
 
