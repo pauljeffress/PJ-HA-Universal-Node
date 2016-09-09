@@ -4,6 +4,7 @@ char foo;
  * June 2016 - I am going to take my current RF Node (PJ_HA_computourist_node_v2_23v14) and my
  * current Eth Node (Shed_HA_Mega_ard_v4) and try to build them into one Sketch with lots
  * of DEFINE statements to allow selective builds, while retaining and maintaining one code base.
+ * Sept 2016 - Migrated this project from Arduino IDE to GitHub etc.
  *
  * RF Node Type - specifics
  * ------------
@@ -98,7 +99,8 @@ char foo;
 //  v5_03     06-08-16        Added OCEANMIRROR stuff. Inc serial send to Due etc.
 //  v5_04     07-08-16        Added in use of ExtVar401 to tx brightness and on/off to Due. Tested Ok.
 //  v5_05     13-08-16        Enable RMT_PWR so Mega tells ATX PSU to supply 5v. Tested, seems to be working.
-
+//  v Nothing 09-09-16        Migrated this project from Arduino IDE to GitHub etc. So no more version numbers
+//                            All code changes will now be documented in GitHub.
 
 #include "a.h" // My global defines and extern variables to help multi file comilation.
 
