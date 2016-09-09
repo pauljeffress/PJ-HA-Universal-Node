@@ -33,7 +33,7 @@ housekeeping(); // Assorted basic jobs that need to be checked up on.
   DS18_sleepyStuff();
 #endif // DS18
 
-#ifdef PING1 or PING2
+#ifdef PING1x or PING2
     //delay (250);  // just for debugging, not needed usually.  xxxx
     checkPINGs();    // take a reading of any PING sensors
 #endif

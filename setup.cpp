@@ -325,7 +325,7 @@ void setup() {
   RMT_PWROff();  // don't turn on remote ATX PSU until its needed.
 #endif //RMT_PWR
   
-#ifdef PING1
+#ifdef PING1x
   pinMode(PING1TRIGGERPIN, OUTPUT); 
 	pinMode(PING1ECHOPIN, INPUT);
 #endif
@@ -380,7 +380,7 @@ void setup() {
     
     #ifdef RFNODETYPE
       lcdGen.printStr("RF Node Type, Freq:");
-      lcdGen.printStr(FREQUENCY==RF69_433MHZ ? 433 : FREQUENCY==RF69_868MHZ ? 868 : 915);
+      //lcdGen.printStr(FREQUENCY==RF69_433MHZ ? 433 : FREQUENCY==RF69_868MHZ ? 868 : 915);
       lcdGen.printStr(" Mhz");
       lcdGen.nextLine();
     #endif

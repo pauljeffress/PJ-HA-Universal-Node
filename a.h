@@ -33,12 +33,12 @@
 
 
 
-#define VERSION "UNIv5_02"  // this value can be queried as device 3
+#define VERSION "UNIvGitHub"  // this value can be queried as device 3
 
 /* NODE CORE CONFIGURATION PARAMETERS */
-#define NODEID           10       // unique node ID within the closed network
-#define NODEIDSTRING node10       // as per above.  
-#define SUBTOPICSTR "home/rfm_gw/sb/node10/#"   // MQTT topic, only used in ETH Node type
+#define NODEID           99       // unique node ID within the closed network
+#define NODEIDSTRING node99       // as per above.  
+#define SUBTOPICSTR "home/rfm_gw/sb/node99/#"   // MQTT topic, only used in ETH Node type
 //#define CLIENTNAMESTR "PJ_HA_Eth_Node_22_ShedLock"  // MQTT topic, only used in ETH Node type
 //#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
 #define COMMS_LED_PIN 15         // RED - Comms traffic IP or RF for/from this node, activity indicator.
@@ -94,16 +94,16 @@
 //#define PIR2          // Have I attached a 2nd PIR
 
 //#define BUTTON1       // Have I attached some buttons/switches...
-//    #define BUTTON1PIN 30      // signal pin from 1st BUTTON
+//   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
 //#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
 //    #define ACTUATOR1PIN A8    // contol pin for 1st ACTUATOR if attached, else ignored.
 //#define ACTUATOR2
-//    #define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
+    //#define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
 //#define ACTUATOR3
-//    #define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
+    //#define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
 //#define ACTUATOR4
 //    #define ACTUATOR4PIN 999    // contol pin for 4th ACTUATOR if attached, else ignored.
 
@@ -123,12 +123,12 @@
 //#define I2CLCD             // Have I attached one of my i2c LCDs to this node?
 //#define TSL2651           // PJ - is there an Adafruit TSL2561 breakout board (light sensors) present?
 //#define MOTEINOWEATHER    // PJ - is there a Moteino WeatherShield present? (http://lowpowerlab.com/blog/2015/01/30/weathershield-is-here/)
-#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
-    #define RMT_PWR_ENA_PIN 3 // The pin to set high when I want to switch on a remote ATX PC power supply
+//#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
+    //#define RMT_PWR_ENA_PIN 3 // The pin to set high when I want to switch on a remote ATX PC power supply
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types.  
-//#define PING1         // Have I got a PING/HC-SR04 distance sensor attached to this node?
+//#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
 //    #define PING1TRIGGERPIN A12
 //    #define PING1ECHOPIN A11
 //    #define PING1MIN 10     // range min, in cm, to consider a detection.
@@ -139,12 +139,12 @@
 //
 //#define LCDGENERIC  // is there one of my generic conforming LCDs attached to this node.
 //  #define LCDGENERIC_SFGLCD   // am I using a SparkFun graphical LCD-09351 as my generic LCD on this node. (PICK only ONE!)
-  //  #define LCDGENERIC_BLAH     // am I using a blah LCD as my generic LCD on this node? (PICK only ONE!)
+//    #define LCDGENERIC_BLAH     // am I using a blah LCD as my generic LCD on this node? (PICK only ONE!)
 //  #define LCDGENERIC_BRIGHTNESS 50  // Brightness in range 0 - 100, if LCD has a backlight. 
 //  #ifdef LCDGENERIC_SFGLCD  // items specific to the SparkFun LCD-09351
-    // Important Note: The SparkFunSerialGraphicLCD.h library ASSUMES we need SoftSerial, because it was developed
-    //                 for a Uno only!  It also assumes you have selected D3 as the TX to the LCD's RX.  You don't
-    //                 even really need to connect D2 as the RX to the LCD's TX as it doesn't send anything back.
+//    // Important Note: The SparkFunSerialGraphicLCD.h library ASSUMES we need SoftSerial, because it was developed
+//    //                 for a Uno only!  It also assumes you have selected D3 as the TX to the LCD's RX.  You don't
+//    //                 even really need to connect D2 as the RX to the LCD's TX as it doesn't send anything back.
 //    #define LCDGENERIC_XMAX 20 // Number of char columns on this particular LCD 
 //    #define LCDGENERIC_YMAX 8  // Number of char rows on this particular LCD
 //  #endif // LCDGENERIC_SFGLCD
@@ -159,21 +159,21 @@
 //
 //#define FINGER  // is there one of my Finger Print Scanners attached to this node?
 //  #define FINGERSERIALPORT Serial1  // Which port is it attached to. Serial, Serial1..3 (Megga only) or SoftSerial etc
-                                    // Mega TX1 pin 18 <-> FPS Red wire
-                                    // Mega RX1 pin 19 <-> FPS Dark Blue wire
-                                    //             +5V <-> FPS Green wire
-                                    //             GND <-> FPS White wire
+//                                    // Mega TX1 pin 18 <-> FPS Red wire
+//                                    // Mega RX1 pin 19 <-> FPS Dark Blue wire
+//                                    //             +5V <-> FPS Green wire
+//                                    //             GND <-> FPS White wire
 //  #define FPS_MODE_RUN		0	// operating as normal
 //  #define FPS_MODE_DB			1	// allowing fingerprint database changes
 //  #define FPS_FOOTLIGHT_LED_ACTUATOR_STATUS actuator3status // assign this FPS function to one of the nodes ACTUATORs.  
 //  #define FPS_DOOR_LATCH_ACTUATOR_STATUS actuator2status // assign this FPS function to one of the nodes ACTUATORs.
 
 
-#define EXTVAR40X  // is this Node interested in External Variables 00 thru 09?  i.e. Dev 400-409
+//  #define EXTVAR40X  // is this Node interested in External Variables 00 thru 09?  i.e. Dev 400-409
 //  #define EXTVAR41X  // is this Node interested in External Variables 10 thru 19?  i.e. Dev 410-419
 //  #define EXTVAR42X  // is this Node interested in External Variables 20 thru 29?  i.e. Dev 420-429
 
-#define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
+//  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
 //-------------------------------------------------------------------------
 

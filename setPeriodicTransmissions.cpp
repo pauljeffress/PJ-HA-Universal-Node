@@ -84,7 +84,7 @@ void setPeriodicTransmissions()
           send55 = true;  // temperature reading
         #endif
         
-        #ifdef PING1
+        #ifdef PING1x
             send64 = true; 
             send65 = true;
             send66 = true;

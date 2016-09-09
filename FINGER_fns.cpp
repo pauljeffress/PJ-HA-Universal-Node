@@ -8,6 +8,8 @@
 
 #ifdef FINGER
 
+crap
+
 // ================ FPSgetFingerprintID()
 // Detailed reader function, based on the Adafruit Fingerprint Sensor 
 // Library (https://github.com/adafruit/Adafruit-Fingerprint-Sensor-Library
