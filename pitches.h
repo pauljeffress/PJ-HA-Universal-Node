@@ -1,7 +1,7 @@
 /*************************************************
 * Public Constants
 *************************************************/
-// just adding this comment to watch Git deal with it. No change to code below.
+
 #define NOTE_B0  31
 #define NOTE_C1  33
 #define NOTE_CS1 35
