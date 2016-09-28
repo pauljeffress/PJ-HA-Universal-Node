@@ -40,6 +40,9 @@ switch (mes.devID) // devID indicates device (sensor) type
   break;
 
   case (3): // software version
+  #ifdef DEBUGPJ2
+    Serial.println("parseCmd() case3 hit");
+  #endif
   if (mes.cmd == 1) send3 = true; // cmd == 1 means read
   else send93 = true;  // tried to write to RO dev
   break;
@@ -74,6 +77,23 @@ switch (mes.devID) // devID indicates device (sensor) type
     if (setAck) send7 = true; // acknowledge message ?
   } 
   else send7 = true; // read request means schedule a message
+  break;
+
+  case (11): // Compiled Date: Gets embedded into code at compile time (string)(RO)
+  #ifdef DEBUGPJ2
+    Serial.println("parseCmd() case11 hit");
+  #endif
+  if (mes.cmd == 1) send11 = true; // cmd == 1 means read
+  else send93 = true;  // tried to write to RO dev
+  break;
+
+  case (12): // Compiled Time: Gets embedded into code at compile time (string)(RO)
+  #ifdef DEBUGPJ2
+    Serial.println("parseCmd() case12 hit");
+    //delay(1000);
+  #endif
+  if (mes.cmd == 1) send12 = true; // cmd == 1 means read
+  else send93 = true;  // tried to write to RO dev
   break;
 
 #ifdef ACTUATOR1

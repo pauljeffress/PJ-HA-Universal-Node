@@ -60,6 +60,18 @@ void dosends() {
     send7 = false;
     }   
 
+  if (send11) 
+    {
+    sendString(NODEID, 11, (__DATE__));
+    send11 = false; 
+    }
+
+  if (send12) 
+    {
+    sendString(NODEID, 12, (__TIME__));
+    send12 = false; 
+    }
+
   #ifdef ACTUATOR1
   if (send16)
     {

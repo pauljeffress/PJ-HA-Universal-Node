@@ -60,7 +60,7 @@ void sendMsg() { // prepares values to be transmitted
   }
 
   if (send3) { // node software version (string)
-    #ifdef DEBUG
+    #ifdef DEBUGPJ2
       Serial.println("SENDMSG: sending dev3 - node sw version string");
     #endif
     mes.devID = 3; // node sw version (string)
@@ -125,6 +125,34 @@ void sendMsg() { // prepares values to be transmitted
     send7 = false;
     txRadio();
     mes.intVal = 0;  // clear it after use.
+  }
+
+  if (send11) { // Compiled Date: Gets embedded into code at compile time (string)(RO)
+    #ifdef DEBUGPJ2
+      Serial.println("SENDMSG: sending dev11");
+    #endif
+    mes.devID = 11; 
+    for ( i = 0; i < sizeof(__DATE__); i++){
+        mes.payLoad[i] = __DATE__[i]; }
+    mes.payLoad[i] = '\0'; 
+    send11 = false;
+    txRadio();
+    for ( i = 0; i < 32; i++){  // clear it after use.
+        mes.payLoad[i] = '\0';}
+  }
+
+  if (send12) { // Compiled Time: Gets embedded into code at compile time (string)(RO)
+    #ifdef DEBUGPJ2
+      Serial.println("SENDMSG: sending dev12");
+    #endif
+    mes.devID = 12; 
+    for ( i = 0; i < sizeof(__TIME__); i++){
+        mes.payLoad[i] = __TIME__[i]; }
+    mes.payLoad[i] = '\0'; 
+    send12 = false;
+    txRadio();
+    for ( i = 0; i < 32; i++){  // clear it after use.
+        mes.payLoad[i] = '\0';}
   }
 
   #ifdef ACTUATOR1

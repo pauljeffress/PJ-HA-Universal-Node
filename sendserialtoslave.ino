@@ -1,6 +1,11 @@
 //
 // ======= sendserialtoslave()
 //
+
+#include "a.h" // My global defines and extern variables to help multi file comilation.
+
+#ifdef SERIALSLAVE
+
 void sendserialtoslave(uint8_t sendsertype, uint8_t sendparam) {
   // This is called whenever the Master/Mega needs to send the Uno/slave some new info. 
   // e.g. tell it to update it's LEDs perhaps.
@@ -20,3 +25,4 @@ void sendserialtoslave(uint8_t sendsertype, uint8_t sendparam) {
   Serial1.write(sendparam);
   
 } // END - sendserialtoslave()
+#endif

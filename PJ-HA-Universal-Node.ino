@@ -261,7 +261,7 @@ long	upTime = 0; // uptime in minutes
 float	hum, temp; // humidity, temperature
 int	  signalStrength; // radio signal strength
 bool  setAck = true; // send ACK message on 'SET' request (This is Dev005 for this node)
-bool	send0, send1, send2, send3, send4, send5, send6, send7, send48, send49, send50, send92, send93, send94 = false; // message triggers
+bool	send0, send1, send2, send3, send4, send5, send6, send7, send11, send12, send48, send49, send50, send92, send93, send94 = false; // message triggers
 bool  CommsLEDStart = false;    // Do we need to turn on the Comms LED?.
 bool  CommsLEDStatus = false; // Comms LED current status...used in it's on/off logic.
 long  CommsLEDonMillis;       // timestamp when Comms LED was turned on. Used to keep track of when to turn it off.
