@@ -34,7 +34,8 @@ void setPeriodicTransmissions()
         send3 = true; // node sw version
         send4 = true; // voltage level
         send5 = true; // Ack status
-
+        //send11 = true; // Compile date
+        //send12 = true; // Compile file
         // Send the remainder if they are actually used on this node.
         
         #ifdef RFNODETYPE

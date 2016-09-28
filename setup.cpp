@@ -24,7 +24,12 @@ void setup() {
 
 
 #ifdef DEBUGPJ2
-  Serial.println("PJ HA Node");
+  Serial.print( F("Compiled: "));
+  Serial.print( F(__DATE__));
+  Serial.print( F(", "));
+  Serial.println( F(__TIME__));
+  
+  Serial.println(F("PJ HA Unified Node"));
   Serial.print("N ");
   Serial.print(NODEID);
   Serial.print(" ");

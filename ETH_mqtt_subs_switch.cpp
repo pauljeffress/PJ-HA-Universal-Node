@@ -89,6 +89,17 @@ int i;
         }
       break;
 
+    case 11:   // 011 - Compiled Date: Gets embedded into code at compile time (string)(RO)
+      send11 = true;
+      error =0;
+      break;
+
+    case 12:   // 012 - Compiled Time: Gets embedded into code at compile time (string)(RO)
+      send12 = true;
+      error =0;
+      break;
+      
+
 #ifdef ACTUATOR1
     case 16: // 016 - Binary Actuator 1 Output (Status Int - Read/Write)
       if (mes.cmd == 1) // READ

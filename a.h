@@ -233,6 +233,8 @@ void FPSLockDoor();
 void MIRROR_sendSerialToDue(int sendSerDev, float sendparam);
 void RMT_PWROn();
 void RMT_PWROff();
+String flashStringBuilder (const __FlashStringHelper *data);
+void sendserialtoslave(uint8_t sendsertype, uint8_t sendparam);
 
 // =============================================
 // Global variables as 'externs' so individual files can compile if they use them.
@@ -252,6 +254,7 @@ extern bool setAck;
 extern bool	send0, send1, send2, send3, send4, send5, send6, send7, send48, send49, send50, send92, send93;
 extern bool	send16, send17, send18, send19, send40, send41, send42, send43, send50, send51, send52, send53;
 extern bool send54, send55, send92, send93;
+extern bool send11, send12; // compilation info
 extern bool actuator1status, actuator2status, actuator3status, actuator4status; 
 extern bool lastactuator1status, lastactuator2status, lastactuator3status, lastactuator4status; 
 extern bool extendedbutton1tapped, extendedbutton2tapped, extendedbutton3tapped, extendedbutton4tapped;

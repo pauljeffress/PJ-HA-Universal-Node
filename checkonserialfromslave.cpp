@@ -4,6 +4,8 @@
  *  
  */
 #include "a.h" // My global defines and extern variables to help multi file comilation.
+
+#ifdef SERIALSLAVE
 //
 // ======== checkonserialfromslave()
 //
@@ -66,4 +68,4 @@ int  recparam;
       }
     }
 } //END - checkonserialfromslave()
-
+#endif
