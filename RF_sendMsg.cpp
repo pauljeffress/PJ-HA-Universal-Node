@@ -60,7 +60,7 @@ void sendMsg() { // prepares values to be transmitted
   }
 
   if (send3) { // node software version (string)
-    #ifdef DEBUGPJ2
+    #ifdef DEBUG
       Serial.println("SENDMSG: sending dev3 - node sw version string");
     #endif
     mes.devID = 3; // node sw version (string)
@@ -235,6 +235,9 @@ void sendMsg() { // prepares values to be transmitted
 
   #ifdef PIR1
     if (send41) { // PIR Binary input read
+      #ifdef DEBUGPJ2
+        Serial.println("SENDMSG: sending dev41 - PIR");
+      #endif
       mes.devID = 41;
       if (curPIR1State == HIGH) mes.intVal = 1; // state (integer) 1 for ON
       send41 = false;

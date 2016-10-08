@@ -71,7 +71,7 @@
 
 // misc defines 
 #define HOLDOFF 2000      // blocking period between button and PIR messages xxxx
-#define PIRHOLDOFF 30       // blocking period between button and PIR messages (seconds) xxxx
+
 
 // PJ Specific/additional DEFINES
 // ==============================
@@ -90,8 +90,13 @@
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
-//#define PIR1          // Have I attached a PIR
+#define PIR1          // Have I attached a PIR
+    #define PIR1PIN 23         // signal pin from 1st PIR if attached, else ignored.
+    #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
+    #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
+
 //#define PIR2          // Have I attached a 2nd PIR
+//   #define PIR2PIN 999         // signal pin from 2nd PIR if attached, else ignored.
 
 //#define BUTTON1       // Have I attached some buttons/switches...
 //   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
@@ -235,6 +240,7 @@ void RMT_PWROn();
 void RMT_PWROff();
 String flashStringBuilder (const __FlashStringHelper *data);
 void sendserialtoslave(uint8_t sendsertype, uint8_t sendparam);
+void checkPIRs();
 
 // =============================================
 // Global variables as 'externs' so individual files can compile if they use them.
@@ -252,7 +258,7 @@ extern int signalStrength;
 extern bool promiscuousMode;
 extern bool setAck;
 extern bool	send0, send1, send2, send3, send4, send5, send6, send7, send48, send49, send50, send92, send93;
-extern bool	send16, send17, send18, send19, send40, send41, send42, send43, send50, send51, send52, send53;
+extern bool	send16, send17, send18, send19, send40, send42, send50, send51, send52, send53;
 extern bool send54, send55, send92, send93;
 extern bool send11, send12; // compilation info
 extern bool actuator1status, actuator2status, actuator3status, actuator4status; 
@@ -307,6 +313,21 @@ extern bool  lastBtn2State;
 extern bool  timerOnButton2; 
 extern bool  ackButton2; 
 extern bool  toggleOnButton2;
+#endif
+
+#ifdef PIR1
+  extern bool send41;
+  extern int  calibrationTime;
+  extern int  Pir1Input;
+  extern long lastPIR1;
+  extern bool curPIR1State;
+#endif
+
+#ifdef PIR2
+  extern bool send43;
+  extern int  Pir2Input;
+  extern long lastPIR2;
+  extern bool curPIR2State;
 #endif
 
 #ifdef PING1

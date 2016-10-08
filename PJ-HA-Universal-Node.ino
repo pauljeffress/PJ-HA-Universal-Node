@@ -318,13 +318,11 @@ Message mes;
 
 #ifdef PIR1 
     bool send41 = false;
-    #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
     int   calibrationTime = 2;        //seconds - the time we give the sensor to calibrate (10-60 secs according to the datasheet)
     int   Pir1Input = PIR1PIN; // PIR pin if also on sleepy this must be either PIN2 (attachInterrupt(0) or PIN3 (attachInterrupt(1)) for the interrupt to work
     long  lastPIR1 = -1; // timestamp last PIR1 detection. We initialise it to this negative value, so when checkPIR()
-                                             //  is called the first time within the first PIRHOLDOFF period, it still triggers
+                                   //  is called the first time within the first PIRHOLDOFF period, it still triggers
     bool  curPIR1State = true; // current PIR state
-    #define PIR1PIN 999         // signal pin from 1st PIR if attached, else ignored.
 #endif
 
 #ifdef PIR2
@@ -332,7 +330,6 @@ Message mes;
     int   Pir2Input = PIR2PIN; // PIR pin if also on sleepy this must be either PIN2 (attachInterrupt(0) or PIN3 (attachInterrupt(1)) for the interrupt to work
     long  lastPIR2 = -1;  // timestamp last PIR2 detection
     bool  curPIR2State = true; // current PIR state
-    #define PIR2PIN 999         // signal pin from 2nd PIR if attached, else ignored.
 #endif
 
 #ifdef BUTTON1
