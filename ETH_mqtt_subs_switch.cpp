@@ -235,7 +235,7 @@ int i;
 //          also check this code is prob in RF_parseCmd() in case its asked of an RF Node
 
 
-#ifdef PING1
+#ifdef PING1x
   case 64: // 064 - last dist sample (Int - ReadOnly)
     if (mes.cmd == 1) send64 = true;
     break;

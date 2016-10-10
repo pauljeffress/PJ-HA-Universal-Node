@@ -13,12 +13,25 @@ void sendInteger(int sendNodeID, int sendDevID, int sendInt){
       mqttClient.publish(buff_topic,buff_mess);                                 // MQTT publish the topic & payload
 } // END - sendInteger()
 
+
+//
+// ======== sendStatusInteger()
+//
+void sendStatusInteger(int sendNodeID, int sendDevID, int sendInt){
+      if (sendInt == 1 )sprintf(buff_mess, "ON"); //    copy/convert status integer into the buff_Mess (i.e. payload we will send north)
+      if (sendInt == 0 )sprintf(buff_mess, "OFF");
+      sprintf(buff_topic, "home/eth_nd/nb/node%02d/dev%03d", sendNodeID, sendDevID); //    copy the correct topic to publish this info out on into buff_topic 
+      CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
+      mqttClient.publish(buff_topic,buff_mess);                                 // MQTT publish the topic & payload
+} // END - sendStatusInteger()
+
+
 //
 // ======== sendString()
 //
 void sendString(int sendNodeID, int sendDevID, char* sendStr){
 int i; 
-      Serial.println(sendStr);
+      //Serial.println(sendStr);
       //for (i=0; i<sizeof(sendStr); i++){                  //    copy the string into the buff_Mess (i.e. payload we will send north)
       for (i=0; i<8; i++){                  //    copy the string into the buff_Mess (i.e. payload we will send north)
       buff_mess[i] = (sendStr[i]); }
