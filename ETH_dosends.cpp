@@ -44,13 +44,13 @@ void dosends() {
 
   if (send5)
     {
-    sendInteger(NODEID, 5, setAck);
+    sendStatusInteger(NODEID, 5, setAck);
     send5 = false;
     }
 
   if (send6)
     {
-    sendInteger(NODEID, 6, toggleOnButton);
+    sendStatusInteger(NODEID, 6, toggleOnButton);
     send6 = false;
     }
 
@@ -75,7 +75,7 @@ void dosends() {
   #ifdef ACTUATOR1
   if (send16)
     {
-    sendInteger(NODEID, 16, actuator1status);
+    sendStatusInteger(NODEID, 16, actuator1status);
     send16 = false;
     }
   #endif
@@ -83,7 +83,7 @@ void dosends() {
   #ifdef ACTUATOR2
   if (send17)
     {
-    sendInteger(NODEID, 17, actuator2status);
+    sendStatusInteger(NODEID, 17, actuator2status);
     send17 = false;
     }
   #endif
@@ -91,7 +91,7 @@ void dosends() {
   #ifdef ACTUATOR3
   if (send18)
     {
-    sendInteger(NODEID, 18, actuator3status);
+    sendStatusInteger(NODEID, 18, actuator3status);
     send18 = false;
     }
   #endif
@@ -99,7 +99,7 @@ void dosends() {
   #ifdef ACTUATOR4
   if (send19)
     {
-    sendInteger(NODEID, 19, actuator4status);
+    sendStatusInteger(NODEID, 19, actuator4status);
     send19 = false;
     }
  #endif
@@ -107,7 +107,7 @@ void dosends() {
 #ifdef BUTTON1 // BUTTON1 is connected
   if (send40)
     {
-    sendInteger(NODEID, 40, curBtn1State);
+    sendStatusInteger(NODEID, 40, curBtn1State);
     send40 = false;
     }
 #endif
@@ -115,7 +115,7 @@ void dosends() {
 #ifdef PIR1 // PIR1 is connected
   if (send41)
     {
-    sendInteger(NODEID, 41, curPIR1State);
+    sendStatusInteger(NODEID, 41, curPIR1State);
     send41 = false;
     }
 #endif
@@ -123,7 +123,7 @@ void dosends() {
 #ifdef BUTTON2 // BUTTON2 is connected
   if (send42)
     {
-    sendInteger(NODEID, 42, curBtn2State);
+    sendStatusInteger(NODEID, 42, curBtn2State);
     send42 = false;
     }
 #endif
@@ -131,7 +131,7 @@ void dosends() {
 #ifdef PIR2 // PIR2 is connected
   if (send43)
     {
-    sendInteger(NODEID, 43, curPIR2State);
+    sendSendInteger(NODEID, 43, curPIR2State);
     send43 = false;
     }
 #endif
@@ -178,7 +178,7 @@ void dosends() {
 #endif // TSL2651
 
 
-#ifdef PING1
+#ifdef PING1x
   if (send64) 
     {
      sendInteger(NODEID, 64, ping1Distance);  

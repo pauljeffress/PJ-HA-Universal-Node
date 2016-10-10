@@ -3,6 +3,8 @@
 //
 #include "a.h" // My global defines and extern variables to help multi file comilation.
 
+#ifdef RFNODETYPE
+
 void txRadio() 
   {
   #ifdef DEBUG
@@ -25,3 +27,5 @@ void txRadio()
   else Serial.println("No connection...or no ACK????...or using this send incorrectly check github");
         // xxxx - when we hit the ELSE above, we should also flash an error/pwr LED a few times if available??? S.O.S pattern :)
 } // end txRadio
+
+#endif // RFNODETYPE

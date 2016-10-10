@@ -28,33 +28,44 @@
 #define SERIAL_BAUD 115200
 
 /* NODE TYPE - must select one ONLY!!!! */
-//#define ETHNODETYPE // can only be one of these types, never both.
-#define RFNODETYPE  
+#define ETHNODETYPE // can only be one of these types, never both.
+//#define RFNODETYPE   // can only be one of these types, never both.
 
 
 
 #define VERSION "UNIvGitHub"  // this value can be queried as device 3
 
-/* NODE CORE CONFIGURATION PARAMETERS */
-#define NODEID           99       // unique node ID within the closed network
-#define NODEIDSTRING node99       // as per above.  
-#define SUBTOPICSTR "home/rfm_gw/sb/node99/#"   // MQTT topic, only used in ETH Node type
-//#define CLIENTNAMESTR "PJ_HA_Eth_Node_22_ShedLock"  // MQTT topic, only used in ETH Node type
-//#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
-#define COMMS_LED_PIN 15         // RED - Comms traffic IP or RF for/from this node, activity indicator.
+/* NODE CORE CONFIGURATION PARAMETERS 
+****************************************************/
+#define NODEID           98       // unique node ID within the closed network
+#define NODEIDSTRING node98       // as per above.  
+#define COMMS_LED_PIN 25         // RED - Comms traffic IP or RF for/from this node, activity indicator.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 12        // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 26        // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+/****************************************************/
 
-/* RF NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES */
-    #define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
-    #define NETWORKID 100	// network ID of the RF network
-    #define ENCRYPTKEY "xxxxxxxxxxxxxxxx" // 16-char encryption key; same as on RF Gateway!
+
+/* ETH NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
+*****************************************************/
+#define SUBTOPICSTR "home/eth_nd/sb/node98/#"   // MQTT topic, only used in ETH Node type
+#define CLIENTNAMESTR "PJ_HA_Eth_Node_98_Tester"  // MQTT topic, only used in ETH Node type
+#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
+/***************************************************/
+
+
+/* RF NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
+****************************************************/
+//#define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
+//#define NETWORKID 100	// network ID of the RF network
+//#define ENCRYPTKEY "xxxxxxxxxxxxxxxx" // 16-char encryption key; same as on RF Gateway!
     // Wireless settings Match frequency to the hardware version of the radio
     //#define FREQUENCY RF69_433MHZ
     //#define FREQUENCY RF69_868MHZ
-    #define FREQUENCY RF69_915MHZ
+//#define FREQUENCY RF69_915MHZ
     //#define IS_RFM69HW // uncomment only for RFM69HW!
-    #define ACK_TIME 50 // max # of ms to wait for an ack
+//#define ACK_TIME 50 // max # of ms to wait for an ack
+/***************************************************/
+
 
 // define types of Serial messages, this is the protocol used for slaveserial type devices.
 #define HELLO 1
@@ -91,7 +102,8 @@
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
 #define PIR1          // Have I attached a PIR
-    #define PIR1PIN 23         // signal pin from 1st PIR if attached, else ignored.
+    #define PIR1PIN 30   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+                         // signal pin from 1st PIR if attached, else ignored.
     #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
     #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
 
@@ -200,6 +212,7 @@ typedef struct {        // Radio packet structure max 66 bytes
 // ============================================
 // Function prototypes when required;
 void sendInteger(int sendNodeID, int sendDevID, int sendInt);
+void sendStatusInteger(int sendNodeID, int sendDevID, int sendInt);
 void sendString(int sendNodeID, int sendDevID, char* sendStr);
 void sendReal(int sendNodeID, int sendDevID, float sendR);
 void housekeeping();
