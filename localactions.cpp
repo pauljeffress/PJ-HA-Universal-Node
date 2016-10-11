@@ -25,7 +25,7 @@ void localactions(){
 #ifdef EXTENDEDBUTTON1
   if (extendedbutton1tapped)
     {
-    #ifdef DEBUG
+    #ifdef DEBUGPJ2
         Serial.println("===== localactions() =====");
         Serial.println("extendedbutton1tapped");
     #endif

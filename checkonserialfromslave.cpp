@@ -68,4 +68,4 @@ int  recparam;
       }
     }
 } //END - checkonserialfromslave()
-#endif
+#endif // SERIALSLAVE
