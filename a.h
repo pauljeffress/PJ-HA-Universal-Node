@@ -37,19 +37,19 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           98       // unique node ID within the closed network
-#define NODEIDSTRING node98       // as per above.  
-#define COMMS_LED_PIN 25         // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           21       // unique node ID within the closed network
+#define NODEIDSTRING node21       // as per above.  
+#define COMMS_LED_PIN 9          // RED - Comms traffic IP or RF for/from this node, activity indicator.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 26        // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 8         // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 /****************************************************/
 
 
 /* ETH NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
 *****************************************************/
-#define SUBTOPICSTR "home/eth_nd/sb/node98/#"   // MQTT topic, only used in ETH Node type
-#define CLIENTNAMESTR "PJ_HA_Eth_Node_98_Tester"  // MQTT topic, only used in ETH Node type
-#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
+#define SUBTOPICSTR "home/eth_nd/sb/node21/#"   // MQTT topic, only used in ETH Node type
+#define CLIENTNAMESTR "PJ_HA_Eth_Node_21_ShedInt"  // MQTT topic, only used in ETH Node type
+#define MQCON 7          // GREEN - MQTT Connection indicator, only used in ETH Node type
 /***************************************************/
 
 
@@ -102,38 +102,38 @@
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
 #define PIR1          // Have I attached a PIR
-    #define PIR1PIN 30   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+    #define PIR1PIN 22   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
                          // signal pin from 1st PIR if attached, else ignored.
     #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
     #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
 
-//#define PIR2          // Have I attached a 2nd PIR
-//   #define PIR2PIN 999         // signal pin from 2nd PIR if attached, else ignored.
+#define PIR2          // Have I attached a 2nd PIR
+   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
 
 //#define BUTTON1       // Have I attached some buttons/switches...
 //   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-//#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//    #define ACTUATOR1PIN A8    // contol pin for 1st ACTUATOR if attached, else ignored.
-//#define ACTUATOR2
-    //#define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
-//#define ACTUATOR3
-    //#define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
-//#define ACTUATOR4
-//    #define ACTUATOR4PIN 999    // contol pin for 4th ACTUATOR if attached, else ignored.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+    #define ACTUATOR1PIN 34    // contol pin for 1st ACTUATOR if attached, else ignored.
+#define ACTUATOR2
+    #define ACTUATOR2PIN 31   // contol pin for 2nd ACTUATOR if attached, else ignored.
+#define ACTUATOR3
+    #define ACTUATOR3PIN 33    // contol pin for 3rd ACTUATOR if attached, else ignored.
+#define ACTUATOR4
+    #define ACTUATOR4PIN 32    // contol pin for 4th ACTUATOR if attached, else ignored.
 
-//#define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
+#define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 
-//#define EXTENDEDBUTTON1   // Have I got any buttons somehow slaved off this node?  e.g. across serial on a sub node
-//#define EXTENDEDBUTTON2
-//#define EXTENDEDBUTTON3
-//#define EXTENDEDBUTTON4
-//#define EXTENDEDACT1    // Have I got any Actuators (i.e digital out pins) somehow slaved off this node?  e.g. across serial on a sub node
-//#define EXTENDEDACT2
-//#define EXTENDEDACT3
-//#define EXTENDEDACT4
+#define EXTENDEDBUTTON1   // Have I got any buttons somehow slaved off this node?  e.g. across serial on a sub node
+#define EXTENDEDBUTTON2
+#define EXTENDEDBUTTON3
+#define EXTENDEDBUTTON4
+#define EXTENDEDACT1    // Have I got any Actuators (i.e digital out pins) somehow slaved off this node?  e.g. across serial on a sub node
+#define EXTENDEDACT2
+#define EXTENDEDACT3
+#define EXTENDEDACT4
 //#define PIXELLEDSTRIP     // PJ - my new device types
 //#define DUMBLEDSTRIP
 //#define XMASLIGHTS
@@ -227,6 +227,7 @@ void sendMsg();
 void parseCmd();
 void txRadio();
 void sendserialtoslave();
+void checkonserialfromslave();
 bool receiveData();
 void checkbuttons();
 bool checkPINGs();

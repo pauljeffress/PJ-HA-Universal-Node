@@ -25,4 +25,4 @@ void sendserialtoslave(uint8_t sendsertype, uint8_t sendparam) {
   Serial1.write(sendparam);
   
 } // END - sendserialtoslave()
-#endif
+#endif //SERIALSLAVE

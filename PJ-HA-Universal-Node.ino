@@ -221,9 +221,9 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
     #include <SPI.h>
     #include <Ethernet.h>
     #include <PubSubClient.h>
-    byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0xEE };  // MAC address for ethernet << MUST CHANGE per node!!!!!>>
+    byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0xEF };  // MAC address for ethernet << MUST CHANGE per node!!!!!>>
     byte mqtt_server[] = { 192, 168, 200, 241};   // MQTT broker address
-    byte ip[] = { 192, 168, 200 , 244 };      // Gateway address (if DHCP fails) << MUST CHANGE per node.
+    byte ip[] = { 192, 168, 200 , 243 };      // Gateway address (if DHCP fails) << MUST CHANGE per node.
     String strPayload;  // used in mqtt_subs() etc, when ingesting a new MQTT message.
     //void mqtt_subs(char* topic, byte* payload, unsigned int length);  // I had to put this prototype here or else I could not compile
     EthernetClient ethClient;

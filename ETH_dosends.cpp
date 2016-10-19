@@ -131,7 +131,7 @@ void dosends() {
 #ifdef PIR2 // PIR2 is connected
   if (send43)
     {
-    sendSendInteger(NODEID, 43, curPIR2State);
+    sendStatusInteger(NODEID, 43, curPIR2State);
     send43 = false;
     }
 #endif
