@@ -435,14 +435,9 @@ Message mes;
 
 #ifdef MOTEINOWEATHER
   // insert any pre setup() code for this specific device here.
-  #include <SFE_BMP180.h>    //get it here: https://github.com/LowPowerLab/SFE_BMP180
-  #include <SI7021.h>        //get it here: https://github.com/LowPowerLab/SI7021
-  #include <Wire.h>           // built in, needed for I2C bus.
+  
   SI7021 SI7021sensor;
   SFE_BMP180 BMP180pressure;
-  #define MOTEINO_WEATHERSHIELD_ALTITUDE 20 // Altitude in meters (my estimate for our house)
-  #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
-  #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
   float WeatherShieldData[3] = {11, 22, 33};  // these defaults just make it easy to see if value not set correctly later.
   bool send51, send54, send55 = false;  // northbound message triggers
 #endif // MOTEINOWEATHER
@@ -450,8 +445,7 @@ Message mes;
 #ifdef TSL2651
   // insert any pre setup() code for this specific device here.
   // Note: I relied heavily on the Adafruit 'sensorapi.ino' example that came with TSL2561 library.
-  #include <Adafruit_Sensor.h>
-  #include <Adafruit_TSL2561_U.h>
+
   //                                                      \/ I2C Addr(see .h)  \/ Sensor ID (see .h)
   Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);
   float TSL2651Data[2] = {11, 22};  // these defaults just make it easy to see if value not set correctly later.

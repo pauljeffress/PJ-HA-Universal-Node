@@ -9,12 +9,16 @@
 #include <Ethernet.h>
 #include <PubSubClient.h>
 #include <RFM69.h>
-#include <Wire.h> // used by RTClib library
+#include <Wire.h> // for I2C bus, used by many DEVices
 #include "RTClib.h"
 #include <SparkFunSerialGraphicLCD.h>//inculde the Serial Graphic LCD library
 #include <SoftwareSerial.h> // used by SparkFunSerialGraphicLCD library
 #include "pitches.h"  // my file with musical note definitions for BEEPER device.
 #include <Adafruit_Fingerprint.h> // Designed to work with  http://www.adafruit.com/products/751 finger sensor
+#include <SFE_BMP180.h>    //get it here: https://github.com/LowPowerLab/SFE_BMP180
+#include <SI7021.h>        //get it here: https://github.com/LowPowerLab/SI7021
+#include <Adafruit_Sensor.h>      // required for TSL2561 sensor stuff
+#include <Adafruit_TSL2561_U.h>
 
 /* DEBUG CONFIGURATION PARAMETERS */
 //#define DEBUG // uncomment for debugging
@@ -28,8 +32,8 @@
 #define SERIAL_BAUD 115200
 
 /* NODE TYPE - must select one ONLY!!!! */
-#define ETHNODETYPE // can only be one of these types, never both.
-//#define RFNODETYPE   // can only be one of these types, never both.
+//#define ETHNODETYPE // can only be one of these types, never both.
+#define RFNODETYPE   // can only be one of these types, never both.
 
 
 
@@ -37,11 +41,11 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           21       // unique node ID within the closed network
-#define NODEIDSTRING node21       // as per above.  
-#define COMMS_LED_PIN 9          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           04       // unique node ID within the closed network
+#define NODEIDSTRING node04       // as per above.  
+#define COMMS_LED_PIN 11          // RED - Comms traffic IP or RF for/from this node, activity indicator.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 8         // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 13         // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 /****************************************************/
 
 
@@ -55,15 +59,15 @@
 
 /* RF NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
 ****************************************************/
-//#define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
-//#define NETWORKID 100	// network ID of the RF network
-//#define ENCRYPTKEY "xxxxxxxxxxxxxxxx" // 16-char encryption key; same as on RF Gateway!
+#define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
+#define NETWORKID 100	// network ID of the RF network
+#define ENCRYPTKEY "xxxxxxxxxxxxxxxx" // 16-char encryption key; same as on RF Gateway!
     // Wireless settings Match frequency to the hardware version of the radio
     //#define FREQUENCY RF69_433MHZ
     //#define FREQUENCY RF69_868MHZ
-//#define FREQUENCY RF69_915MHZ
+#define FREQUENCY RF69_915MHZ
     //#define IS_RFM69HW // uncomment only for RFM69HW!
-//#define ACK_TIME 50 // max # of ms to wait for an ack
+#define ACK_TIME 50 // max # of ms to wait for an ack
 /***************************************************/
 
 
@@ -102,44 +106,48 @@
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
 #define PIR1          // Have I attached a PIR
-    #define PIR1PIN 22   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+    #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
                          // signal pin from 1st PIR if attached, else ignored.
     #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
     #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
 
-#define PIR2          // Have I attached a 2nd PIR
-   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
+//#define PIR2          // Have I attached a 2nd PIR
+//   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
 
 //#define BUTTON1       // Have I attached some buttons/switches...
 //   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-    #define ACTUATOR1PIN 34    // contol pin for 1st ACTUATOR if attached, else ignored.
-#define ACTUATOR2
-    #define ACTUATOR2PIN 31   // contol pin for 2nd ACTUATOR if attached, else ignored.
-#define ACTUATOR3
-    #define ACTUATOR3PIN 33    // contol pin for 3rd ACTUATOR if attached, else ignored.
-#define ACTUATOR4
-    #define ACTUATOR4PIN 32    // contol pin for 4th ACTUATOR if attached, else ignored.
+// #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+//     #define ACTUATOR1PIN 34    // contol pin for 1st ACTUATOR if attached, else ignored.
+// #define ACTUATOR2
+//     #define ACTUATOR2PIN 31   // contol pin for 2nd ACTUATOR if attached, else ignored.
+// #define ACTUATOR3
+//     #define ACTUATOR3PIN 33    // contol pin for 3rd ACTUATOR if attached, else ignored.
+// #define ACTUATOR4
+//     #define ACTUATOR4PIN 32    // contol pin for 4th ACTUATOR if attached, else ignored.
 
-#define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
+// #define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 
-#define EXTENDEDBUTTON1   // Have I got any buttons somehow slaved off this node?  e.g. across serial on a sub node
-#define EXTENDEDBUTTON2
-#define EXTENDEDBUTTON3
-#define EXTENDEDBUTTON4
-#define EXTENDEDACT1    // Have I got any Actuators (i.e digital out pins) somehow slaved off this node?  e.g. across serial on a sub node
-#define EXTENDEDACT2
-#define EXTENDEDACT3
-#define EXTENDEDACT4
+// #define EXTENDEDBUTTON1   // Have I got any buttons somehow slaved off this node?  e.g. across serial on a sub node
+// #define EXTENDEDBUTTON2
+// #define EXTENDEDBUTTON3
+// #define EXTENDEDBUTTON4
+// #define EXTENDEDACT1    // Have I got any Actuators (i.e digital out pins) somehow slaved off this node?  e.g. across serial on a sub node
+// #define EXTENDEDACT2
+// #define EXTENDEDACT3
+// #define EXTENDEDACT4
 //#define PIXELLEDSTRIP     // PJ - my new device types
 //#define DUMBLEDSTRIP
 //#define XMASLIGHTS
 //#define I2CLCD             // Have I attached one of my i2c LCDs to this node?
-//#define TSL2651           // PJ - is there an Adafruit TSL2561 breakout board (light sensors) present?
-//#define MOTEINOWEATHER    // PJ - is there a Moteino WeatherShield present? (http://lowpowerlab.com/blog/2015/01/30/weathershield-is-here/)
+#define TSL2651           // PJ - is there an Adafruit TSL2561 breakout board (light sensors) present?
+#define MOTEINOWEATHER    // PJ - is there a Moteino WeatherShield present? (http://lowpowerlab.com/blog/2015/01/30/weathershield-is-here/)
+  #define MOTEINO_WEATHERSHIELD_ALTITUDE 20 // Altitude in meters (my estimate for our house)
+  #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
+  #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
+
 //#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
     //#define RMT_PWR_ENA_PIN 3 // The pin to set high when I want to switch on a remote ATX PC power supply
                                 // that is providing the power for the actuator/LED etc, beyond just the 
@@ -255,6 +263,10 @@ void RMT_PWROff();
 String flashStringBuilder (const __FlashStringHelper *data);
 void sendserialtoslave(uint8_t sendsertype, uint8_t sendparam);
 void checkPIRs();
+void getWeatherShield();
+void getTSL2651();
+void displaySensorDetails(void);
+void configureSensor(void);
 
 // =============================================
 // Global variables as 'externs' so individual files can compile if they use them.
@@ -271,9 +283,9 @@ extern float hum, temp;
 extern int signalStrength;
 extern bool promiscuousMode;
 extern bool setAck;
-extern bool	send0, send1, send2, send3, send4, send5, send6, send7, send48, send49, send50, send92, send93;
-extern bool	send16, send17, send18, send19, send40, send42, send50, send51, send52, send53;
-extern bool send54, send55, send92, send93;
+extern bool	send0, send1, send2, send3, send4, send5, send6, send7, send48, send49;
+extern bool	send16, send17, send18, send19, send40, send42, send50;
+extern bool send92, send93;
 extern bool send11, send12; // compilation info
 extern bool actuator1status, actuator2status, actuator3status, actuator4status; 
 extern bool lastactuator1status, lastactuator2status, lastactuator3status, lastactuator4status; 
@@ -414,4 +426,20 @@ extern bool send320, send321, send322, send323, send324;
 #ifdef RMT_PWR
   extern int   RMT_PWR_State;
 #endif
+
+#ifdef MOTEINOWEATHER
+  extern float WeatherShieldData[3];
+  extern bool send51, send54, send55;
+  extern SI7021 SI7021sensor;
+  extern SFE_BMP180 BMP180pressure;
+#endif
+
+#ifdef TSL2651
+  extern Adafruit_TSL2561_Unified tsl;
+  extern float TSL2651Data[2];
+  extern bool send52, send53;
+#endif
+
+
+
 #endif // PJ_MY_A_H
