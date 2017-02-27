@@ -41,11 +41,11 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           04       // unique node ID within the closed network
-#define NODEIDSTRING node04       // as per above.  
-#define COMMS_LED_PIN 11          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           05       // unique node ID within the closed network
+#define NODEIDSTRING node05       // as per above.  
+#define COMMS_LED_PIN 6          // RED - Comms traffic IP or RF for/from this node, activity indicator.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 13         // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 9         // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 /****************************************************/
 
 
@@ -105,11 +105,11 @@
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
-#define PIR1          // Have I attached a PIR
-    #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
-                         // signal pin from 1st PIR if attached, else ignored.
-    #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
-    #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
+// #define PIR1          // Have I attached a PIR
+//     #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+//                          // signal pin from 1st PIR if attached, else ignored.
+//     #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
+//     #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
 
 //#define PIR2          // Have I attached a 2nd PIR
 //   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
@@ -119,14 +119,18 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-// #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//     #define ACTUATOR1PIN 34    // contol pin for 1st ACTUATOR if attached, else ignored.
-// #define ACTUATOR2
-//     #define ACTUATOR2PIN 31   // contol pin for 2nd ACTUATOR if attached, else ignored.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+     #define ACTUATOR1PIN 5    // contol pin for 1st ACTUATOR if attached, else ignored.
+     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR2
+     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
+     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR3
 //     #define ACTUATOR3PIN 33    // contol pin for 3rd ACTUATOR if attached, else ignored.
+//     #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR4
 //     #define ACTUATOR4PIN 32    // contol pin for 4th ACTUATOR if attached, else ignored.
+//     #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 
 // #define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 
@@ -142,11 +146,11 @@
 //#define DUMBLEDSTRIP
 //#define XMASLIGHTS
 //#define I2CLCD             // Have I attached one of my i2c LCDs to this node?
-#define TSL2651           // PJ - is there an Adafruit TSL2561 breakout board (light sensors) present?
-#define MOTEINOWEATHER    // PJ - is there a Moteino WeatherShield present? (http://lowpowerlab.com/blog/2015/01/30/weathershield-is-here/)
-  #define MOTEINO_WEATHERSHIELD_ALTITUDE 20 // Altitude in meters (my estimate for our house)
-  #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
-  #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
+// #define TSL2651           // PJ - is there an Adafruit TSL2561 breakout board (light sensors) present?
+// #define MOTEINOWEATHER    // PJ - is there a Moteino WeatherShield present? (http://lowpowerlab.com/blog/2015/01/30/weathershield-is-here/)
+//   #define MOTEINO_WEATHERSHIELD_ALTITUDE 20 // Altitude in meters (my estimate for our house)
+//   #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
+//   #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
 
 //#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
     //#define RMT_PWR_ENA_PIN 3 // The pin to set high when I want to switch on a remote ATX PC power supply

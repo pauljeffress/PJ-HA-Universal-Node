@@ -72,16 +72,24 @@ void localactions(){
 // due to something locally here on the node, we must keep things like OpenHAB up to date.
 #ifdef ACTUATOR1
   if (actuator1status != lastactuator1status) // has its status variable been changed, if so act on it.
-    {
-    digitalWrite(ACTUATOR1PIN, actuator1status); // Set the ACTUATOR to new desired state.
-    lastactuator1status = actuator1status;  // keep track of last applied state of this actuator.
-    send16 = true;                      // Advise upstream of new state of actuator.
-    }
+      {
+      #ifdef ACTUATOR1REVERSE // for reversed Actuator behaviour do this
+        digitalWrite(ACTUATOR1PIN, !actuator1status); // Set the ACTUATOR to new desired state. Reversed behaviour.
+      #else // for normal Actuator behavior do this
+        digitalWrite(ACTUATOR1PIN, actuator1status); // Set the ACTUATOR to new desired state.
+      #endif
+      lastactuator1status = actuator1status;  // keep track of last applied state of this actuator.
+      send16 = true;                      // Advise upstream of new state of actuator.
+      }   
 #endif
 #ifdef ACTUATOR2
   if (actuator2status != lastactuator2status) // has its status variable been changed, if so act on it.
     {
-    digitalWrite(ACTUATOR2PIN, actuator2status); // Set the ACTUATOR to new desired state.
+    #ifdef ACTUATOR2REVERSE // for reversed Actuator behaviour do this
+      digitalWrite(ACTUATOR2PIN, !actuator2status); // Set the ACTUATOR to new desired state. Reversed behaviour.
+    #else // for normal Actuator behavior do this
+      digitalWrite(ACTUATOR2PIN, actuator2status); // Set the ACTUATOR to new desired state.
+    #endif
     lastactuator2status = actuator2status;  // keep track of last applied state of this actuator.
     send17 = true;                      // Advise upstream of new state of actuator.
     }
