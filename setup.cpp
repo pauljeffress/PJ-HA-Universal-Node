@@ -175,11 +175,19 @@ void setup() {
  
 #ifdef ACTUATOR1 // 1st Actuator ===============================================
   pinMode(ACTUATOR1PIN, OUTPUT);
-  digitalWrite(ACTUATOR1PIN, actuator1status);
+  #ifdef ACTUATOR1REVERSE // for reversed Actuator behaviour do this
+     digitalWrite(ACTUATOR1PIN, !actuator1status); // Set the ACTUATOR starting state. Reversed behaviour.
+  #else // for normal Actuator behavior do this
+     digitalWrite(ACTUATOR1PIN, actuator1status); // Set the ACTUATOR starting state.
+  #endif
 #endif
 #ifdef ACTUATOR2 // 2nd ACTUATOR ===============================================
   pinMode(ACTUATOR2PIN, OUTPUT);
-  digitalWrite(ACTUATOR2PIN, actuator2status);
+  #ifdef ACTUATOR2REVERSE // for reversed Actuator behaviour do this
+     digitalWrite(ACTUATOR2PIN, !actuator2status); // Set the ACTUATOR starting state. Reversed behaviour.
+  #else // for normal Actuator behavior do this
+     digitalWrite(ACTUATOR2PIN, actuator2status); // Set the ACTUATOR starting state.
+  #endif
 #endif
 #ifdef ACTUATOR3 // 3rd Actuator ===============================================
   pinMode(ACTUATOR3PIN, OUTPUT);
