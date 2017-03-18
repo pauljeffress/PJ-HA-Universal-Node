@@ -64,7 +64,12 @@ void FPSRunModeSM()
 				Serial.print("Unknown FPS Run State: ");
 				Serial.println(FPSRunState);
 			#endif
-            localwriteLCDGEN(0, 0, "Unknown FPS Run State");
+            #ifdef LCDGEN
+				localwriteLCDGEN(0, 0, "Unknown FPS Run State");
+			#endif
+			#ifdef LCDNEXTION_FPS
+				writeLCDNEXTION_FPS_instruction("Unknown FPS Run State - Halting Mega");
+			#endif
 			while (1)	// if we hit this state, we have a problem, so just stay here forever.
 			{
 			delay(1);
@@ -80,11 +85,14 @@ void FPSRunStart()
 		Serial.println("F: FPSRunStart");
 	#endif
 	FPSTurnFootlightOn();
-  localwriteLCDGEN(0, 4, "                    ");  // erase bottom of screen
-  localwriteLCDGEN(0, 5, "                    ");  // erase bottom of screen
-  localwriteLCDGEN(0, 6, "                    ");  // erase bottom of screen
-  localwriteLCDGEN(0, 7, "                    ");  // erase bottom of screen
-  localwriteLCDGEN(0, 4, "FPS Run Mode");
+
+  #ifdef LCDGEN
+  	localwriteLCDGEN(0, 4, "                    ");  // erase bottom of screen
+  	localwriteLCDGEN(0, 5, "                    ");  // erase bottom of screen
+  	localwriteLCDGEN(0, 6, "                    ");  // erase bottom of screen
+  	localwriteLCDGEN(0, 7, "                    ");  // erase bottom of screen
+  	localwriteLCDGEN(0, 4, "FPS Run Mode");
+  #endif //LCDGEN
 
   FPSRunIdentifyTimer = millis() + (FPS_IDENTIFY_TIME * 1000L);	// set timer to a time a number of seconds in the future
 	//FPSRunIdentifyTimer = 70000;
@@ -105,11 +113,16 @@ void FPSRunStartIdentify()
 	#ifdef DEBUGPJ2
 		Serial.println("F: FPSRunStartIdentify");
 	#endif
-  localwriteLCDGEN(0, 5, "                    ");  // erase bottom of screen
+  
+  #ifdef LCDGEN
+  	localwriteLCDGEN(0, 5, "                    ");  // erase bottom of screen
+  	localwriteLCDGEN(0, 6, "                    ");  // erase bottom of screen	
+  	localwriteLCDGEN(0, 5, "Scan your finger now");
+  #endif //LCDGEN
 
-  localwriteLCDGEN(0, 6, "                    ");  // erase bottom of screen	
-
-	localwriteLCDGEN(0, 5, "Scan your finger now");
+  #ifdef LCDNEXTION_FPS
+  	writeLCDNEXTION_FPS_instruction("Place finger on scanner.");
+  #endif
 
 	#ifdef BEEPER
   		tone(BEEPERPIN, beeperNotes[0], beeperDurations[0]);	// play tone to get user attention, to place finger.
@@ -145,7 +158,12 @@ void FPSRunDoIdentify()
       FPSRunState = FPS_RUN_DO_IDENTIFY;  // Transition to next state.
       break;
     case FPS_FINGER_NO_MATCH:
-      localwriteLCDGEN(0, 6, "Finger but no match.");
+      #ifdef LCDGEN
+	  	localwriteLCDGEN(0, 6, "Finger but no match.");
+	  #endif
+	  #ifdef LCDNEXTION_FPS
+	  	writeLCDNEXTION_FPS_instruction("No Match");
+	  #endif
       #ifdef BEEPER
         tone(BEEPERPIN, beeperNotes[1], beeperDurations[1]);  // play tone to get user attention, FAIL.
       #endif // BEEPER
@@ -153,7 +171,12 @@ void FPSRunDoIdentify()
       FPSRunState = FPS_RUN_START_IDENTIFY;  // Transition to next state.      
       break;
     case FPS_OTHER_ERROR:
-      localwriteLCDGEN(0, 7, "FPS - Other Error Occured.");
+      #ifdef LCDGEN
+	  	localwriteLCDGEN(0, 7, "FPS - Other Error Occured.");
+	  #endif
+	  #ifdef LCDNEXTION_FPS
+	  	writeLCDNEXTION_FPS_instruction("FPS - Other Error Occured.");
+	  #endif	  
       #ifdef BEEPER
         tone(BEEPERPIN, beeperNotes[1], beeperDurations[1]);  // play tone to get user attention, FAIL.
       #endif // BEEPER
@@ -162,7 +185,12 @@ void FPSRunDoIdentify()
       break;
     default: // we should only get to here if we got a match ID back.
 
-      localwriteLCDGEN(0, 5, "Identity Verified OK ");
+      #ifdef LCDGEN
+	  localwriteLCDGEN(0, 5, "Identity Verified OK ");
+	  #endif
+	  #ifdef LCDNEXTION_FPS
+	  	writeLCDNEXTION_FPS_instruction("Identity Verified OK ");
+	  #endif
       #ifdef BEEPER
         tone(BEEPERPIN, beeperNotes[3], beeperDurations[3]);  // play tone to get user attention, SUCCESS.
       #endif // BEEPER
@@ -177,7 +205,12 @@ void FPSRunDoorUnlocker()
 {
 	FPSUnlockDoor(); // Unlock the door.
 	FPSRunUnlockedTimer = millis() + (FPS_DOOR_UNLOCKED_TIME * 1000);	// set timer to a time a number of seconds in the future
-	localwriteLCDGEN(0, 6, "Door Unlocked");  
+	#ifdef LCDGEN
+		localwriteLCDGEN(0, 6, "Door Unlocked"); 
+	#endif
+	#ifdef LCDNEXTION_FPS
+	  	writeLCDNEXTION_FPS_instruction("Door Unlocked");
+	#endif		 
 	FPSRunState = FPS_RUN_DOOR_UNLOCKED;	// Transition to next state.
 }  // END - FPSDoorUnlocker()
 
@@ -204,7 +237,12 @@ void FPSRunDoorLocker()
 		Serial.println("F: FPSDoorLocker");
 	#endif
   FPSLockDoor(); // Lock the door.
-	localwriteLCDGEN(0, 6, "Door Locked  ");  
+	#ifdef LCDGEN
+		localwriteLCDGEN(0, 6, "Door Locked  ");  
+	#endif
+	#ifdef LCDNEXTION_FPS
+	  	writeLCDNEXTION_FPS_instruction("Door Locked");
+	#endif		
 	FPSRunState = FPS_RUN_EXIT;	// Transition to next state.
 }  // END - FPSDoorLocker()
 
@@ -215,37 +253,17 @@ void FPSRunExit()
 		Serial.println("F: FPSRunExit");
 	#endif
   FPSTurnFootlightOff();  // don't need to worry about a timer, if we get to this state, just turn it off.
-	localwriteLCDGEN(0, 4, "                     ");  // erase bottom of screen
-  localwriteLCDGEN(0, 5, "                     ");  // erase bottom of screen
-  localwriteLCDGEN(0, 6, "                     ");  // erase bottom of screen
-  localwriteLCDGEN(0, 7, "                     ");  // erase bottom of screen
+  #ifdef LCDGENERIC
+  	localwriteLCDGEN(0, 4, "                     ");  // erase bottom of screen
+  	localwriteLCDGEN(0, 5, "                     ");  // erase bottom of screen
+  	localwriteLCDGEN(0, 6, "                     ");  // erase bottom of screen
+  	localwriteLCDGEN(0, 7, "                     ");  // erase bottom of screen
+  #endif
+  #ifdef LCDNEXTION_FPS
+	writeLCDNEXTION_FPS_instruction("Ready");
+  #endif	  
   FPSRunState = FPS_RUN_START;	// Transition to next state. Ensure when we return to FPS Run Mode we start in start mode.
 	EnableFPSRunModeStateMachine = false; // flag that we need to stop running FPS RUN MODE state machine.
 } // END - FPSRunExit()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif FINGER
-
-
-
-
-
-
-
-
-

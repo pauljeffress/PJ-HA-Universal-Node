@@ -416,6 +416,54 @@ void setup() {
   #endif 
 #endif
 
+#ifdef LCDNEXTION_FPS  // dev330 Nextion LCD used on FPS Node specifically
+    #ifdef DEBUGPJ2
+      Serial.println("initalising Nextion LCD for FPS");
+    #endif
+    
+    /* Set the baudrate which is for debug and communicate with Nextion screen. */
+    nexInit();
+    dbSerialPrintln("Nextion nexInit() done");  // send debug info to Serial0 i.e. show up in Arduino IDE Serial Monitor Window
+    
+    // display initialisation text just to confirm display is working.  Will be overwritten by proper text very quickly.
+    strcpy(NextionLCD_FPS_buffer, "Title Initialised");
+    text0.setText(NextionLCD_FPS_buffer);
+    strcpy(NextionLCD_FPS_buffer, "Instruction Initialised");
+    scroll_inst.setText(NextionLCD_FPS_buffer);
+    strcpy(NextionLCD_FPS_buffer, "Node Data Initialised");
+    scroll0.setText(NextionLCD_FPS_buffer);
+
+    delay(1500);
+
+    // display starting or permanent text now.
+    strcpy(NextionLCD_FPS_buffer, "Jeffos Home   Door Lock");
+    text0.setText(NextionLCD_FPS_buffer);
+
+    strcpy(NextionLCD_FPS_buffer, "Node Data >> "); // clear the buffer ready for some concats.
+    strcat(NextionLCD_FPS_buffer, "PJ HA Node:");
+    strcat(NextionLCD_FPS_buffer, int(NODEID));
+    strcat(NextionLCD_FPS_buffer, "  SW Ver:");
+    strcat(NextionLCD_FPS_buffer, VERSION);
+        
+    #ifdef RFNODETYPE
+      strcat(NextionLCD_FPS_buffer, "  RF Node Type - Freq:");
+      //lcdGen.printStr(FREQUENCY==RF69_433MHZ ? 433 : FREQUENCY==RF69_868MHZ ? 868 : 915);
+      strcat(NextionLCD_FPS_buffer," xx Mhz");
+    #endif
+    #ifdef ETHNODETYPE
+      strcat(NextionLCD_FPS_buffer, "  ETH Node Type - ");
+      strcat(NextionLCD_FPS_buffer, "MyIP:");
+      for (int i = 0; i < 4; i++)
+        {
+        strcat(NextionLCD_FPS_buffer, int(ip[i]));
+        strcat(NextionLCD_FPS_buffer, ".");
+        }
+    #endif  
+    scroll0.setText(NextionLCD_FPS_buffer);
+#endif 
+
+
+
 #ifdef FINGER
   Serial.println("FINGER setup() started");
   // set the data rate for the sensor serial port

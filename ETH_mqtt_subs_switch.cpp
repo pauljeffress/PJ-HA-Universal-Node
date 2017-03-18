@@ -273,7 +273,7 @@ int i;
     if (mes.cmd == 1) send64 = true;
     break;    
 
-#endif // PING1
+#endif // PING1x
 
 #ifdef RTC
   case 300: // 300: Unixtime - high 16 bits (Unixtime is a 32bit Arduino 'Long')

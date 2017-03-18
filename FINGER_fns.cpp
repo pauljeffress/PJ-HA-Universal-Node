@@ -8,7 +8,7 @@
 
 #ifdef FINGER
 
-crap
+
 
 // ================ FPSgetFingerprintID()
 // Detailed reader function, based on the Adafruit Fingerprint Sensor 
