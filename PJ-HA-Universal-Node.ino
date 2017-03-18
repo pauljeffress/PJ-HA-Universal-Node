@@ -221,9 +221,9 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
     #include <SPI.h>
     #include <Ethernet.h>
     #include <PubSubClient.h>
-    byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xBE, 0xEF };  // MAC address for ethernet << MUST CHANGE per node!!!!!>>
+    byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0x00, 0x23 };  // MAC address for ethernet << MUST CHANGE per node!!!!!>>
     byte mqtt_server[] = { 192, 168, 200, 241};   // MQTT broker address
-    byte ip[] = { 192, 168, 200 , 243 };      // Gateway address (if DHCP fails) << MUST CHANGE per node.
+    byte ip[] = { 192, 168, 200 , 238 };      // Gateway address (if DHCP fails) << MUST CHANGE per node.
     String strPayload;  // used in mqtt_subs() etc, when ingesting a new MQTT message.
     //void mqtt_subs(char* topic, byte* payload, unsigned int length);  // I had to put this prototype here or else I could not compile
     EthernetClient ethClient;
@@ -498,6 +498,14 @@ Message mes;
   #ifdef LCDGENERIC_BLAH  // items specific to the blah LCD
   #endif // LCDGENERIC_BLAH
 #endif // LCDGENERIC
+
+#ifdef LCDNEXTION_FPS // dev330 Nextion LCD used on FPS Node specifically
+  bool send330 = false;  // northbound message triggers
+  NexText text0 = NexText(0, 2, "text0");             // The big font title text on the Nextion LCD
+  NexText scroll_inst = NexText(0, 3, "scroll_inst");           // The scrolling instruction to user text on the Nextion LCD
+  NexText scroll0 = NexText(0, 1, "scroll0");   // The scrolling line of node data across bottom of Nextion LCD
+  char NextionLCD_FPS_buffer[LCDNEXTION_FPS_BUFSIZE] = {0};  // create a char buffer for use with writting text to Nextion LCD.
+#endif
 
 #ifdef BEEPER // dev340 - 349 BEEPER
   bool send340= false;  // northbound message triggers. xxxx - these are WO registers, I don't need sendXXX flags for them!!!'

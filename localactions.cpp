@@ -147,6 +147,10 @@ void localactions(){
     #ifdef LCDGENERIC // if we have an LCD....
       localwriteLCDGEN(0, 4, "FPS DB  Mode");
     #endif
+    #ifdef LCDNEXTION_FPS
+	    writeLCDNEXTION_FPS_instruction("FPS DB  Mode");
+    #endif
+
     // xxxx - add code to do DB stuff here :)
     // xxxx - stuff like enrol fingers etc, if I ever want to do that on the Arduino not external Win PC.
     }

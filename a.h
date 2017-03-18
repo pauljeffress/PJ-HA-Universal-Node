@@ -19,6 +19,7 @@
 #include <SI7021.h>        //get it here: https://github.com/LowPowerLab/SI7021
 #include <Adafruit_Sensor.h>      // required for TSL2561 sensor stuff
 #include <Adafruit_TSL2561_U.h>
+#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
 
 /* DEBUG CONFIGURATION PARAMETERS */
 //#define DEBUG // uncomment for debugging
@@ -32,8 +33,8 @@
 #define SERIAL_BAUD 115200
 
 /* NODE TYPE - must select one ONLY!!!! */
-//#define ETHNODETYPE // can only be one of these types, never both.
-#define RFNODETYPE   // can only be one of these types, never both.
+#define ETHNODETYPE // can only be one of these types, never both.
+//#define RFNODETYPE   // can only be one of these types, never both.
 
 
 
@@ -41,19 +42,19 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           05       // unique node ID within the closed network
-#define NODEIDSTRING node05       // as per above.  
-#define COMMS_LED_PIN 6          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           23       // unique node ID within the closed network
+#define NODEIDSTRING node23       // as per above.  
+#define COMMS_LED_PIN 23          // RED - Comms traffic IP or RF for/from this node, activity indicator.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 9         // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 22         // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 /****************************************************/
 
 
 /* ETH NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
 *****************************************************/
-#define SUBTOPICSTR "home/eth_nd/sb/node21/#"   // MQTT topic, only used in ETH Node type
-#define CLIENTNAMESTR "PJ_HA_Eth_Node_21_ShedInt"  // MQTT topic, only used in ETH Node type
-#define MQCON 7          // GREEN - MQTT Connection indicator, only used in ETH Node type
+#define SUBTOPICSTR "home/eth_nd/sb/node23/#"   // MQTT topic, only used in ETH Node type
+#define CLIENTNAMESTR "PJ_HA_Eth_Node_23_HouseFPS"  // MQTT topic, only used in ETH Node type
+#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
 /***************************************************/
 
 
@@ -114,20 +115,20 @@
 //#define PIR2          // Have I attached a 2nd PIR
 //   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
 
-//#define BUTTON1       // Have I attached some buttons/switches...
-//   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
+#define BUTTON1       // Have I attached some buttons/switches...
+   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-     #define ACTUATOR1PIN 5    // contol pin for 1st ACTUATOR if attached, else ignored.
-     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+//#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+//     #define ACTUATOR1PIN 5    // contol pin for 1st ACTUATOR if attached, else ignored.
+//     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 #define ACTUATOR2
-     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
-     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR3
-//     #define ACTUATOR3PIN 33    // contol pin for 3rd ACTUATOR if attached, else ignored.
-//     #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+    #define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
+  //  #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR3
+    #define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
+  //  #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR4
 //     #define ACTUATOR4PIN 32    // contol pin for 4th ACTUATOR if attached, else ignored.
 //     #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
@@ -157,12 +158,12 @@
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types.  
-//#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
-//    #define PING1TRIGGERPIN A12
-//    #define PING1ECHOPIN A11
-//    #define PING1MIN 10     // range min, in cm, to consider a detection.
-//    #define PING1MAX 20    // range max, in cm, to consider a detection.
-//    #define PING1HOLDTIME 5   // seconds - to wait before attempting another PING after a detection.
+#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
+   #define PING1TRIGGERPIN A12
+   #define PING1ECHOPIN A11
+   #define PING1MIN 10     // range min, in cm, to consider a detection.
+   #define PING1MAX 20    // range max, in cm, to consider a detection.
+   #define PING1HOLDTIME 5   // seconds - to wait before attempting another PING after a detection.
 //
 //#define RTC     // is there some sort of RTC attached to this node.
 //
@@ -182,20 +183,24 @@
 //    #define LCDGENERIC_YMAX 2  // Number of rows on this particular LCD 
 //  #endif // LCDGENERIC_BLAH
 //
-//#define BEEPER  // is there one of my beepers attached to this node?
-//  #define BEEPERPIN A0  // PWM pin that the speaker is attached to.
-//  #define BEEPNUMMAX 4 // how many beeps are defined on this node.
-//
-//#define FINGER  // is there one of my Finger Print Scanners attached to this node?
-//  #define FINGERSERIALPORT Serial1  // Which port is it attached to. Serial, Serial1..3 (Megga only) or SoftSerial etc
-//                                    // Mega TX1 pin 18 <-> FPS Red wire
-//                                    // Mega RX1 pin 19 <-> FPS Dark Blue wire
-//                                    //             +5V <-> FPS Green wire
-//                                    //             GND <-> FPS White wire
-//  #define FPS_MODE_RUN		0	// operating as normal
-//  #define FPS_MODE_DB			1	// allowing fingerprint database changes
-//  #define FPS_FOOTLIGHT_LED_ACTUATOR_STATUS actuator3status // assign this FPS function to one of the nodes ACTUATORs.  
-//  #define FPS_DOOR_LATCH_ACTUATOR_STATUS actuator2status // assign this FPS function to one of the nodes ACTUATORs.
+
+#define LCDNEXTION_FPS  // have I got a Nextion LCD setup to work on an FPS node, this node?
+    #define LCDNEXTION_FPS_BUFSIZE 100  // Size of the character buffer, make sure its big enough for any strings you send to the Nextion. 
+
+#define BEEPER  // is there one of my beepers attached to this node?
+  #define BEEPERPIN A0  // PWM pin that the speaker is attached to.
+  #define BEEPNUMMAX 4 // how many beeps are defined on this node.
+
+#define FINGER  // is there one of my Finger Print Scanners attached to this node?
+ #define FINGERSERIALPORT Serial1  // Which port is it attached to. Serial, Serial1..3 (Megga only) or SoftSerial etc
+                                   // Mega TX1 pin 18 <-> FPS Red wire
+                                   // Mega RX1 pin 19 <-> FPS Dark Blue wire
+                                   //             +5V <-> FPS Green wire
+                                   //             GND <-> FPS White wire
+ #define FPS_MODE_RUN		0	// operating as normal
+ #define FPS_MODE_DB			1	// allowing fingerprint database changes
+ #define FPS_FOOTLIGHT_LED_ACTUATOR_STATUS actuator3status // assign this FPS function to one of the nodes ACTUATORs.  
+ #define FPS_DOOR_LATCH_ACTUATOR_STATUS actuator2status // assign this FPS function to one of the nodes ACTUATORs.
 
 
 //  #define EXTVAR40X  // is this Node interested in External Variables 00 thru 09?  i.e. Dev 400-409
@@ -271,6 +276,7 @@ void getWeatherShield();
 void getTSL2651();
 void displaySensorDetails(void);
 void configureSensor(void);
+void writeLCDNEXTION_FPS_instruction(char* theStr);
 
 // =============================================
 // Global variables as 'externs' so individual files can compile if they use them.
@@ -360,7 +366,7 @@ extern bool  toggleOnButton2;
   extern bool curPIR2State;
 #endif
 
-#ifdef PING1
+#ifdef PING1x
 extern int ping1Distance;
 extern int ping1RangeMin;
 extern int ping1RangeMax;
@@ -398,6 +404,14 @@ extern bool send320, send321, send322, send323, send324;
   #ifdef LCDGENERIC_BLAH  // items specific to the blah LCD
   #endif // LCDGENERIC_BLAH
 #endif // LCDGENERIC
+
+#ifdef LCDNEXTION_FPS  // dev330 Nextion LCD used on FPS Node specifically
+  extern bool send330;
+  extern NexText text0; 
+  extern NexText scroll_inst;
+  extern NexText scroll0;
+  extern char NextionLCD_FPS_buffer[LCDNEXTION_FPS_BUFSIZE];
+#endif
 
 #ifdef BEEPER
   extern bool send340;

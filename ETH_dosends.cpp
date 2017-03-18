@@ -199,7 +199,7 @@ void dosends() {
      sendInteger(NODEID, 67, ping1Detect);  // ping1Detect is actually a Bool, but gets sent as an integer ok.
      send67 = false;   
     }
-#endif // PING1
+#endif // PING1x
 
 // Dev09x - Error messages
 // xxxx - what other errors should be setup to send back from an ETHNODE (see RF_sendMsg etc on RF side for ideas)
