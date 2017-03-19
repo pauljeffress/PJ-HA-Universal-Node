@@ -397,15 +397,52 @@ void sendMsg() { // prepares values to be transmitted
   }
   #endif
 
-  #ifdef PIXELLEDSTRIP
-  if (send201) { // 1st PIXELLEDSTRIP present status
-    mes.devID = 201;
-    mes.intVal = pixelLEDStrip1Mode; // i.e. whatever mode we last set it to.
-    send201 = false; // as we are about to send it in next statement, so clear flag.
-    txRadio(); // RF send msg.
-    mes.intVal = 0;  // clear it after use.
-  }
-  #endif
+#ifdef LEDSTRIP
+  if (send200)  
+    {
+      mes.devID = 200;
+      mes.intVal = LEDStrip1Type; 
+      send200 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send201)  
+    {
+      mes.devID = 201;
+      mes.intVal = LEDStrip1RedValue; 
+      send201 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send202)  
+    {
+      mes.devID = 202;
+      mes.intVal = LEDStrip1GreenValue; 
+      send202 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send203)  
+    {
+      mes.devID = 203;
+      mes.intVal = LEDStrip1BlueValue; 
+      send203 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send204)  
+    {
+      mes.devID = 204;
+      mes.intVal = LEDStrip1BrightnessValue; 
+      send204 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+#endif // LEDSTRIP
 
 #ifdef EXTVAR40X
   if (send400)  // 400     - TestExtVar - purely for testing, does not represent any real external variable. (Real - R/W)

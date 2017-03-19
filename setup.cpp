@@ -231,8 +231,8 @@ void setup() {
     pinMode(wakeUpPin, INPUT);
 #endif
 
-#ifdef PIXELLEDSTRIP
-   setupPixelLEDStrip();  // do any prep work for any pixel led strips
+#ifdef LEDSTRIP
+   setupLEDStrips();  // do any prep work for any led strips
 #endif
 
 

@@ -393,26 +393,14 @@ Message mes;
   boolean extendedbutton4tapped = OFF;  // consider it as OFF until first read of the button
 #endif
 
-#ifdef PIXELLEDSTRIP
-  // insert any pre setup() code for this specific device here.
-  #include <FastLED.h>
-  #include <colorutils.h>
-  // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
-  // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
-  // and minimize distance between Arduino and first pixel.  Avoid connecting
-  // on a live circuit...if you must, connect GND first.
-  #define PIXELLEDSTRIP1_NUMPIXELS  25    // num WS28xx controller chips on this strip
-  #define PIXELLEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip
-  int pixelLEDStrip1Mode = 0;              // the currently set mode for this strip
-  // This is an array of leds.  One item for each led in your strip. Part of FastLED library.
-  CRGB pixelledstrip1_leds[PIXELLEDSTRIP1_NUMPIXELS];
-  bool send201 = false;  // northbound message trigger
-#endif  // PIXELLEDSTRIP
-
-#ifdef DUMBLEDSTRIP
-  // insert any pre setup() code for this specific device here.
-  
-#endif  // DUMBLEDSTRIP
+#ifdef LEDSTRIP // dev2xx
+  int LEDStrip1Type = LEDSTRIP1_TYPE;  // is it a PIXEL or DUMB LED strip.
+  int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue = 0;    // initialise R,G,B & brightness values for this strip.
+  #if LEDSTRIP1_TYPE  // is it a PIXEL type?
+    CRGB pixelledstrip1_leds[LEDSTRIP1_NUMPIXELS]; // This is an array of leds.  One item for each led in your strip. Part of FastLED library.
+  #endif  
+  bool send200, send201, send202, send203, send204 = false;  // northbound message trigger
+#endif  // LEDSTRIP
 
 #ifdef I2CLCD // ====================================
               // Code to initialise the I2C LCD if attached. "DFRobot 508040" part.

@@ -230,9 +230,7 @@ int i;
 //          see stuff in ETH_dosends();
 //          also check this code is prob in RF_parseCmd() in case its asked of an RF Node
 
-// xxxx - add switch for PIXELLEDSTRIP, R/W, send201 etc - see stuff in main ino.
-//          see stuff in ETH_dosends();
-//          also check this code is prob in RF_parseCmd() in case its asked of an RF Node
+
 
 
 #ifdef PING1x
@@ -274,6 +272,106 @@ int i;
     break;    
 
 #endif // PING1x
+
+#ifdef LEDSTRIP
+    case 200:   // 200: 1st RGB LED Strip Type value - 0 = DUMB, 1 = PIXEL, no other value is valid. (see below for explanation)  (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send200 = true;
+        error = 0;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 1)    // test for correct value thats in range.
+          {
+            LEDStrip1Type = mes.intVal;
+            if (setAck) send200 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 201:   // 201: 1st RGB LED Strip RED value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send201 = true;
+        error = 0;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            LEDStrip1RedValue = mes.intVal;
+            #ifdef DEBUGPJ
+              Serial.println("calling updateStaticLEDStrip(1)");
+            #endif
+            updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            if (setAck) send201 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 202:   // 202: 1st RGB LED Strip GREEN value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send202 = true;
+        error = 0;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            LEDStrip1GreenValue = mes.intVal;
+            #ifdef DEBUGPJ
+              Serial.println("calling updateStaticLEDStrip(1)");
+            #endif
+            updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            if (setAck) send202 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 203:   // 203: 1st RGB LED Strip BLUE value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send203 = true;
+        error = 0;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            LEDStrip1BlueValue = mes.intVal;
+            #ifdef DEBUGPJ
+              Serial.println("calling updateStaticLEDStrip(1)");
+            #endif
+            updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            if (setAck) send203 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 204:   // 204: 1st RGB LED Strip BRIGHTNESS value - 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send204 = true;
+        error = 0;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            LEDStrip1BrightnessValue = mes.intVal;
+            #ifdef DEBUGPJ
+              Serial.println("calling updateStaticLEDStrip(1)");
+            #endif
+            updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            if (setAck) send204 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+#endif
+
 
 #ifdef RTC
   case 300: // 300: Unixtime - high 16 bits (Unixtime is a 32bit Arduino 'Long')

@@ -224,23 +224,99 @@ switch (mes.devID) // devID indicates device (sensor) type
   #endif  // XMASLIGHTS
 
   
-  #ifdef PIXELLEDSTRIP
+  #ifdef LEDSTRIP
   // insert code here for each DevID this node should respond to.
-  case (201): // 1st RGB Pixel LED Strip Independent Device - Pixel Mode
-  
-  if (mes.cmd == 0) { // cmd == 0 means write
-    if(mes.intVal >= 0 || mes.intVal <= 255) {   // test for correct value thats in range.
-      pixelLEDStrip1Mode = mes.intVal;
-      #ifdef DEBUG
-        Serial.println("calling setPixelStripMode()");
-      #endif
-      setPixelLEDStripMode(1, pixelLEDStrip1Mode);  // tell the correct strip what mode to go into.
-      if (setAck) send201 = true; // acknowledge message ?
-    }
-  }
-  else send201 = true; // cmd == 1 means read
-  break;  
-  #endif  // PIXELLEDSTRIP
+    case 200:   // 200: 1st RGB LED Strip Type value - 0 = DUMB, 1 = PIXEL, no other value is valid. (see below for explanation)  (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send200 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 1)    // test for correct value thats in range.
+          {
+            LEDStrip1Type = mes.intVal;
+            if (setAck) send200 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 201:   // 201: 1st RGB LED Strip RED value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send201 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            LEDStrip1RedValue = mes.intVal;
+            #ifdef DEBUGPJ
+              Serial.println("calling updateStaticLEDStrip(1)");
+            #endif
+            updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            if (setAck) send201 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 202:   // 202: 1st RGB LED Strip GREEN value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send202 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            LEDStrip1GreenValue = mes.intVal;
+            #ifdef DEBUGPJ
+              Serial.println("calling updateStaticLEDStrip(1)");
+            #endif
+            updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            if (setAck) send202 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 203:   // 203: 1st RGB LED Strip BLUE value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send203 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            LEDStrip1BlueValue = mes.intVal;
+            #ifdef DEBUGPJ
+              Serial.println("calling updateStaticLEDStrip(1)");
+            #endif
+            updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            if (setAck) send203 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 204:   // 204: 1st RGB LED Strip BRIGHTNESS value - 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send204 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            LEDStrip1BrightnessValue = mes.intVal;
+            #ifdef DEBUGPJ
+              Serial.println("calling updateStaticLEDStrip(1)");
+            #endif
+            updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            if (setAck) send204 = true; // acknowledge message ?
+          }     
+        }
+      break;
+  #endif  // LEDSTRIP
 
 #ifdef EXTVAR40X
   case 400: // 400     - TestExtVar - purely for testing, does not represent any real external variable. (Real - R/W)
