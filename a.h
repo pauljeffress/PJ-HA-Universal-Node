@@ -19,7 +19,9 @@
 #include <SI7021.h>        //get it here: https://github.com/LowPowerLab/SI7021
 #include <Adafruit_Sensor.h>      // required for TSL2561 sensor stuff
 #include <Adafruit_TSL2561_U.h>
-#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
+//#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
+//  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION_FPS etc.
+
 
 /* DEBUG CONFIGURATION PARAMETERS */
 //#define DEBUG // uncomment for debugging
@@ -33,8 +35,8 @@
 #define SERIAL_BAUD 115200
 
 /* NODE TYPE - must select one ONLY!!!! */
-#define ETHNODETYPE // can only be one of these types, never both.
-//#define RFNODETYPE   // can only be one of these types, never both.
+//#define ETHNODETYPE // can only be one of these types, never both.
+#define RFNODETYPE   // can only be one of these types, never both.
 
 
 
@@ -42,19 +44,20 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           23       // unique node ID within the closed network
-#define NODEIDSTRING node23       // as per above.  
-#define COMMS_LED_PIN 23          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID            6       // unique node ID within the closed network
+#define NODEIDSTRING node06       // as per above.  
+#define COMMS_LED_PIN  A5          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+                                  // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 22         // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN A4          // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 /****************************************************/
 
 
 /* ETH NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
 *****************************************************/
-#define SUBTOPICSTR "home/eth_nd/sb/node23/#"   // MQTT topic, only used in ETH Node type
-#define CLIENTNAMESTR "PJ_HA_Eth_Node_23_HouseFPS"  // MQTT topic, only used in ETH Node type
-#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
+//#define SUBTOPICSTR "home/eth_nd/sb/node23/#"   // MQTT topic, only used in ETH Node type
+//#define CLIENTNAMESTR "PJ_HA_Eth_Node_23_HouseFPS"  // MQTT topic, only used in ETH Node type
+//#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
 /***************************************************/
 
 
@@ -115,23 +118,23 @@
 //#define PIR2          // Have I attached a 2nd PIR
 //   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
 
-#define BUTTON1       // Have I attached some buttons/switches...
-   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
+//#define BUTTON1       // Have I attached some buttons/switches...
+//   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
 //#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//     #define ACTUATOR1PIN 5    // contol pin for 1st ACTUATOR if attached, else ignored.
-//     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-#define ACTUATOR2
-    #define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
+  //   #define ACTUATOR1PIN 5    // contol pin for 1st ACTUATOR if attached, else ignored.
+  //   #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+//#define ACTUATOR2
+  //  #define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
   //  #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-#define ACTUATOR3
-    #define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
+//#define ACTUATOR3
+  //  #define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
   //  #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR4
-//     #define ACTUATOR4PIN 32    // contol pin for 4th ACTUATOR if attached, else ignored.
-//     #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+  //   #define ACTUATOR4PIN 32    // contol pin for 4th ACTUATOR if attached, else ignored.
+  //   #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 
 // #define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 
@@ -143,8 +146,7 @@
 // #define EXTENDEDACT2
 // #define EXTENDEDACT3
 // #define EXTENDEDACT4
-//#define PIXELLEDSTRIP     // PJ - my new device types
-//#define DUMBLEDSTRIP
+
 //#define XMASLIGHTS
 //#define I2CLCD             // Have I attached one of my i2c LCDs to this node?
 // #define TSL2651           // PJ - is there an Adafruit TSL2561 breakout board (light sensors) present?
@@ -153,17 +155,18 @@
 //   #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
 //   #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
 
-//#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
-    //#define RMT_PWR_ENA_PIN 3 // The pin to set high when I want to switch on a remote ATX PC power supply
+#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
+    #define RMT_PWR_ENA_PIN A0 // The pin to set high when I want to switch on a remote ATX PC power supply
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
-                                // Chose this pin for now, but may conflict with actuators of other types.  
-#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
-   #define PING1TRIGGERPIN A12
-   #define PING1ECHOPIN A11
-   #define PING1MIN 10     // range min, in cm, to consider a detection.
-   #define PING1MAX 20    // range max, in cm, to consider a detection.
-   #define PING1HOLDTIME 5   // seconds - to wait before attempting another PING after a detection.
+                                // Chose this pin for now, but may conflict with actuators of other types. 
+
+//#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
+//    #define PING1TRIGGERPIN A12
+//    #define PING1ECHOPIN A11
+//    #define PING1MIN 10     // range min, in cm, to consider a detection.
+//    #define PING1MAX 20    // range max, in cm, to consider a detection.
+//    #define PING1HOLDTIME 5   // seconds - to wait before attempting another PING after a detection.
 //
 //#define RTC     // is there some sort of RTC attached to this node.
 //
@@ -184,23 +187,24 @@
 //  #endif // LCDGENERIC_BLAH
 //
 
-#define LCDNEXTION_FPS  // have I got a Nextion LCD setup to work on an FPS node, this node?
-    #define LCDNEXTION_FPS_BUFSIZE 100  // Size of the character buffer, make sure its big enough for any strings you send to the Nextion. 
+//#define LCDNEXTION_FPS  // have I got a Nextion LCD setup to work on an FPS node, this node?
+//    #include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
+//    #define LCDNEXTION_FPS_BUFSIZE 100  // Size of the character buffer, make sure its big enough for any strings you send to the Nextion. 
 
-#define BEEPER  // is there one of my beepers attached to this node?
-  #define BEEPERPIN A0  // PWM pin that the speaker is attached to.
-  #define BEEPNUMMAX 4 // how many beeps are defined on this node.
+//#define BEEPER  // is there one of my beepers attached to this node?
+//  #define BEEPERPIN A0  // PWM pin that the speaker is attached to.
+//  #define BEEPNUMMAX 4 // how many beeps are defined on this node.
 
-#define FINGER  // is there one of my Finger Print Scanners attached to this node?
- #define FINGERSERIALPORT Serial1  // Which port is it attached to. Serial, Serial1..3 (Megga only) or SoftSerial etc
+//#define FINGER  // is there one of my Finger Print Scanners attached to this node?
+// #define FINGERSERIALPORT Serial1  // Which port is it attached to. Serial, Serial1..3 (Megga only) or SoftSerial etc
                                    // Mega TX1 pin 18 <-> FPS Red wire
                                    // Mega RX1 pin 19 <-> FPS Dark Blue wire
                                    //             +5V <-> FPS Green wire
                                    //             GND <-> FPS White wire
- #define FPS_MODE_RUN		0	// operating as normal
- #define FPS_MODE_DB			1	// allowing fingerprint database changes
- #define FPS_FOOTLIGHT_LED_ACTUATOR_STATUS actuator3status // assign this FPS function to one of the nodes ACTUATORs.  
- #define FPS_DOOR_LATCH_ACTUATOR_STATUS actuator2status // assign this FPS function to one of the nodes ACTUATORs.
+// #define FPS_MODE_RUN		0	// operating as normal
+// #define FPS_MODE_DB			1	// allowing fingerprint database changes
+// #define FPS_FOOTLIGHT_LED_ACTUATOR_STATUS actuator3status // assign this FPS function to one of the nodes ACTUATORs.  
+// #define FPS_DOOR_LATCH_ACTUATOR_STATUS actuator2status // assign this FPS function to one of the nodes ACTUATORs.
 
 
 //  #define EXTVAR40X  // is this Node interested in External Variables 00 thru 09?  i.e. Dev 400-409
@@ -208,6 +212,31 @@
 //  #define EXTVAR42X  // is this Node interested in External Variables 20 thru 29?  i.e. Dev 420-429
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
+
+#define LEDSTRIP
+  // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
+  // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
+  // and minimize distance between Arduino and first pixel.  Avoid connecting
+  // on a live circuit...if you must, connect GND first.
+  #define LEDSTRIPS_REMOTE     1     // see DEV299 
+                                     // 0 = LED Strips are local, 1 = they are on subordinate MCU.
+                                     // Need to set this correctly right up front as a number of subsequent LEDSTRIP DEVice
+                                     // activities need to know, before this could be set by MQTT from somewhere else. Also need
+                                     // to know it and have it correct in case Node restarts and has no comms. We need the LED initialisation
+                                     // to still proceed properly.
+  //#define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
+                                     //       not used if LEDSTRIPS_REMOTE = 1
+  //#define LEDSTRIP1_NUMPIXELS  25    // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
+                                     //       not used if LEDSTRIPS_REMOTE = 1
+  //#define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
+                                     // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
+                                     //       not used if LEDSTRIPS_REMOTE = 1
+  //#define LEDSTRIP1_DUMB_R_PIN  xx     // What pin are all the DUMBLEDSTRIPs Red LEDs driven from? Not used for PIXELLEDSTRIPs.
+                                         //       not used if LEDSTRIPS_REMOTE = 1
+  //#define LEDSTRIP1_DUMB_G_PIN  xx     // What pin are all the DUMBLEDSTRIPs Green LEDs driven from? Not used for PIXELLEDSTRIPs.
+                                         //       not used if LEDSTRIPS_REMOTE = 1
+  //#define LEDSTRIP1_DUMB_B_PIN  xx     // What pin are all the DUMBLEDSTRIPs Blue LEDs driven from? Not used for PIXELLEDSTRIPs.
+                                         //       not used if LEDSTRIPS_REMOTE = 1
 
 //-------------------------------------------------------------------------
 
@@ -276,7 +305,11 @@ void getWeatherShield();
 void getTSL2651();
 void displaySensorDetails(void);
 void configureSensor(void);
-void writeLCDNEXTION_FPS_instruction(char* theStr);
+void writeLCDNEXTION_FPS_instruction(char* theStr);  
+void sendDevValueToSerial(int sendSerDev, int sendSerType, int sendSerInt, float sendSerFloat);
+
+
+
 
 // =============================================
 // Global variables as 'externs' so individual files can compile if they use them.
@@ -373,6 +406,25 @@ extern int ping1RangeMax;
 extern bool ping1Detect;
 extern bool send64, send65, send66, send67;
 extern long ping1OnMillis;
+#endif
+
+#ifdef LEDSTRIP
+  // required libraries required for this DEVice.
+  #include <FastLED.h>
+  #include <colorutils.h>
+  // extern any global variables used by this DEVice.
+  extern int LEDStripsRemote;
+  extern int LEDStrip1Type;
+  extern int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue;
+  extern bool send200, send201, send202, send203, send204, send221, send231, send291, send299;
+  extern int serSent200, serSent201, serSent202, serSent203, serSent204, serSent221, serSent231, serSent291, serSent299; 
+  extern int current200, current201, current202, current203, current204, current221, current231, current291, current299;
+  #if LEDSTRIP1_TYPE && !LEDSTRIPS_REMOTE  // is it a PIXEL type AND is LEDSTRIP local or remote?
+    extern  CRGB pixelledstrip1_leds[LEDSTRIP1_NUMPIXELS];
+  #endif
+  // prototype any unique functions created for this DEVice.
+  void setupLEDStrips();
+  void updateStaticLEDStrip(int stripnum);
 #endif
 
 #ifdef RTC

@@ -224,23 +224,177 @@ switch (mes.devID) // devID indicates device (sensor) type
   #endif  // XMASLIGHTS
 
   
-  #ifdef PIXELLEDSTRIP
+  #ifdef LEDSTRIP
   // insert code here for each DevID this node should respond to.
-  case (201): // 1st RGB Pixel LED Strip Independent Device - Pixel Mode
-  
-  if (mes.cmd == 0) { // cmd == 0 means write
-    if(mes.intVal >= 0 || mes.intVal <= 255) {   // test for correct value thats in range.
-      pixelLEDStrip1Mode = mes.intVal;
-      #ifdef DEBUG
-        Serial.println("calling setPixelStripMode()");
-      #endif
-      setPixelLEDStripMode(1, pixelLEDStrip1Mode);  // tell the correct strip what mode to go into.
-      if (setAck) send201 = true; // acknowledge message ?
-    }
-  }
-  else send201 = true; // cmd == 1 means read
-  break;  
-  #endif  // PIXELLEDSTRIP
+    case 200:   // 200: 1st RGB LED Strip Type value - 0 = DUMB, 1 = PIXEL, no other value is valid. (see below for explanation)  (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send200 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 1)    // test for correct value thats in range.
+          {
+            #if LEDSTRIPS_REMOTE
+              current200 = mes.intVal;
+            #else
+              LEDStrip1Type = mes.intVal;
+            #endif
+            if (setAck) send200 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 201:   // 201: 1st RGB LED Strip RED value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send201 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            #if LEDSTRIPS_REMOTE
+              current201 = mes.intVal; // we only need to do this if we have remote LED Strips  
+            #else
+              LEDStrip1RedValue = mes.intVal;
+              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            #endif
+            if (setAck) send201 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 202:   // 202: 1st RGB LED Strip GREEN value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send202 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            #if LEDSTRIPS_REMOTE
+              current202 = mes.intVal; // we only need to do this if we have remote LED Strips  
+            #else
+              LEDStrip1GreenValue = mes.intVal;
+              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            #endif
+            if (setAck) send202 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 203:   // 203: 1st RGB LED Strip BLUE value 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send203 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            #if LEDSTRIPS_REMOTE
+              current203 = mes.intVal; // we only need to do this if we have remote LED Strips  
+            #else
+              LEDStrip1BlueValue = mes.intVal;
+              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            #endif
+            if (setAck) send203 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+    case 204:   // 204: 1st RGB LED Strip BRIGHTNESS value - 0-255 only, no other value is valid. (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send204 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            #if LEDSTRIPS_REMOTE
+              current204 = mes.intVal; // we only need to do this if we have remote LED Strips  
+            #else
+              LEDStrip1BrightnessValue = mes.intVal;
+              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            #endif
+            if (setAck) send204 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+      case 221:   // 221: 1st RGB PIXEL LED Strip - Static Pattern Selector (see below for explanation)  (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send221 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            #if LEDSTRIPS_REMOTE
+              current221 = mes.intVal; // we only need to do this if we have remote LED Strips  
+            #else
+              // insert code for STATIC_PATTERN here, like on Teensy
+              //LEDStrip1BrightnessValue = mes.intVal;
+              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            #endif
+            if (setAck) send221 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+       case 231:   // 231: 1st RGB PIXEL LED Strip - Dynamic Pattern Selector (see below for explanation)  (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send231 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            #if LEDSTRIPS_REMOTE
+              current231 = mes.intVal; // we only need to do this if we have remote LED Strips  
+            #else
+              // insert code for DYNAMIC_PATTERN here, like on Teensy
+              //LEDStrip1BrightnessValue = mes.intVal;
+              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            #endif
+            if (setAck) send231 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+      case 291:   // 291: Is Led Strip 1 in STATIC ONE COLOUR, STATIC PATTERN or DYNAMIC PATTERN mode? (Integer - Read/Write)
+      if (mes.cmd == 1) // READ
+        {
+        send291 = true;
+        }
+      else  // WRITE
+        {
+        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          {
+            #if LEDSTRIPS_REMOTE
+              current291 = mes.intVal; // we only need to do this if we have remote LED Strips  
+            #else
+              // insert code for change of mode between STATIC_ONE_COLOUR, STATIC_PATTERN etc here, like on Teensy
+              //LEDStrip1BrightnessValue = mes.intVal;
+              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+            #endif
+            if (setAck) send291 = true; // acknowledge message ?
+          }     
+        }
+      break;
+
+
+  case 299: // 299:  Offload to subordinate MCU via Serial  0 = no, 1 = yes   (Integer - Read Only)
+    if (mes.cmd == 1) send299 = true; // cmd == 1 means read
+    else send93 = true;  // tried to write to RO dev
+    break;
+
+  #endif  // LEDSTRIP
 
 #ifdef EXTVAR40X
   case 400: // 400     - TestExtVar - purely for testing, does not represent any real external variable. (Real - R/W)

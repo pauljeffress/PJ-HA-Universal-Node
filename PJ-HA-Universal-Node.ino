@@ -393,26 +393,23 @@ Message mes;
   boolean extendedbutton4tapped = OFF;  // consider it as OFF until first read of the button
 #endif
 
-#ifdef PIXELLEDSTRIP
-  // insert any pre setup() code for this specific device here.
-  #include <FastLED.h>
-  #include <colorutils.h>
-  // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
-  // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
-  // and minimize distance between Arduino and first pixel.  Avoid connecting
-  // on a live circuit...if you must, connect GND first.
-  #define PIXELLEDSTRIP1_NUMPIXELS  25    // num WS28xx controller chips on this strip
-  #define PIXELLEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip
-  int pixelLEDStrip1Mode = 0;              // the currently set mode for this strip
-  // This is an array of leds.  One item for each led in your strip. Part of FastLED library.
-  CRGB pixelledstrip1_leds[PIXELLEDSTRIP1_NUMPIXELS];
-  bool send201 = false;  // northbound message trigger
-#endif  // PIXELLEDSTRIP
-
-#ifdef DUMBLEDSTRIP
-  // insert any pre setup() code for this specific device here.
-  
-#endif  // DUMBLEDSTRIP
+#ifdef LEDSTRIP // dev2xx
+  int LEDStripsRemote = LEDSTRIPS_REMOTE;
+  #if !LEDSTRIPS_REMOTE
+    int LEDStrip1Type = LEDSTRIP1_TYPE;  // is it a PIXEL or DUMB LED strip.
+    int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue = 0;    // initialise R,G,B & brightness values for this strip.
+  #endif
+  #if LEDSTRIP1_TYPE && !LEDSTRIPS_REMOTE  // is it a PIXEL type AND is LEDSTRIP local or remote?
+    CRGB pixelledstrip1_leds[LEDSTRIP1_NUMPIXELS]; // This is an array of leds.  One item for each led in your strip. Part of FastLED library.
+  #endif  
+  bool send200, send201, send202, send203, send204, send221, send231, send291, send299 = false;  // northbound message trigger
+  int serSent200=-1, serSent201=-1, serSent202=-1, serSent203=-1, serSent204=-1, serSent221=-1, serSent231=-1, serSent291=-1, serSent299=-1; // copy of last value sent over serial for each DEVice. 
+                                                                                  // default value, easy to spot and know it was set at init.
+                                                                                  // will also cause all currentXXX to be sent once around init time.
+  int current200, current201=0, current202=0, current203=0, current204=1, current221=1, current231=1, current291=1, current299 = 0; // What I need them to be when first sent to subordinate. 
+                                                                                  
+                                                                                 
+#endif  // LEDSTRIP
 
 #ifdef I2CLCD // ====================================
               // Code to initialise the I2C LCD if attached. "DFRobot 508040" part.

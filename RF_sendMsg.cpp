@@ -397,15 +397,128 @@ void sendMsg() { // prepares values to be transmitted
   }
   #endif
 
-  #ifdef PIXELLEDSTRIP
-  if (send201) { // 1st PIXELLEDSTRIP present status
-    mes.devID = 201;
-    mes.intVal = pixelLEDStrip1Mode; // i.e. whatever mode we last set it to.
-    send201 = false; // as we are about to send it in next statement, so clear flag.
-    txRadio(); // RF send msg.
-    mes.intVal = 0;  // clear it after use.
-  }
-  #endif
+#ifdef LEDSTRIP
+  if (send200)  
+    {
+      mes.devID = 200;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current200;
+      #else
+        mes.intVal = LEDStrip1Type; 
+      #endif
+      send200 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send201)  
+    {
+      mes.devID = 201;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current201;
+      #else
+        mes.intVal = LEDStrip1RedValue; 
+      #endif
+      send201 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send202)  
+    {
+      mes.devID = 202;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current202;
+      #else
+        mes.intVal = LEDStrip1GreenValue; 
+      #endif
+      send202 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send203)  
+    {
+      mes.devID = 203;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current203;
+      #else
+        mes.intVal = LEDStrip1BlueValue; 
+      #endif 
+      send203 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send204)  
+    {
+      mes.devID = 204;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current204;
+      #else
+        mes.intVal = LEDStrip1BrightnessValue;
+      #endif
+      send204 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send221)  
+    {
+      mes.devID = 221;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current221;
+      #else
+        mes.intVal = 999; // junk until I code this section properly
+        // insert code here for STATIC_PATTERN....
+        //mes.intVal = LEDStrip1BrightnessValue;
+      #endif
+      send221 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send231)  
+    {
+      mes.devID = 231;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current231;
+      #else
+        mes.intVal = 999; // junk until I code this section properly
+        // insert code here for STATIC_PATTERN....
+        //mes.intVal = LEDStrip1BrightnessValue;
+      #endif
+      send231 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send291)  
+    {
+      mes.devID = 291;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current291;
+      #else
+        mes.intVal = 999; // junk until I code this section properly
+        // insert code here for STATIC_PATTERN....
+        //mes.intVal = LEDStrip1BrightnessValue;
+      #endif
+      send291 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+
+
+  if (send299)  
+    {
+      mes.devID = 299;
+      mes.intVal = LEDStripsRemote;
+      send299 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+#endif // LEDSTRIP
 
 #ifdef EXTVAR40X
   if (send400)  // 400     - TestExtVar - purely for testing, does not represent any real external variable. (Real - R/W)

@@ -91,7 +91,15 @@ void setPeriodicTransmissions()
             send66 = true;
             send67 = true;
         #endif
-        
+
+        #ifdef LEDSTRIP
+            send200 = true;
+            send201 = true;
+            send202 = true;
+            send203 = true;
+            send204 = true;
+        #endif
+
         
   #ifdef SLEEPY
       }

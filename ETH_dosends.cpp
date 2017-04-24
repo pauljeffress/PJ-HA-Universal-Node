@@ -223,13 +223,33 @@ if (send93)
     }
 #endif
 
-#ifdef PIXELLEDSTRIP
-  if (send201)  // 1st PIXELLEDSTRIP present status
+#ifdef LEDSTRIP
+  if (send200)  //  1st RGB LED Strip Type value - 0 = DUMB, 1 = PIXEL
     {
-    sendInteger(NODEID, 100, pixelLEDStrip1Mode);
+    sendInteger(NODEID, 200, LEDStrip1Type);
+    send200 = false;
+    }
+  if (send201)  // 1st RGB LED Strip RED value
+    {
+    sendInteger(NODEID, 201, LEDStrip1RedValue);
     send201 = false;
     }
-#endif
+  if (send202)  // 1st RGB LED Strip GREEN value
+    {
+    sendInteger(NODEID, 202, LEDStrip1GreenValue);
+    send202 = false;
+    }
+  if (send203)  // 1st RGB LED Strip BLUE value
+    {
+    sendInteger(NODEID, 203, LEDStrip1BlueValue);
+    send203 = false;
+    }
+  if (send204)  // 1st RGB LED Strip BRIGHTNESS value
+    {
+    sendInteger(NODEID, 204, LEDStrip1BrightnessValue);
+    send204 = false;
+    }
+#endif // LEDSTRIP
 
 #ifdef RTC
     if (send300 || send301 || send302 || send303 || send304 || send305 || send306 || send307 || send308) 
