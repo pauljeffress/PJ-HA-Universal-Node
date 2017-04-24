@@ -174,4 +174,54 @@ void localactions(){
     }
 #endif// OCEANMIRROR
 
+#if LEDSTRIPS_REMOTE // Do this stuff if only if THIS VALUE = 1, i.e. I have LED Strips attached to subordinate MCU attached via Serial to this Node
+  //Serial.print("current200 = "); Serial.print(current200); Serial.print("   serSent200 = "); Serial.println(serSent200);
+  //delay(1000);
+  if (current200 != serSent200) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
+    {
+      serSent200 = current200; // update my sent copy of this variable
+      sendDevValueToSerial(200, 0, serSent200, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+    }
+  if (current201 != serSent201) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
+    {
+      serSent201 = current201; // update my sent copy of this variable
+      sendDevValueToSerial(201, 0, serSent201, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+    }
+  if (current202 != serSent202) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
+    {
+      serSent202 = current202; // update my sent copy of this variable
+      sendDevValueToSerial(202, 0, serSent202, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+    }
+  if (current203 != serSent203) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
+    {
+      serSent203 = current203;// update my sent copy of this variable
+      sendDevValueToSerial(203, 0, serSent203, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+    }
+  if (current204 != serSent204) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
+    {
+      serSent204 = current204; // // update my sent copy of this variable
+      // Tell ATX PSU to wake up and supply the main +5v for LED strip
+      if (current204 != 0) // i.e we have been asked for a brightness > 0, remeber 0 means don't display anything, so turn on shared ATX PSU
+        RMT_PWROn();
+      else
+        RMT_PWROff();     // we have been asked for brightness 0, so turn ATX PSU off.
+      sendDevValueToSerial(204, 0, serSent204, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+    }
+  if (current221 != serSent221) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
+    {
+      serSent221 = current221;// update my sent copy of this variable
+      sendDevValueToSerial(221, 0, serSent221, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+    }
+  if (current231 != serSent231) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
+    {
+      serSent231 = current231;// update my sent copy of this variable
+      sendDevValueToSerial(231, 0, serSent231, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+    }
+  if (current291 != serSent291) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
+    {
+      serSent291 = current291;// update my sent copy of this variable
+      sendDevValueToSerial(291, 0, serSent291, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+    }
+#endif// LEDSTRIPS_REMOTE
+
 } //END - localactions()

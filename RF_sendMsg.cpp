@@ -401,7 +401,11 @@ void sendMsg() { // prepares values to be transmitted
   if (send200)  
     {
       mes.devID = 200;
-      mes.intVal = LEDStrip1Type; 
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current200;
+      #else
+        mes.intVal = LEDStrip1Type; 
+      #endif
       send200 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.
@@ -410,7 +414,11 @@ void sendMsg() { // prepares values to be transmitted
   if (send201)  
     {
       mes.devID = 201;
-      mes.intVal = LEDStrip1RedValue; 
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current201;
+      #else
+        mes.intVal = LEDStrip1RedValue; 
+      #endif
       send201 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.
@@ -419,7 +427,11 @@ void sendMsg() { // prepares values to be transmitted
   if (send202)  
     {
       mes.devID = 202;
-      mes.intVal = LEDStrip1GreenValue; 
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current202;
+      #else
+        mes.intVal = LEDStrip1GreenValue; 
+      #endif
       send202 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.
@@ -428,7 +440,11 @@ void sendMsg() { // prepares values to be transmitted
   if (send203)  
     {
       mes.devID = 203;
-      mes.intVal = LEDStrip1BlueValue; 
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current203;
+      #else
+        mes.intVal = LEDStrip1BlueValue; 
+      #endif 
       send203 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.
@@ -437,8 +453,68 @@ void sendMsg() { // prepares values to be transmitted
   if (send204)  
     {
       mes.devID = 204;
-      mes.intVal = LEDStrip1BrightnessValue; 
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current204;
+      #else
+        mes.intVal = LEDStrip1BrightnessValue;
+      #endif
       send204 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send221)  
+    {
+      mes.devID = 221;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current221;
+      #else
+        mes.intVal = 999; // junk until I code this section properly
+        // insert code here for STATIC_PATTERN....
+        //mes.intVal = LEDStrip1BrightnessValue;
+      #endif
+      send221 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send231)  
+    {
+      mes.devID = 231;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current231;
+      #else
+        mes.intVal = 999; // junk until I code this section properly
+        // insert code here for STATIC_PATTERN....
+        //mes.intVal = LEDStrip1BrightnessValue;
+      #endif
+      send231 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+  if (send291)  
+    {
+      mes.devID = 291;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = current291;
+      #else
+        mes.intVal = 999; // junk until I code this section properly
+        // insert code here for STATIC_PATTERN....
+        //mes.intVal = LEDStrip1BrightnessValue;
+      #endif
+      send291 = false; // as we are about to send it in next statement, so clear flag.
+      txRadio(); // RF send msg.
+      mes.intVal = 0;  // clear it after use.
+    }
+
+
+
+  if (send299)  
+    {
+      mes.devID = 299;
+      mes.intVal = LEDStripsRemote;
+      send299 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.
     }

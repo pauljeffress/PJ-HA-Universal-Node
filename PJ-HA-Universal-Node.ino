@@ -394,12 +394,21 @@ Message mes;
 #endif
 
 #ifdef LEDSTRIP // dev2xx
-  int LEDStrip1Type = LEDSTRIP1_TYPE;  // is it a PIXEL or DUMB LED strip.
-  int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue = 0;    // initialise R,G,B & brightness values for this strip.
-  #if LEDSTRIP1_TYPE  // is it a PIXEL type?
+  int LEDStripsRemote = LEDSTRIPS_REMOTE;
+  #if !LEDSTRIPS_REMOTE
+    int LEDStrip1Type = LEDSTRIP1_TYPE;  // is it a PIXEL or DUMB LED strip.
+    int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue = 0;    // initialise R,G,B & brightness values for this strip.
+  #endif
+  #if LEDSTRIP1_TYPE && !LEDSTRIPS_REMOTE  // is it a PIXEL type AND is LEDSTRIP local or remote?
     CRGB pixelledstrip1_leds[LEDSTRIP1_NUMPIXELS]; // This is an array of leds.  One item for each led in your strip. Part of FastLED library.
   #endif  
-  bool send200, send201, send202, send203, send204 = false;  // northbound message trigger
+  bool send200, send201, send202, send203, send204, send221, send231, send291, send299 = false;  // northbound message trigger
+  int serSent200=-1, serSent201=-1, serSent202=-1, serSent203=-1, serSent204=-1, serSent221=-1, serSent231=-1, serSent291=-1, serSent299=-1; // copy of last value sent over serial for each DEVice. 
+                                                                                  // default value, easy to spot and know it was set at init.
+                                                                                  // will also cause all currentXXX to be sent once around init time.
+  int current200, current201=0, current202=0, current203=0, current204=1, current221=1, current231=1, current291=1, current299 = 0; // What I need them to be when first sent to subordinate. 
+                                                                                  
+                                                                                 
 #endif  // LEDSTRIP
 
 #ifdef I2CLCD // ====================================

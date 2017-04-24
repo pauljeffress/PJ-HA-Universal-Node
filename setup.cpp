@@ -66,6 +66,11 @@ void setup() {
   #endif  
 #endif
 
+  //serSent200 = 5;
+  //Serial.print("current200 = "); Serial.print(current200); Serial.print("   serSent200 = "); Serial.println(serSent200);
+  //delay(1000);
+
+
 #ifdef BEEPER
   for (int i = 0; i < 4; i++)
     {
@@ -232,7 +237,11 @@ void setup() {
 #endif
 
 #ifdef LEDSTRIP
-   setupLEDStrips();  // do any prep work for any led strips
+   #if LEDSTRIPS_REMOTE  // if LED strips are not local...
+     Serial1.begin(115200); // Initialise the 2nd hw serial port for inter Arduino serial link
+   #else
+    setupLEDStrips();  // do any prep work for any local led strips
+  #endif
 #endif
 
 

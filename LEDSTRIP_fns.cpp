@@ -4,7 +4,9 @@
 //
 #include "a.h" // My global defines and extern variables to help multi file comilation.
 
-#ifdef LEDSTRIP
+#ifdef LEDSTRIP 
+
+#if !LEDSTRIPS_REMOTE  // we don't want any of the functions in this file compiled if LEDS are remote.
 
 void setupLEDStrips() // gets called during setup()
   {
@@ -204,6 +206,10 @@ void setAnimatedLEDStripMode(int stripnum, int stripmode)  // action the require
   } // End - setAnimatedLEDStripMode()
 
 
-#endif /*===== LEDSTRIP related functions ===========*/
+#endif  // LEDSTRIP
+
+#endif // !LEDSTRIPS_REMOTE
+
+ /*===== local LEDSTRIP related functions ===========*/
 
 
