@@ -75,7 +75,9 @@ void dosends() {
   #ifdef ACTUATOR1
   if (send16)
     {
-    sendStatusInteger(NODEID, 16, actuator1status);
+    // in the next statement actuator1status is a boolean
+    // but it gets converted to an integer dynamically.  
+    sendInteger(NODEID, 16, actuator1status); 
     send16 = false;
     }
   #endif
@@ -83,7 +85,7 @@ void dosends() {
   #ifdef ACTUATOR2
   if (send17)
     {
-    sendStatusInteger(NODEID, 17, actuator2status);
+    sendInteger(NODEID, 17, actuator2status);
     send17 = false;
     }
   #endif
@@ -91,7 +93,7 @@ void dosends() {
   #ifdef ACTUATOR3
   if (send18)
     {
-    sendStatusInteger(NODEID, 18, actuator3status);
+    sendInteger(NODEID, 18, actuator3status);
     send18 = false;
     }
   #endif
@@ -99,7 +101,7 @@ void dosends() {
   #ifdef ACTUATOR4
   if (send19)
     {
-    sendStatusInteger(NODEID, 19, actuator4status);
+    sendInteger(NODEID, 19, actuator4status);
     send19 = false;
     }
  #endif
