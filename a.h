@@ -44,12 +44,12 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID            6       // unique node ID within the closed network
-#define NODEIDSTRING node06       // as per above.  
+#define NODEID            5       // unique node ID within the closed network
+#define NODEIDSTRING node05       // as per above.  
 #define COMMS_LED_PIN  A5          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                   // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN A4          // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN A2          // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 /****************************************************/
 
 
@@ -109,11 +109,11 @@
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
-// #define PIR1          // Have I attached a PIR
-//     #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
-//                          // signal pin from 1st PIR if attached, else ignored.
-//     #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
-//     #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
+#define PIR1          // Have I attached a PIR
+     #define PIR1PIN A4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+                          // signal pin from 1st PIR if attached, else ignored.
+     #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
+     #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
 
 //#define PIR2          // Have I attached a 2nd PIR
 //   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
@@ -123,18 +123,18 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-//#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-  //   #define ACTUATOR1PIN 5    // contol pin for 1st ACTUATOR if attached, else ignored.
-  //   #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-//#define ACTUATOR2
-  //  #define ACTUATOR2PIN A9   // contol pin for 2nd ACTUATOR if attached, else ignored.
-  //  #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-//#define ACTUATOR3
-  //  #define ACTUATOR3PIN A10    // contol pin for 3rd ACTUATOR if attached, else ignored.
-  //  #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR4
-  //   #define ACTUATOR4PIN 32    // contol pin for 4th ACTUATOR if attached, else ignored.
-  //   #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+     #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
+     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR2
+    #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
+    #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR3
+    #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
+    #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR4
+    #define ACTUATOR4PIN 7    // contol pin for 4th ACTUATOR if attached, else ignored.
+    #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 
 // #define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 
@@ -155,8 +155,8 @@
 //   #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
 //   #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
 
-#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
-    #define RMT_PWR_ENA_PIN A0 // The pin to set high when I want to switch on a remote ATX PC power supply
+// #define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
+//     #define RMT_PWR_ENA_PIN A0 // The pin to set high when I want to switch on a remote ATX PC power supply
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types. 
@@ -213,12 +213,12 @@
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
-#define LEDSTRIP
+// #define LEDSTRIP
   // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
   // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
   // and minimize distance between Arduino and first pixel.  Avoid connecting
   // on a live circuit...if you must, connect GND first.
-  #define LEDSTRIPS_REMOTE     1     // see DEV299 
+  //#define LEDSTRIPS_REMOTE     1     // see DEV299 
                                      // 0 = LED Strips are local, 1 = they are on subordinate MCU.
                                      // Need to set this correctly right up front as a number of subsequent LEDSTRIP DEVice
                                      // activities need to know, before this could be set by MQTT from somewhere else. Also need
