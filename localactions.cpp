@@ -97,18 +97,26 @@ void localactions(){
 #ifdef ACTUATOR3
   if (actuator3status != lastactuator3status) // has its status variable been changed, if so act on it.
     {
-    digitalWrite(ACTUATOR3PIN, actuator3status); // Set the ACTUATOR to new desired state.
-    lastactuator3status = actuator3status;  // keep track of last applied state of this actuator.
-    send18 = true;                      // Advise upstream of new state of actuator.
-    }
+      #ifdef ACTUATOR3REVERSE // for reversed Actuator behaviour do this
+        digitalWrite(ACTUATOR3PIN, !actuator3status); // Set the ACTUATOR to new desired state. Reversed behaviour.
+      #else // for normal Actuator behavior do this
+        digitalWrite(ACTUATOR3PIN, actuator3status); // Set the ACTUATOR to new desired state.
+      #endif
+      lastactuator3status = actuator3status;  // keep track of last applied state of this actuator.
+      send18 = true;                      // Advise upstream of new state of actuator.
+      }  
 #endif
 #ifdef ACTUATOR4
   if (actuator4status != lastactuator4status) // has its status variable been changed, if so act on it.
     {
-    digitalWrite(ACTUATOR4PIN, actuator4status); // Set the ACTUATOR to new desired state.
-    lastactuator4status = actuator4status;  // keep track of last applied state of this actuator.
-    send19 = true;                      // Advise upstream of new state of actuator.
-    }
+      #ifdef ACTUATOR4REVERSE // for reversed Actuator behaviour do this
+        digitalWrite(ACTUATOR4PIN, !actuator4status); // Set the ACTUATOR to new desired state. Reversed behaviour.
+      #else // for normal Actuator behavior do this
+        digitalWrite(ACTUATOR4PIN, actuator4status); // Set the ACTUATOR to new desired state.
+      #endif
+      lastactuator4status = actuator4status;  // keep track of last applied state of this actuator.
+      send19 = true;                      // Advise upstream of new state of actuator.
+      }  
 #endif  
 
 //Do we need to do fire up the FPS?

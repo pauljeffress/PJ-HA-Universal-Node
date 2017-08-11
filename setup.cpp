@@ -196,11 +196,19 @@ void setup() {
 #endif
 #ifdef ACTUATOR3 // 3rd Actuator ===============================================
   pinMode(ACTUATOR3PIN, OUTPUT);
-  digitalWrite(ACTUATOR3PIN, actuator3status);
+  #ifdef ACTUATOR3REVERSE // for reversed Actuator behaviour do this
+     digitalWrite(ACTUATOR3PIN, !actuator3status); // Set the ACTUATOR starting state. Reversed behaviour.
+  #else // for normal Actuator behavior do this
+     digitalWrite(ACTUATOR3PIN, actuator3status); // Set the ACTUATOR starting state.
+  #endif
 #endif
 #ifdef ACTUATOR4 // 4th ACTUATOR ===============================================
   pinMode(ACTUATOR4PIN, OUTPUT);
-  digitalWrite(ACTUATOR4PIN, actuator4status);
+    #ifdef ACTUATOR4REVERSE // for reversed Actuator behaviour do this
+     digitalWrite(ACTUATOR4PIN, !actuator4status); // Set the ACTUATOR starting state. Reversed behaviour.
+  #else // for normal Actuator behavior do this
+     digitalWrite(ACTUATOR4PIN, actuator4status); // Set the ACTUATOR starting state.
+  #endif
 #endif
 
 #ifdef PIR1
