@@ -44,12 +44,12 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID            44       // unique node ID within the closed network
-#define NODEIDSTRING node44       // as per above.  
-#define COMMS_LED_PIN  6          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           03       // unique node ID within the closed network
+#define NODEIDSTRING node03       // as per above.  
+#define COMMS_LED_PIN  7          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                   // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 7          // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 9          // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 /****************************************************/
 
 
@@ -109,12 +109,12 @@
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
-#define PIR1          // Have I attached a PIR
-     #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+// #define PIR1          // Have I attached a PIR
+//      #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
 
-                          // signal pin from 1st PIR if attached, else ignored.
-     #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
-     #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
+//                           // signal pin from 1st PIR if attached, else ignored.
+//      #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
+//      #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
 
 //#define PIR2          // Have I attached a 2nd PIR
 //   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
@@ -157,8 +157,8 @@
 //   #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
 //   #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
 
-// #define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
-//     #define RMT_PWR_ENA_PIN A0 // The pin to set high when I want to switch on a remote ATX PC power supply
+#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
+     #define RMT_PWR_ENA_PIN 5 // The pin to set high when I want to switch on a remote ATX PC power supply
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types. 
@@ -215,22 +215,23 @@
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
-// #define LEDSTRIP
+#define LEDSTRIP
   // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
   // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
   // and minimize distance between Arduino and first pixel.  Avoid connecting
   // on a live circuit...if you must, connect GND first.
-  //#define LEDSTRIPS_REMOTE     1     // see DEV299 
-                                     // 0 = LED Strips are local, 1 = they are on subordinate MCU.
+  //#define LEDSTRIPS_REMOTE         // see DEV299 
+                                     // If its defined then it means LEDs are on subordinate MCU.
+                                     // If its not defined then it means LEDs are on local MCU.
                                      // Need to set this correctly right up front as a number of subsequent LEDSTRIP DEVice
                                      // activities need to know, before this could be set by MQTT from somewhere else. Also need
                                      // to know it and have it correct in case Node restarts and has no comms. We need the LED initialisation
                                      // to still proceed properly.
-  //#define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
+#define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
                                      //       not used if LEDSTRIPS_REMOTE = 1
-  //#define LEDSTRIP1_NUMPIXELS  25    // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
+#define LEDSTRIP1_NUMPIXELS  75    // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
                                      //       not used if LEDSTRIPS_REMOTE = 1
-  //#define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
+#define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
                                      // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                      //       not used if LEDSTRIPS_REMOTE = 1
   //#define LEDSTRIP1_DUMB_R_PIN  xx     // What pin are all the DUMBLEDSTRIPs Red LEDs driven from? Not used for PIXELLEDSTRIPs.
@@ -415,7 +416,7 @@ extern long ping1OnMillis;
   #include <FastLED.h>
   #include <colorutils.h>
   // extern any global variables used by this DEVice.
-  extern int LEDStripsRemote;
+  //extern int LEDStripsRemote;
   extern int LEDStrip1Type;
   extern int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue;
   extern bool send200, send201, send202, send203, send204, send221, send231, send291, send299;
