@@ -517,7 +517,11 @@ void sendMsg() { // prepares values to be transmitted
   if (send299)  
     {
       mes.devID = 299;
-      mes.intVal = LEDStripsRemote;
+      #if LEDSTRIPS_REMOTE
+        mes.intVal = 1;
+      #else 
+        mes.intVal = 0; 
+      #endif
       send299 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.

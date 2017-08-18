@@ -394,7 +394,7 @@ Message mes;
 #endif
 
 #ifdef LEDSTRIP // dev2xx
-  int LEDStripsRemote = LEDSTRIPS_REMOTE;
+  //int LEDStripsRemote = LEDSTRIPS_REMOTE;
   #if !LEDSTRIPS_REMOTE
     int LEDStrip1Type = LEDSTRIP1_TYPE;  // is it a PIXEL or DUMB LED strip.
     int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue = 0;    // initialise R,G,B & brightness values for this strip.
