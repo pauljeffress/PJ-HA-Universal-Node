@@ -24,7 +24,7 @@ void txRadio()
   #endif
   CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
   if (radio.sendWithRetry(GATEWAYID, (const void*)(&mes), sizeof(mes)));
-  else Serial.println("No connection...or no ACK????...or using this send incorrectly check github");
+  else Serial.println("No con...or no ACK");
         // xxxx - when we hit the ELSE above, we should also flash an error/pwr LED a few times if available??? S.O.S pattern :)
 } // end txRadio
 

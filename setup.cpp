@@ -23,7 +23,7 @@ void setup() {
 #endif
 
 
-#ifdef DEBUGPJ2
+#ifdef DEBUGPJx
   Serial.print( F("Compiled: "));
   Serial.print( F(__DATE__));
   Serial.print( F(", "));
@@ -196,11 +196,19 @@ void setup() {
 #endif
 #ifdef ACTUATOR3 // 3rd Actuator ===============================================
   pinMode(ACTUATOR3PIN, OUTPUT);
-  digitalWrite(ACTUATOR3PIN, actuator3status);
+  #ifdef ACTUATOR3REVERSE // for reversed Actuator behaviour do this
+     digitalWrite(ACTUATOR3PIN, !actuator3status); // Set the ACTUATOR starting state. Reversed behaviour.
+  #else // for normal Actuator behavior do this
+     digitalWrite(ACTUATOR3PIN, actuator3status); // Set the ACTUATOR starting state.
+  #endif
 #endif
 #ifdef ACTUATOR4 // 4th ACTUATOR ===============================================
   pinMode(ACTUATOR4PIN, OUTPUT);
-  digitalWrite(ACTUATOR4PIN, actuator4status);
+    #ifdef ACTUATOR4REVERSE // for reversed Actuator behaviour do this
+     digitalWrite(ACTUATOR4PIN, !actuator4status); // Set the ACTUATOR starting state. Reversed behaviour.
+  #else // for normal Actuator behavior do this
+     digitalWrite(ACTUATOR4PIN, actuator4status); // Set the ACTUATOR starting state.
+  #endif
 #endif
 
 #ifdef PIR1
@@ -298,17 +306,21 @@ void setup() {
       while(1); // Pause forever.
     #endif
   }
-   
-  if (BMP180pressure.begin())
-    Serial.println("BMP180ok");
-  else
-  {
-    // Oops, something went wrong, this is usually a connection problem,
-    // see the comments at the top of this sketch for the proper connections.
 
-    Serial.println("BMP180fail");
-    //while(1); // Pause forever.
-  }
+  // **********************************************
+  // I have commented out all of this code that reads the BMP180 on the WeatherShield as my current WeatherShield is
+  // missing a BMP180 chip.  See my Evernotes. 
+  
+  // if (BMP180pressure.begin())
+  //   Serial.println("BMP180ok");
+  // else
+  // {
+  //   // Oops, something went wrong, this is usually a connection problem,
+  //   // see the comments at the top of this sketch for the proper connections.
+
+  //   Serial.println("BMP180fail");
+  //   //while(1); // Pause forever.
+  // }
 #endif // MOTEINOWEATHER
 
 #ifdef TSL2651
@@ -324,7 +336,7 @@ void setup() {
     while(1);
   }
   /* Display some basic information on this sensor */
-  #ifdef DEBUGPJ2
+  #ifdef DEBUGPJx
     displaySensorDetails();
   #endif
 //  #ifdef DEBUG

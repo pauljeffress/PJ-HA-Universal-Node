@@ -135,7 +135,7 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
   mqttToSend = false;       // not a valid request yet...
   error = 999;               // set it to 999 just so I can monitor it while debugging. 999 is not a real value.
 
-  #ifdef DEBUGPJ2
+  #ifdef DEBUGPJ
     Serial.println();
     Serial.println("=============================================");
     Serial.println("Southbound MQTT Topic received from Mosquitto");
@@ -148,7 +148,7 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
                                   // originally was 27, now 28 as I have allowed for devID's > 99 hence three digit.
     {   // The 'topic' we received was not of correct length
     error = 1;
-    #ifdef DEBUGPJ2
+    #ifdef DEBUGPJ
         Serial.println(); // make sure I get a new line before printing below messages.
         Serial.println("mqtt_subs() - error = 1 (due to 'topic' being incorrect length)");
         //Serial.println("mqtt_subs() - wrong message format in MQTT subscription.");
@@ -158,7 +158,7 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
     
   else if (length == 0) // no payload sent in the southbound MQTT msg...thats not valid so error out.
         {
-        #ifdef DEBUGPJ2
+        #ifdef DEBUGPJ
             Serial.println(); // make sure I get a new line before printing below messages.
             Serial.println("mqtt_subs() - error = 2 (due to length of payload = 0)");
         #endif
@@ -172,13 +172,13 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
         destDevID = (topic[25]-'0')*100 + (topic[26]-'0')*10 + topic[27]-'0';   // extract device ID from MQTT topic and stor it in global 'destDevID" for use later
         payload[length] = '\0';                     // terminate the payload string we received with '0'
         strPayload = String((char*)payload); // convert the payload to string, as it was a ptr to some bytes when we received it.
-        #ifdef DEBUGPJ2
+        #ifdef DEBUGPJ
             Serial.println(strPayload);
             Serial.println("=============================================");
         #endif
         if (destNodeID != NODEID)  // Somehow we have go this far but the MQTT topic is not for this Node!
           {
-          #ifdef DEBUGPJ2
+          #ifdef DEBUGPJ
             Serial.println(); // make sure I get a new line before printing below messages.
             Serial.println("mqtt_subs() - error = 10 (Somehow we have go this far but the MQTT topic is not for this Node!");
           #endif
