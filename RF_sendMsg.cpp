@@ -128,7 +128,7 @@ void sendMsg() { // prepares values to be transmitted
   }
 
   if (send11) { // Compiled Date: Gets embedded into code at compile time (string)(RO)
-    #ifdef DEBUGPJ2
+    #ifdef DEBUGPJ
       Serial.println("SENDMSG: sending dev11");
     #endif
     mes.devID = 11; 
@@ -142,7 +142,7 @@ void sendMsg() { // prepares values to be transmitted
   }
 
   if (send12) { // Compiled Time: Gets embedded into code at compile time (string)(RO)
-    #ifdef DEBUGPJ2
+    #ifdef DEBUGPJ
       Serial.println("SENDMSG: sending dev12");
     #endif
     mes.devID = 12; 
@@ -298,9 +298,13 @@ void sendMsg() { // prepares values to be transmitted
   #ifdef MOTEINOWEATHER
   if (send51 || send54 || send55) 
     {
-      Serial.println("call getW");
+      #ifdef DEBUGPJx
+        Serial.println("call getW");
+      #endif
       getWeatherShield();  // if we have to send any of these, get them all first.
-      Serial.println("back from getW");
+      #ifdef DEBUG PJx
+        Serial.println("back from getW");
+      #endif
     }
   if (send51) { // pressure
     #ifdef DEBUG

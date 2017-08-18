@@ -1,6 +1,8 @@
-#ifdef TSL2651 /*===== TSL2651 related functions ===========*/
+/*===== TSL2651 related functions ===========*/
 
 #include "a.h" // My global defines and extern variables to help multi file comilation.
+
+#ifdef TSL2651 
 
 void getTSL2651() 
   {
@@ -64,11 +66,13 @@ void configureSensor(void)
   // tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_101MS);  /* medium resolution and speed   */
   // tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_402MS);  /* 16-bit data but slowest conversions */
 
-  /* Update these values depending on what you've set above! */  
-  Serial.println("------------------------------------");
-  Serial.print  ("Gain:         "); Serial.println("Auto");
-  Serial.print  ("Timing:       "); Serial.println("13 ms");
-  Serial.println("------------------------------------");
+  /* Update these values depending on what you've set above! */ 
+  #ifdef DEBUGPJx 
+    Serial.println("------------------------------------");
+    Serial.print  ("Gain:         "); Serial.println("Auto");
+    Serial.print  ("Timing:       "); Serial.println("13 ms");
+    Serial.println("------------------------------------");
+  #endif
 }
 
 

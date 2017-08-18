@@ -44,12 +44,12 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID            5       // unique node ID within the closed network
-#define NODEIDSTRING node05       // as per above.  
-#define COMMS_LED_PIN  A5          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID            44       // unique node ID within the closed network
+#define NODEIDSTRING node44       // as per above.  
+#define COMMS_LED_PIN  6          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                   // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN A2          // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 7          // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 /****************************************************/
 
 
@@ -110,7 +110,8 @@
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
 #define PIR1          // Have I attached a PIR
-     #define PIR1PIN A4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+     #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+
                           // signal pin from 1st PIR if attached, else ignored.
      #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
      #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
@@ -123,18 +124,19 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-     #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
-     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-#define ACTUATOR2
-    #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
-    #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-#define ACTUATOR3
-    #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
-    #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-#define ACTUATOR4
-    #define ACTUATOR4PIN 7    // contol pin for 4th ACTUATOR if attached, else ignored.
-    #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+
+// #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+//      #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
+//      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+// #define ACTUATOR2
+//     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
+//     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+// #define ACTUATOR3
+//     #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
+//     #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+// #define ACTUATOR4
+//     #define ACTUATOR4PIN 7    // contol pin for 4th ACTUATOR if attached, else ignored.
+//     #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 
 // #define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 

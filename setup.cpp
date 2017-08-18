@@ -23,7 +23,7 @@ void setup() {
 #endif
 
 
-#ifdef DEBUGPJ2
+#ifdef DEBUGPJx
   Serial.print( F("Compiled: "));
   Serial.print( F(__DATE__));
   Serial.print( F(", "));
@@ -306,17 +306,21 @@ void setup() {
       while(1); // Pause forever.
     #endif
   }
-   
-  if (BMP180pressure.begin())
-    Serial.println("BMP180ok");
-  else
-  {
-    // Oops, something went wrong, this is usually a connection problem,
-    // see the comments at the top of this sketch for the proper connections.
 
-    Serial.println("BMP180fail");
-    //while(1); // Pause forever.
-  }
+  // **********************************************
+  // I have commented out all of this code that reads the BMP180 on the WeatherShield as my current WeatherShield is
+  // missing a BMP180 chip.  See my Evernotes. 
+  
+  // if (BMP180pressure.begin())
+  //   Serial.println("BMP180ok");
+  // else
+  // {
+  //   // Oops, something went wrong, this is usually a connection problem,
+  //   // see the comments at the top of this sketch for the proper connections.
+
+  //   Serial.println("BMP180fail");
+  //   //while(1); // Pause forever.
+  // }
 #endif // MOTEINOWEATHER
 
 #ifdef TSL2651
@@ -332,7 +336,7 @@ void setup() {
     while(1);
   }
   /* Display some basic information on this sensor */
-  #ifdef DEBUGPJ2
+  #ifdef DEBUGPJx
     displaySensorDetails();
   #endif
 //  #ifdef DEBUG
