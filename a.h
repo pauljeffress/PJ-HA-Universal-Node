@@ -111,6 +111,7 @@
 
 #define PIR1          // Have I attached a PIR
      #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+
                           // signal pin from 1st PIR if attached, else ignored.
      #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
      #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
@@ -122,6 +123,7 @@
 //   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
+
 
 // #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
 //      #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
