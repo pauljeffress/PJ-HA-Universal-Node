@@ -389,7 +389,27 @@ void sendMsg() { // prepares values to be transmitted
     mes.intVal = 0;  // clear it after use.
   }
 
-  
+  if (send94) { // error message 
+    #ifdef DEBUG
+      Serial.println("SENDMSG: sending dev94 - error message you to READ a WRITEONLY device");
+    #endif
+    mes.intVal = mes.devID;
+    mes.devID = 94;
+    send94 = false;
+    txRadio();
+    mes.intVal = 0;  // clear it after use.
+  }  
+
+  if (send95) { // error message 
+    #ifdef DEBUG
+      Serial.println("SENDMSG: sending dev95 - error message Value to be WRITTEN is out of range");
+    #endif
+    mes.intVal = mes.devID;
+    mes.devID = 95;
+    send95 = false;
+    txRadio();
+    mes.intVal = 0;  // clear it after use.
+  }
 
   #ifdef XMASLIGHTS
   if (send100) { // XMAS LIGHTS present status
@@ -470,13 +490,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send221)  
     {
       mes.devID = 221;
-      #if LEDSTRIPS_REMOTE
-        mes.intVal = current221;
-      #else
-        mes.intVal = 999; // junk until I code this section properly
-        // insert code here for STATIC_PATTERN....
-        //mes.intVal = LEDStrip1BrightnessValue;
-      #endif
+      mes.intVal = current221;
       send221 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.
@@ -485,13 +499,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send231)  
     {
       mes.devID = 231;
-      #if LEDSTRIPS_REMOTE
-        mes.intVal = current231;
-      #else
-        mes.intVal = 999; // junk until I code this section properly
-        // insert code here for STATIC_PATTERN....
-        //mes.intVal = LEDStrip1BrightnessValue;
-      #endif
+      mes.intVal = current231;
       send231 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.
@@ -500,13 +508,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send291)  
     {
       mes.devID = 291;
-      #if LEDSTRIPS_REMOTE
-        mes.intVal = current291;
-      #else
-        mes.intVal = 999; // junk until I code this section properly
-        // insert code here for STATIC_PATTERN....
-        //mes.intVal = LEDStrip1BrightnessValue;
-      #endif
+      mes.intVal = current291;
       send291 = false; // as we are about to send it in next statement, so clear flag.
       txRadio(); // RF send msg.
       mes.intVal = 0;  // clear it after use.

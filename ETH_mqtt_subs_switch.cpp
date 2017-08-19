@@ -307,7 +307,7 @@ int i;
               current201 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1RedValue = mes.intVal;
-              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              setStaticOneColourLEDStrip(1);  // tell the correct strip what mode to go into.
             #endif
             if (setAck) send201 = true; // acknowledge message ?
           }     
@@ -327,7 +327,7 @@ int i;
               current202 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1GreenValue = mes.intVal;
-              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              setStaticOneColourLEDStrip(1);  // tell the correct strip what mode to go into.
             #endif
             if (setAck) send202 = true; // acknowledge message ?
           }     
@@ -347,7 +347,7 @@ int i;
               current203 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BlueValue = mes.intVal;
-              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              setStaticOneColourLEDStrip(1);  // tell the correct strip what mode to go into.
             #endif
             if (setAck) send203 = true; // acknowledge message ?
           }     
@@ -367,7 +367,7 @@ int i;
               current204 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BrightnessValue = mes.intVal;
-              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              setStaticOneColourLEDStrip(1);  // tell the correct strip what mode to go into.
             #endif
             if (setAck) send204 = true; // acknowledge message ?
           }     
@@ -388,7 +388,7 @@ int i;
             #else
               // insert code for STATIC_PATTERN here, like on Teensy
               //LEDStrip1BrightnessValue = mes.intVal;
-              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              //setStaticOneColourLEDStrip(1);  // tell the correct strip what mode to go into.
             #endif
             if (setAck) send221 = true; // acknowledge message ?
           }     
@@ -409,7 +409,7 @@ int i;
             #else
               // insert code for DYNAMIC_PATTERN here, like on Teensy
               //LEDStrip1BrightnessValue = mes.intVal;
-              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              //setStaticOneColourLEDStrip(1);  // tell the correct strip what mode to go into.
             #endif
             if (setAck) send231 = true; // acknowledge message ?
           }     
@@ -430,7 +430,7 @@ int i;
             #else
               // insert code for change of mode between STATIC_ONE_COLOUR, STATIC_PATTERN etc here, like on Teensy
               //LEDStrip1BrightnessValue = mes.intVal;
-              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              //setStaticOneColourLEDStrip(1);  // tell the correct strip what mode to go into.
             #endif
             if (setAck) send291 = true; // acknowledge message ?
           }     
