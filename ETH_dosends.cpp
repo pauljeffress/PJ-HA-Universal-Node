@@ -213,7 +213,16 @@ if (send93)
     sendString(NODEID, 93, DEV93ERRORSTR);
     send93 = false; 
     }
-    
+if (send94) 
+    {
+    sendString(NODEID, 94, DEV94ERRORSTR);
+    send94 = false; 
+    }
+if (send95) 
+    {
+    sendString(NODEID, 95, DEV95ERRORSTR);
+    send95 = false; 
+    }    
 
 #ifdef XMASLIGHTS
   if (send100)  // XMAS LIGHTS present status
@@ -248,6 +257,21 @@ if (send93)
     {
     sendInteger(NODEID, 204, LEDStrip1BrightnessValue);
     send204 = false;
+    }
+  if (send221)  // 
+    {
+    sendInteger(NODEID, 221, current221);
+    send221 = false;
+    }
+  if (send231)  // 
+    {
+    sendInteger(NODEID, 231, current231);
+    send231 = false;
+    }
+  if (send291)  //
+    {
+    sendInteger(NODEID, 291, current291);
+    send291 = false;
     }
 #endif // LEDSTRIP
 

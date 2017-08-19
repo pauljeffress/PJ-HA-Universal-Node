@@ -98,6 +98,9 @@ void setPeriodicTransmissions()
             send202 = true;
             send203 = true;
             send204 = true;
+            send221 = true;
+            send231 = true;
+            send291 = true;
         #endif
 
         

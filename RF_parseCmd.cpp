@@ -258,10 +258,11 @@ switch (mes.devID) // devID indicates device (sensor) type
               current201 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1RedValue = mes.intVal;
-              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              if (current291 == STATIC_ONE_COLOUR) setStaticOneColourLEDStrip(1);  // only update the LED strip if we are in this mode.
             #endif
             if (setAck) send201 = true; // acknowledge message ?
-          }     
+          } 
+        else send95 = true;  // Value to be WRITTEN is out of range.      
         }
       break;
 
@@ -278,10 +279,11 @@ switch (mes.devID) // devID indicates device (sensor) type
               current202 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1GreenValue = mes.intVal;
-              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              if (current291 == STATIC_ONE_COLOUR) setStaticOneColourLEDStrip(1);  // only update the LED strip if we are in this mode.
             #endif
             if (setAck) send202 = true; // acknowledge message ?
-          }     
+          }
+        else send95 = true;  // Value to be WRITTEN is out of range.       
         }
       break;
 
@@ -298,10 +300,11 @@ switch (mes.devID) // devID indicates device (sensor) type
               current203 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BlueValue = mes.intVal;
-              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              if (current291 == STATIC_ONE_COLOUR) setStaticOneColourLEDStrip(1);  // only update the LED strip if we are in this mode.
             #endif
             if (setAck) send203 = true; // acknowledge message ?
-          }     
+          } 
+        else send95 = true;  // Value to be WRITTEN is out of range.      
         }
       break;
 
@@ -318,10 +321,19 @@ switch (mes.devID) // devID indicates device (sensor) type
               current204 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BrightnessValue = mes.intVal;
-              updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              if (current291 == STATIC_ONE_COLOUR) 
+                {
+                  setStaticOneColourLEDStrip(1);  // only update the LED strip if we are in this mode.
+                  #ifdef RMT_PWR
+                    if(LEDStrip1BrightnessValue == 0) RMT_PWROff(); // When Brightness set to 0, no mater what mode
+                                                                // the LED strip is in, cut the power. We don't
+                                                                // want the remote PSU to stay on when brightness = 0.
+                  #endif
+                }
             #endif
             if (setAck) send204 = true; // acknowledge message ?
-          }     
+          } 
+        else send95 = true;  // Value to be WRITTEN is out of range.      
         }
       break;
 
@@ -337,12 +349,12 @@ switch (mes.devID) // devID indicates device (sensor) type
             #if LEDSTRIPS_REMOTE
               current221 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
-              // insert code for STATIC_PATTERN here, like on Teensy
-              //LEDStrip1BrightnessValue = mes.intVal;
-              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              current221 = mes.intVal;
+              setStaticPatternLEDStripMode(1,current221);
             #endif
             if (setAck) send221 = true; // acknowledge message ?
           }     
+        else send95 = true;  // Value to be WRITTEN is out of range.
         }
       break;
 
@@ -358,12 +370,12 @@ switch (mes.devID) // devID indicates device (sensor) type
             #if LEDSTRIPS_REMOTE
               current231 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
-              // insert code for DYNAMIC_PATTERN here, like on Teensy
-              //LEDStrip1BrightnessValue = mes.intVal;
-              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              current231 = mes.intVal;
+              setDynamicPatternLEDStripMode(1,current231);
             #endif
             if (setAck) send231 = true; // acknowledge message ?
-          }     
+          }
+        else send95 = true;  // Value to be WRITTEN is out of range.     
         }
       break;
 
@@ -374,17 +386,28 @@ switch (mes.devID) // devID indicates device (sensor) type
         }
       else  // WRITE
         {
-        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+        if(mes.intVal == STATIC_ONE_COLOUR || mes.intVal == STATIC_PATTERN || mes.intVal == DYNAMIC_PATTERN)    // test for correct value thats in range.
           {
             #if LEDSTRIPS_REMOTE
               current291 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
-              // insert code for change of mode between STATIC_ONE_COLOUR, STATIC_PATTERN etc here, like on Teensy
-              //LEDStrip1BrightnessValue = mes.intVal;
-              //updateStaticLEDStrip(1);  // tell the correct strip what mode to go into.
+              current291 = mes.intVal;
+              switch (current291) // devID indicates device (sensor) type
+                {
+                case (STATIC_ONE_COLOUR): 
+                  setStaticOneColourLEDStrip(1);
+                  break;
+                case (STATIC_PATTERN): 
+                  setStaticPatternLEDStripMode(1,current221);
+                  break;
+                case (DYNAMIC_PATTERN): 
+                  setDynamicPatternLEDStripMode(1,current231);
+                  break;                
+                }
             #endif
             if (setAck) send291 = true; // acknowledge message ?
-          }     
+          }
+        else send95 = true;  // Value to be WRITTEN is out of range.     
         }
       break;
 

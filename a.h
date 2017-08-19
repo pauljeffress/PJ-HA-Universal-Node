@@ -86,7 +86,8 @@
 // Error Dev Types (Dev9x etc)
 #define DEV92ERRORSTR "Error message - You tried to READ from a WO device"
 #define DEV93ERRORSTR "Error message - You tried to WRITE to a RO device"
-
+#define DEV94ERRORSTR "Error message - You tried to READ a WRITEONLY device"
+#define DEV95ERRORSTR "Error message - Value to be WRITTEN is out of range"
 
 // misc defines 
 #define HOLDOFF 2000      // blocking period between button and PIR messages xxxx
@@ -216,10 +217,13 @@
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
 #define LEDSTRIP
-  // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
-  // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
-  // and minimize distance between Arduino and first pixel.  Avoid connecting
-  // on a live circuit...if you must, connect GND first.
+  #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
+  #define STATIC_PATTERN    1 
+  #define DYNAMIC_PATTERN   2
+
+  #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
+  #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
+  
   //#define LEDSTRIPS_REMOTE         // see DEV299 
                                      // If its defined then it means LEDs are on subordinate MCU.
                                      // If its not defined then it means LEDs are on local MCU.
@@ -227,19 +231,19 @@
                                      // activities need to know, before this could be set by MQTT from somewhere else. Also need
                                      // to know it and have it correct in case Node restarts and has no comms. We need the LED initialisation
                                      // to still proceed properly.
-#define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
-                                     //       not used if LEDSTRIPS_REMOTE = 1
-#define LEDSTRIP1_NUMPIXELS  75    // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
-                                     //       not used if LEDSTRIPS_REMOTE = 1
-#define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
+  #define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
+                                     //       not used if LEDSTRIPS_REMOTE defined
+  #define LEDSTRIP1_NUMPIXELS  75    // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
+                                     //       not used if LEDSTRIPS_REMOTE defined
+  #define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
                                      // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
-                                     //       not used if LEDSTRIPS_REMOTE = 1
+                                     //       not used if LEDSTRIPS_REMOTE defined
   //#define LEDSTRIP1_DUMB_R_PIN  xx     // What pin are all the DUMBLEDSTRIPs Red LEDs driven from? Not used for PIXELLEDSTRIPs.
-                                         //       not used if LEDSTRIPS_REMOTE = 1
+                                         //       not used if LEDSTRIPS_REMOTE defined
   //#define LEDSTRIP1_DUMB_G_PIN  xx     // What pin are all the DUMBLEDSTRIPs Green LEDs driven from? Not used for PIXELLEDSTRIPs.
-                                         //       not used if LEDSTRIPS_REMOTE = 1
+                                         //       not used if LEDSTRIPS_REMOTE defined
   //#define LEDSTRIP1_DUMB_B_PIN  xx     // What pin are all the DUMBLEDSTRIPs Blue LEDs driven from? Not used for PIXELLEDSTRIPs.
-                                         //       not used if LEDSTRIPS_REMOTE = 1
+                                         //       not used if LEDSTRIPS_REMOTE defined
 
 //-------------------------------------------------------------------------
 
@@ -310,8 +314,9 @@ void displaySensorDetails(void);
 void configureSensor(void);
 void writeLCDNEXTION_FPS_instruction(char* theStr);  
 void sendDevValueToSerial(int sendSerDev, int sendSerType, int sendSerInt, float sendSerFloat);
-
-
+void setStaticOneColourLEDStrip(int stripnum);
+void setStaticPatternLEDStripMode(int stripnum, int stripmode);
+void setDynamicPatternLEDStripMode(int stripnum, int stripmode);
 
 
 // =============================================
@@ -331,7 +336,7 @@ extern bool promiscuousMode;
 extern bool setAck;
 extern bool	send0, send1, send2, send3, send4, send5, send6, send7, send48, send49;
 extern bool	send16, send17, send18, send19, send40, send42, send50;
-extern bool send92, send93;
+extern bool send92, send93, send94, send95; 
 extern bool send11, send12; // compilation info
 extern bool actuator1status, actuator2status, actuator3status, actuator4status; 
 extern bool lastactuator1status, lastactuator2status, lastactuator3status, lastactuator4status; 
@@ -427,7 +432,7 @@ extern long ping1OnMillis;
   #endif
   // prototype any unique functions created for this DEVice.
   void setupLEDStrips();
-  void updateStaticLEDStrip(int stripnum);
+  void setStaticOneColourLEDStrip(int stripnum);
 #endif
 
 #ifdef RTC
