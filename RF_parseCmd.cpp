@@ -101,12 +101,12 @@ switch (mes.devID) // devID indicates device (sensor) type
   if (mes.cmd == 0) { // cmd == 0 means write
     if(mes.intVal == 0 || mes.intVal == 1) {
       actuator1status = mes.intVal;
-      digitalWrite(ACTUATOR1PIN, actuator1status);
+      // digitalWrite(ACTUATOR1PIN, actuator1status);
       if (setAck) send16 = true; // acknowledge message ?
-      #ifdef DEBUGPJ2
-        Serial.print("Set LED to ");
-        Serial.println(actuator1status);
-      #endif
+      // #ifdef DEBUGPJ2
+      //   Serial.print("Set LED to ");
+      //   Serial.println(actuator1status);
+      // #endif
     }
   }
   else send16 = true; // cmd == 1 means read
@@ -118,12 +118,12 @@ switch (mes.devID) // devID indicates device (sensor) type
   if (mes.cmd == 0) { // cmd == 0 means write
     if(mes.intVal == 0 || mes.intVal == 1) {
       actuator2status = mes.intVal;
-      digitalWrite(ACTUATOR2PIN, actuator2status);
+      // digitalWrite(ACTUATOR2PIN, actuator2status);
       if (setAck) send17 = true; // acknowledge message ?
-      #ifdef DEBUGPJ2
-        Serial.print("Set LED to ");
-        Serial.println(actuator2status);
-      #endif
+      // #ifdef DEBUGPJ2
+      //   Serial.print("Set LED to ");
+      //   Serial.println(actuator2status);
+      // #endif
     }
   }
   else send17 = true; // cmd == 1 means read
@@ -135,12 +135,12 @@ switch (mes.devID) // devID indicates device (sensor) type
   if (mes.cmd == 0) { // cmd == 0 means write
     if(mes.intVal == 0 || mes.intVal == 1) {
       actuator3status = mes.intVal;
-      digitalWrite(ACTUATOR3PIN, actuator3status);
+      // digitalWrite(ACTUATOR3PIN, actuator3status);
       if (setAck) send18 = true; // acknowledge message ?
-      #ifdef DEBUGPJ2
-        Serial.print("Set LED to ");
-        Serial.println(actuator3status);
-      #endif
+      // #ifdef DEBUGPJ2
+      //   Serial.print("Set LED to ");
+      //   Serial.println(actuator3status);
+      // #endif
     }
   }
   else send18 = true; // cmd == 1 means read
@@ -152,12 +152,12 @@ switch (mes.devID) // devID indicates device (sensor) type
   if (mes.cmd == 0) { // cmd == 0 means write
     if(mes.intVal == 0 || mes.intVal == 1) {
       actuator4status = mes.intVal;
-      digitalWrite(ACTUATOR4PIN, actuator4status);
+      // digitalWrite(ACTUATOR4PIN, actuator4status);
       if (setAck) send19 = true; // acknowledge message ?
-      #ifdef DEBUGPJ2
-        Serial.print("Set LED to ");
-        Serial.println(actuator4status);
-      #endif
+      // #ifdef DEBUGPJ2
+      //   Serial.print("Set LED to ");
+      //   Serial.println(actuator4status);
+      // #endif
     }
   }
   else send19 = true; // cmd == 1 means read
