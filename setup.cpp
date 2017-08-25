@@ -23,7 +23,7 @@ void setup() {
 #endif
 
 
-#ifdef DEBUGPJx
+#ifdef DEBUGPJ2
   Serial.print( F("Compiled: "));
   Serial.print( F(__DATE__));
   Serial.print( F(", "));

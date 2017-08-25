@@ -44,9 +44,9 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           03       // unique node ID within the closed network
-#define NODEIDSTRING node03       // as per above.  
-#define COMMS_LED_PIN  7          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           07       // unique node ID within the closed network
+#define NODEIDSTRING node07       // as per above.  
+#define COMMS_LED_PIN  6          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                   // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
 #define STATUS_LED_PIN 9          // BLUE - Status LED, generally just blinking away so we know node has not crashed.
@@ -126,12 +126,12 @@
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
 
-// #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//      #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
-//      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR2
-//     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
-//     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+     #define ACTUATOR1PIN 3    // contol pin for 1st ACTUATOR if attached, else ignored.
+     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR2
+    #define ACTUATOR2PIN 5   // contol pin for 2nd ACTUATOR if attached, else ignored.
+    #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR3
 //     #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
 //     #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
@@ -158,8 +158,8 @@
 //   #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
 //   #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
 
-#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
-     #define RMT_PWR_ENA_PIN 5 // The pin to set high when I want to switch on a remote ATX PC power supply
+// #define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
+//      #define RMT_PWR_ENA_PIN 5 // The pin to set high when I want to switch on a remote ATX PC power supply
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types. 
@@ -216,13 +216,13 @@
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
-#define LEDSTRIP
-  #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
-  #define STATIC_PATTERN    1 
-  #define DYNAMIC_PATTERN   2
+// #define LEDSTRIP
+//   #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
+//   #define STATIC_PATTERN    1 
+//   #define DYNAMIC_PATTERN   2
 
-  #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
-  #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
+//   #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
+//   #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
   
   //#define LEDSTRIPS_REMOTE         // see DEV299 
                                      // If its defined then it means LEDs are on subordinate MCU.
@@ -231,11 +231,11 @@
                                      // activities need to know, before this could be set by MQTT from somewhere else. Also need
                                      // to know it and have it correct in case Node restarts and has no comms. We need the LED initialisation
                                      // to still proceed properly.
-  #define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
-                                     //       not used if LEDSTRIPS_REMOTE defined
-  #define LEDSTRIP1_NUMPIXELS  75    // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
-                                     //       not used if LEDSTRIPS_REMOTE defined
-  #define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
+  // #define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
+  //                                    //       not used if LEDSTRIPS_REMOTE defined
+  // #define LEDSTRIP1_NUMPIXELS  75    // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
+  //                                    //       not used if LEDSTRIPS_REMOTE defined
+  // #define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
                                      // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                      //       not used if LEDSTRIPS_REMOTE defined
   //#define LEDSTRIP1_DUMB_R_PIN  xx     // What pin are all the DUMBLEDSTRIPs Red LEDs driven from? Not used for PIXELLEDSTRIPs.
