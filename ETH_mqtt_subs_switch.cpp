@@ -284,7 +284,7 @@ int i;
         {
         if(mes.intVal >= 0 || mes.intVal <= 1)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current200 = mes.intVal;
             #else
               LEDStrip1Type = mes.intVal;
@@ -303,7 +303,7 @@ int i;
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current201 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1RedValue = mes.intVal;
@@ -323,7 +323,7 @@ int i;
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current202 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1GreenValue = mes.intVal;
@@ -343,7 +343,7 @@ int i;
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current203 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BlueValue = mes.intVal;
@@ -363,7 +363,7 @@ int i;
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current204 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BrightnessValue = mes.intVal;
@@ -383,7 +383,7 @@ int i;
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current221 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               // insert code for STATIC_PATTERN here, like on Teensy
@@ -404,7 +404,7 @@ int i;
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current231 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               // insert code for DYNAMIC_PATTERN here, like on Teensy
@@ -425,7 +425,7 @@ int i;
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current291 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               // insert code for change of mode between STATIC_ONE_COLOUR, STATIC_PATTERN etc here, like on Teensy

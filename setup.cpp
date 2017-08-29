@@ -23,7 +23,7 @@ void setup() {
 #endif
 
 
-#ifdef DEBUGPJx
+#ifdef DEBUGPJ2
   Serial.print( F("Compiled: "));
   Serial.print( F(__DATE__));
   Serial.print( F(", "));
@@ -245,7 +245,7 @@ void setup() {
 #endif
 
 #ifdef LEDSTRIP
-   #if LEDSTRIPS_REMOTE  // if LED strips are not local...
+   #ifdef LEDSTRIPS_REMOTE  // if LED strips are not local...
      Serial1.begin(115200); // Initialise the 2nd hw serial port for inter Arduino serial link
    #else
     setupLEDStrips();  // do any prep work for any local led strips

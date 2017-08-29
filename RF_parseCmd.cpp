@@ -235,7 +235,7 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 1)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current200 = mes.intVal;
             #else
               LEDStrip1Type = mes.intVal;
@@ -254,7 +254,7 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current201 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1RedValue = mes.intVal;
@@ -275,7 +275,7 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current202 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1GreenValue = mes.intVal;
@@ -296,7 +296,7 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current203 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BlueValue = mes.intVal;
@@ -317,7 +317,7 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current204 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BrightnessValue = mes.intVal;
@@ -346,7 +346,7 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current221 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               current221 = mes.intVal;
@@ -367,7 +367,7 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current231 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               current231 = mes.intVal;
@@ -388,7 +388,7 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal == STATIC_ONE_COLOUR || mes.intVal == STATIC_PATTERN || mes.intVal == DYNAMIC_PATTERN)    // test for correct value thats in range.
           {
-            #if LEDSTRIPS_REMOTE
+            #ifdef LEDSTRIPS_REMOTE
               current291 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               current291 = mes.intVal;

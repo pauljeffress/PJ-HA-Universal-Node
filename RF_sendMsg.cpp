@@ -425,7 +425,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send200)  
     {
       mes.devID = 200;
-      #if LEDSTRIPS_REMOTE
+      #ifdef LEDSTRIPS_REMOTE
         mes.intVal = current200;
       #else
         mes.intVal = LEDStrip1Type; 
@@ -438,7 +438,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send201)  
     {
       mes.devID = 201;
-      #if LEDSTRIPS_REMOTE
+      #ifdef LEDSTRIPS_REMOTE
         mes.intVal = current201;
       #else
         mes.intVal = LEDStrip1RedValue; 
@@ -451,7 +451,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send202)  
     {
       mes.devID = 202;
-      #if LEDSTRIPS_REMOTE
+      #ifdef LEDSTRIPS_REMOTE
         mes.intVal = current202;
       #else
         mes.intVal = LEDStrip1GreenValue; 
@@ -464,7 +464,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send203)  
     {
       mes.devID = 203;
-      #if LEDSTRIPS_REMOTE
+      #ifdef LEDSTRIPS_REMOTE
         mes.intVal = current203;
       #else
         mes.intVal = LEDStrip1BlueValue; 
@@ -477,7 +477,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send204)  
     {
       mes.devID = 204;
-      #if LEDSTRIPS_REMOTE
+      #ifdef LEDSTRIPS_REMOTE
         mes.intVal = current204;
       #else
         mes.intVal = LEDStrip1BrightnessValue;
@@ -519,7 +519,7 @@ void sendMsg() { // prepares values to be transmitted
   if (send299)  
     {
       mes.devID = 299;
-      #if LEDSTRIPS_REMOTE
+      #ifdef LEDSTRIPS_REMOTE
         mes.intVal = 1;
       #else 
         mes.intVal = 0; 
