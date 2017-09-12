@@ -395,11 +395,9 @@ Message mes;
 
 #ifdef LEDSTRIP // dev2xx
   //int LEDStripsRemote = LEDSTRIPS_REMOTE;
-  #if !LEDSTRIPS_REMOTE
-    int LEDStrip1Type = LEDSTRIP1_TYPE;  // is it a PIXEL or DUMB LED strip.
-    int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue = 0;    // initialise R,G,B & brightness values for this strip.
-  #endif
-  #if LEDSTRIP1_TYPE && !LEDSTRIPS_REMOTE  // is it a PIXEL type AND is LEDSTRIP local or remote?
+  int LEDStrip1RedValue, LEDStrip1GreenValue, LEDStrip1BlueValue, LEDStrip1BrightnessValue = 0;    // initialise R,G,B & brightness values for this strip.
+  #ifdef LEDSTRIP1_TYPE && !LEDSTRIPS_REMOTE  // is it a PIXEL type AND is LEDSTRIP local or remote?
+    int LEDStrip1Type = LEDSTRIP1_TYPE;  // is it a PIXEL or DUMB LED strip.  
     CRGB pixelledstrip1_leds[LEDSTRIP1_NUMPIXELS]; // This is an array of leds.  One item for each led in your strip. Part of FastLED library.
   #endif  
   bool send200, send201, send202, send203, send204, send221, send231, send291, send299 = false;  // northbound message trigger

@@ -182,7 +182,7 @@ void localactions(){
     }
 #endif// OCEANMIRROR
 
-#if LEDSTRIPS_REMOTE // Do this stuff if only if THIS VALUE = 1, i.e. I have LED Strips attached to subordinate MCU attached via Serial to this Node
+#ifdef LEDSTRIPS_REMOTE // Do this stuff if only if I have LED Strips attached to subordinate MCU attached via Serial to this Node
   //Serial.print("current200 = "); Serial.print(current200); Serial.print("   serSent200 = "); Serial.println(serSent200);
   //delay(1000);
   if (current200 != serSent200) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
