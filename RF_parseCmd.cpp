@@ -254,11 +254,16 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
+          if (current291 != STATIC_ONE_COLOUR) // if we were not in this mode prior to this message arriving....
+            {
+              current291 = STATIC_ONE_COLOUR; // ... then change into this mode....
+              send291 = true;               // ... and make sure upstream controller (Home Assistant) knows and updates any GUI etc
+            }
             #ifdef LEDSTRIPS_REMOTE
               current201 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1RedValue = mes.intVal;
-              if (current291 == STATIC_ONE_COLOUR) setStaticOneColourLEDStrip(1);  // only update the LED strip if we are in this mode.
+              setStaticOneColourLEDStrip(1);  // update the LED strip.
             #endif
             if (setAck) send201 = true; // acknowledge message ?
           } 
@@ -275,11 +280,16 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
+          if (current291 != STATIC_ONE_COLOUR) // if we were not in this mode prior to this message arriving....
+            {
+              current291 = STATIC_ONE_COLOUR; // ... then change into this mode....
+              send291 = true;               // ... and make sure upstream controller (Home Assistant) knows and updates any GUI etc
+            }
             #ifdef LEDSTRIPS_REMOTE
               current202 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1GreenValue = mes.intVal;
-              if (current291 == STATIC_ONE_COLOUR) setStaticOneColourLEDStrip(1);  // only update the LED strip if we are in this mode.
+              setStaticOneColourLEDStrip(1);  // update the LED strip
             #endif
             if (setAck) send202 = true; // acknowledge message ?
           }
@@ -296,11 +306,16 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
+          if (current291 != STATIC_ONE_COLOUR) // if we were not in this mode prior to this message arriving....
+            {
+              current291 = STATIC_ONE_COLOUR; // ... then change into this mode....
+              send291 = true;               // ... and make sure upstream controller (Home Assistant) knows and updates any GUI etc
+            }
             #ifdef LEDSTRIPS_REMOTE
               current203 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BlueValue = mes.intVal;
-              if (current291 == STATIC_ONE_COLOUR) setStaticOneColourLEDStrip(1);  // only update the LED strip if we are in this mode.
+              setStaticOneColourLEDStrip(1);  // update the LED strip
             #endif
             if (setAck) send203 = true; // acknowledge message ?
           } 
@@ -317,19 +332,21 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
+          if (current291 != STATIC_ONE_COLOUR) // if we were not in this mode prior to this message arriving....
+            {
+              current291 = STATIC_ONE_COLOUR; // ... then change into this mode....
+              send291 = true;               // ... and make sure upstream controller (Home Assistant) knows and updates any GUI etc
+            }
             #ifdef LEDSTRIPS_REMOTE
               current204 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1BrightnessValue = mes.intVal;
-              if (current291 == STATIC_ONE_COLOUR) 
-                {
-                  setStaticOneColourLEDStrip(1);  // only update the LED strip if we are in this mode.
+              setStaticOneColourLEDStrip(1);  // update the LED strip
                   #ifdef RMT_PWR
                     if(LEDStrip1BrightnessValue == 0) RMT_PWROff(); // When Brightness set to 0, no mater what mode
                                                                 // the LED strip is in, cut the power. We don't
                                                                 // want the remote PSU to stay on when brightness = 0.
                   #endif
-                }
             #endif
             if (setAck) send204 = true; // acknowledge message ?
           } 
@@ -346,6 +363,11 @@ switch (mes.devID) // devID indicates device (sensor) type
         {
         if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
+            if (current291 != STATIC_PATTERN) // if we were not in this mode prior to this message arriving....
+            {
+              current291 = STATIC_PATTERN; // ... then change into this mode....
+              send291 = true;               // ... and make sure upstream controller (Home Assistant) knows and updates any GUI etc
+            }
             #ifdef LEDSTRIPS_REMOTE
               current221 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
@@ -365,7 +387,12 @@ switch (mes.devID) // devID indicates device (sensor) type
         }
       else  // WRITE
         {
-        if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
+          if (current291 != DYNAMIC_PATTERN) // if we were not in this mode prior to this message arriving....
+          {
+            current291 = DYNAMIC_PATTERN; // ... then change into this mode....
+            send291 = true;               // ... and make sure upstream controller (Home Assistant) knows and updates any GUI etc
+          }
+          if(mes.intVal >= 0 || mes.intVal <= 255)    // test for correct value thats in range.
           {
             #ifdef LEDSTRIPS_REMOTE
               current231 = mes.intVal; // we only need to do this if we have remote LED Strips  
