@@ -265,6 +265,9 @@ bool	send0, send1, send2, send3, send4, send5, send6, send7, send11, send12, sen
 bool  CommsLEDStart = false;    // Do we need to turn on the Comms LED?.
 bool  CommsLEDStatus = false; // Comms LED current status...used in it's on/off logic.
 long  CommsLEDonMillis;       // timestamp when Comms LED was turned on. Used to keep track of when to turn it off.
+bool  StatusLEDStatus = false; // Status LED current status...used in it's on/off logic.
+long  StatusLEDonMillis;       // timestamp when Status LED was turned on. Used to keep track of when to turn it off.
+
 bool  msgBlock = false; // flag to hold button messages to prevent overload
 
 Message mes;
