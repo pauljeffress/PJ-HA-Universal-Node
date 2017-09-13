@@ -10,15 +10,6 @@
 
 void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
   {
-    #ifdef DEBUGPJ2 && !LEDSTRIPS_REMOTE
-      Serial.println("Init Local LEDs");
-      //delay(5000);
-    #endif
-
-    #ifdef DEBUGPJ2 && LEDSTRIPS_REMOTE
-      Serial.println("Init Remote LEDs");
-    #endif
-
     //set statup values for LEDStrip1
     LEDStrip1RedValue = 0;
     LEDStrip1GreenValue = 0;
@@ -33,6 +24,7 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
     #endif
 
     #ifndef LEDSTRIPS_REMOTE  // Do the following initialisation stuff only if LEDs are local.
+      Serial.println("Init Local LEDs");
       // LED Strip 1 stuff
       if (LEDStrip1Type) // if LED Strip 1 is a PIXEL LED Strip...
         {
@@ -88,6 +80,7 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
       // Insert LED Strip 2 initialisation stuff here - NOT IMPLEMENTED YET
 
     #else   // Do the following initialisation stuff only if LEDs are REMOTE.
+      Serial.println("Init Remote LEDs");
       // REMOTE LED Strip 1 initialisation - send commands to subordinate to display initialisation sequence
       // Start by ensuring REMOTE device has all variables correctly initialised. Just in case it has not
       // done that correctly itself.
@@ -250,6 +243,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
       break;
       
   default:  // i.e. we have been sent request to use a mode that we have not implemented.
+      send95 = true;  // send message upstream to say request was out of range.
       #ifdef DEBUGPJ2
         Serial.println("Mode not implemented in setStaticPatternLEDStripMode()");
       #endif
@@ -310,6 +304,7 @@ void setDynamicPatternLEDStripMode(int stripnum, int stripmode)  // action the r
       break;
       
   default:  // i.e. we have been sent request to use a mode that we have not implemented.
+      send95 = true;  // send message upstream to say request was out of range.
       #ifdef DEBUGPJ2
         Serial.println("Mode not implemented in setDynamicPatternLEDStripMode()");
       #endif
