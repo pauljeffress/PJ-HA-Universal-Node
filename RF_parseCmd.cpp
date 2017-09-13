@@ -263,7 +263,7 @@ switch (mes.devID) // devID indicates device (sensor) type
               current201 = mes.intVal; // we only need to do this if we have remote LED Strips  
             #else
               LEDStrip1RedValue = mes.intVal;
-              setStaticOneColourLEDStrip(1);  // update the LED strip.
+              setStaticOneColourLEDStrip(1);  // update the LED strip. 
             #endif
             if (setAck) send201 = true; // acknowledge message ?
           } 

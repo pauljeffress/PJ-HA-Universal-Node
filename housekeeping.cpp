@@ -21,7 +21,7 @@ void housekeeping() {
       digitalWrite(STATUS_LED_PIN, HIGH);
       StatusLEDonMillis = millis();  // grab a timestamp of when we turned the LED on.
       StatusLEDStatus = true;  // The LED is now on.
-      #ifdef DEBUGPJx
+      #ifdef DEBUGPJx 
         Serial.print("ON: ");
         Serial.println(StatusLEDonMillis);
       #endif

@@ -49,9 +49,9 @@
 #define COMMS_LED_PIN  7          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                   // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 9              // BLUE - Status LED, generally just blinking away so we know node has not crashed.
-#define STATUS_LED_CYCLE_PERIOD 5000  // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
-#define STATUS_LED_ON_PERIOD 100      // (mSecs) How long we keep it on for per blink, in mSec.
+#define STATUS_LED_PIN 9               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
+#define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 /****************************************************/
 
 

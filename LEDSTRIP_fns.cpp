@@ -24,7 +24,7 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
     #endif
 
     #ifndef LEDSTRIPS_REMOTE  // Do the following initialisation stuff only if LEDs are local.
-      Serial.println("Init Local LEDs");
+      Serial.println("Init Local LEDs"); 
       // LED Strip 1 stuff
       if (LEDStrip1Type) // if LED Strip 1 is a PIXEL LED Strip...
         {
