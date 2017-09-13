@@ -14,10 +14,39 @@ void housekeeping() {
 // This bit of code needs to be called often in order for it to work successfully. I wanted to avoid 
 // using interupts etc as the node is already dealing with interupts from the Eth/RF interfaces.
   // work out if we are in an odd or even sec of uptime, swap LED state accordingly.
-  long uptimeSecs = millis()/1000;
-  if ((uptimeSecs & 1) == 0) digitalWrite(STATUS_LED_PIN, HIGH);  // Turn the Comms LED on as we are in an odd second
-  else digitalWrite(STATUS_LED_PIN, LOW);  // Turn the Comms LED on as we are in an even second
-  
+
+  //long uptimeSecs = millis()/1000;
+  if (((millis() % STATUS_LED_CYCLE_PERIOD) == 0) &&  !StatusLEDStatus)  // If Status LED is off, check if its time to turn it on
+                                                                           // i.e. are we at beginning of cycle
+    {
+      digitalWrite(STATUS_LED_PIN, HIGH);
+      StatusLEDonMillis = millis();  // grab a timestamp of when we turned the LED on.
+      StatusLEDStatus = true;  // The LED is now on.
+      #ifdef DEBUGPJx 
+        Serial.print("ON: ");
+        Serial.println(StatusLEDonMillis);
+      #endif
+    }
+
+    if (StatusLEDStatus)   // i.e. its on, but is it time to turn it off yet?
+    {            
+    #ifdef DEBUGPJx
+      Serial.print("current: ");
+      Serial.println(millis());
+    #endif
+    if (millis() - StatusLEDonMillis > STATUS_LED_ON_PERIOD) // has timer expired?
+      {
+      #ifdef DEBUGPJx
+        Serial.print("OFF: ");
+        Serial.println(millis());
+      #endif
+      digitalWrite(STATUS_LED_PIN, LOW); // Turn the LED off
+      StatusLEDStatus = false;  // The LED is now off.
+      }
+    }
+
+
+
 
 // Attend to the CommsLED
   if (CommsLEDStart &&  !CommsLEDStatus)  // i.e. its not currently on, but something wants us turn it on.
