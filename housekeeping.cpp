@@ -14,6 +14,7 @@ void housekeeping() {
 // This bit of code needs to be called often in order for it to work successfully. I wanted to avoid 
 // using interupts etc as the node is already dealing with interupts from the Eth/RF interfaces.
   // work out if we are in an odd or even sec of uptime, swap LED state accordingly.
+
   //long uptimeSecs = millis()/1000;
   if (((millis() % STATUS_LED_CYCLE_PERIOD) == 0) &&  !StatusLEDStatus)  // If Status LED is off, check if its time to turn it on
                                                                            // i.e. are we at beginning of cycle
@@ -45,7 +46,7 @@ void housekeeping() {
     }
 
 
-  
+
 
 // Attend to the CommsLED
   if (CommsLEDStart &&  !CommsLEDStatus)  // i.e. its not currently on, but something wants us turn it on.
