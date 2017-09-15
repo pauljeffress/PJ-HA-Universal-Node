@@ -84,6 +84,7 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
       // REMOTE LED Strip 1 initialisation - send commands to subordinate to display initialisation sequence
       // Start by ensuring REMOTE device has all variables correctly initialised. Just in case it has not
       // done that correctly itself.
+      delay(10000);  // Wait 10secs for subordinate to bootup after power on and be ready to receive commands etc.
       sendDevValueToSerial(201, 0, LEDStrip1RedValue, 0.0);  
       sendDevValueToSerial(202, 0, LEDStrip1GreenValue, 0.0);  
       sendDevValueToSerial(203, 0, LEDStrip1BlueValue, 0.0);  

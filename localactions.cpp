@@ -173,16 +173,19 @@ void localactions(){
   if (extVar401 != mirrorDev401) // i.e. this extVar must have been updated recently, so I need to tell the Due.
     {
       mirrorDev401 = extVar401; // update my mirror copy of this ExtVar
-      // Tell ATX PSU to wake up and supply the main +5v for LED strip
-      if (extVar401 != 0) // i.e we have been asked for a brightness > 0, remeber 0 means don't display anything, so turn on shared ATX PSU
-        RMT_PWROn();
-      else
-        RMT_PWROff();     // we have been asked for brightness 0, so turn ATX PSU off.
+      #ifdef RMT_PWR
+        // Tell ATX PSU to wake up and supply the main +5v for LED strip
+        if (extVar401 != 0) // i.e we have been asked for a brightness > 0, remeber 0 means don't display anything, so turn on shared ATX PSU
+          RMT_PWROn();
+        else
+          RMT_PWROff();     // we have been asked for brightness 0, so turn ATX PSU off.
+      #endif
       MIRROR_sendSerialToDue(401, mirrorDev401);  //  Tell the DUE which variable changed and what its new value is.
     }
 #endif// OCEANMIRROR
 
 #ifdef LEDSTRIPS_REMOTE // Do this stuff if only if I have LED Strips attached to subordinate MCU attached via Serial to this Node
+                        // Also manage RMT_PWR for the subordinate.
   //Serial.print("current200 = "); Serial.print(current200); Serial.print("   serSent200 = "); Serial.println(serSent200);
   //delay(1000);
   if (current200 != serSent200) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
@@ -194,36 +197,67 @@ void localactions(){
     {
       serSent201 = current201; // update my sent copy of this variable
       sendDevValueToSerial(201, 0, serSent201, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+      #ifdef RMT_PWR
+        // Check if RED, GREEN, BLUE are all now ZERO and if so tell ATX PSU to turn off.
+        if (current201 == 0 && current202 == 0 && current203 ==0) 
+          RMT_PWROff();
+      #endif
     }
   if (current202 != serSent202) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
     {
       serSent202 = current202; // update my sent copy of this variable
       sendDevValueToSerial(202, 0, serSent202, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+      #ifdef RMT_PWR
+        // Check if RED, GREEN, BLUE are all now ZERO and if so tell ATX PSU to turn off.
+        if (current201 == 0 && current202 == 0 && current203 ==0) 
+          RMT_PWROff();
+      #endif
     }
   if (current203 != serSent203) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
     {
       serSent203 = current203;// update my sent copy of this variable
       sendDevValueToSerial(203, 0, serSent203, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+      #ifdef RMT_PWR
+        // Check if RED, GREEN, BLUE are all now ZERO and if so tell ATX PSU to turn off.
+        if (current201 == 0 && current202 == 0 && current203 ==0) 
+          RMT_PWROff();
+    #endif
     }
   if (current204 != serSent204) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
     {
+      #ifdef RMT_PWR
+        // Tell ATX PSU to wake up and supply the main +5v for LED strip
+        if (current204 != 0) // i.e we have been asked for a brightness > 0, remeber 0 means don't display anything, so turn on shared ATX PSU
+          RMT_PWROn();
+        else
+          RMT_PWROff();     // we have been asked for brightness 0, so turn ATX PSU off.
+      #endif
       serSent204 = current204; // // update my sent copy of this variable
-      // Tell ATX PSU to wake up and supply the main +5v for LED strip
-      if (current204 != 0) // i.e we have been asked for a brightness > 0, remeber 0 means don't display anything, so turn on shared ATX PSU
-        RMT_PWROn();
-      else
-        RMT_PWROff();     // we have been asked for brightness 0, so turn ATX PSU off.
       sendDevValueToSerial(204, 0, serSent204, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
     }
   if (current221 != serSent221) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
     {
+      #ifdef RMT_PWR
+        RMT_PWROn(); // Before passing new setting to subordinate tell ATX PSU to wake up and supply the main +5v for LED strip
+      #endif
       serSent221 = current221;// update my sent copy of this variable
       sendDevValueToSerial(221, 0, serSent221, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+      #ifdef RMT_PWR
+        if (current221 == 0)  // i.e. BLACK/Off Pattern
+          RMT_PWROff();       // then turn off the remote PSU.
+      #endif
     }
   if (current231 != serSent231) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
     {
+      #ifdef RMT_PWR
+        RMT_PWROn(); // Before passing new setting to subordinate tell ATX PSU to wake up and supply the main +5v for LED strip
+      #endif
       serSent231 = current231;// update my sent copy of this variable
       sendDevValueToSerial(231, 0, serSent231, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
+      #ifdef RMT_PWR
+        if (current231 == 0)  // i.e. BLACK/Off Pattern
+          RMT_PWROff();       // then turn off the remote PSU.
+      #endif
     }
   if (current291 != serSent291) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
     {
