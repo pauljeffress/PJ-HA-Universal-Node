@@ -111,7 +111,13 @@ char foo;
     #include <SPI.h>
     bool	promiscuousMode = false; // only listen to nodes within the closed network
     bool  wakeUp = true; // wakeup flag
-    RFM69 radio;
+    //#ifdef FEATHERM0RFM69 // Need to specify all pins if not using a Moteino board.
+    //RFM69 radio = RFM69(RFM69_CS, RFM69_IRQ, IS_RFM69HCW, RFM69_IRQN);
+    RFM69 radio = RFM69(RFM69_CS, RFM69_IRQ, IS_RFM69HCW, RFM69_IRQN);
+    //#else
+    //  RFM69 radio;
+    //#endif
+
 #endif
 
 //
@@ -355,6 +361,16 @@ Message mes;
     bool  timerOnButton2 = false; // timer output on button press
     bool  ackButton2 = false; // flag for message on button press
     bool  toggleOnButton2 = false; // toggle related actuator output on button press
+#endif
+
+#ifdef SWITCH1
+    bool send44 = false;
+    bool curSwitch1State; // current switch state
+#endif
+
+#ifdef SWITCH2
+    bool send45 = false;
+    bool curSwitch2State; // current switch state
 #endif
 
 #ifdef ACTUATOR1 

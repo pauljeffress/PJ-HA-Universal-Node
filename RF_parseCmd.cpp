@@ -192,6 +192,20 @@ switch (mes.devID) // devID indicates device (sensor) type
   break;
 #endif // PIR2
 
+#ifdef SWITCH1
+  case (44): // binary input
+  if (mes.cmd == 1) send44 = true; // cmd == 1 means read
+  else send93 = true;  // tried to write to RO dev
+  break;
+#endif // SWITCH1
+
+#ifdef SWITCH2
+  case (45): // binary input
+  if (mes.cmd == 1) send45 = true; // cmd == 1 means read
+  else send93 = true;  // tried to write to RO dev
+  break;
+#endif // SWITCH2
+
   case (48): // temperature
   if (mes.cmd == 1) send48 = true;  // cmd == 1 means read
   else send93 = true;  // tried to write to RO dev

@@ -6,7 +6,7 @@
 
 void setPeriodicTransmissions()
   {
-  #ifdef DEBUG
+  #ifdef DEBUGxx
       Serial.println("Flag periodics");
   #endif
   
@@ -74,6 +74,13 @@ void setPeriodicTransmissions()
             send43 = true; // PIR2 status
         #endif 
 
+        #ifdef SWITCH1
+            send44 = true; // SWITCH1 status
+        #endif
+        #ifdef SWITCH2
+            send45 = true; // SWITCH2 status
+        #endif  
+        
         #ifdef TSL2651
           send52 = true;  // TSL2651 visible light level
           send53 = true;  // TSL2651 IR light level

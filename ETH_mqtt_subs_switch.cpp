@@ -204,6 +204,18 @@ int i;
     break; 
 #endif
 
+#ifdef SWITCH1
+  case 44: // 044 - Binary Sensor Input (Status Int - ReadOnly) SWITCH1
+    if (mes.cmd == 1) send44 = true;
+    break;
+#endif
+
+#ifdef SWITCH2
+  case 45: // 045 - Binary Sensor Input (Status Int - ReadOnly) SWITCH2
+    if (mes.cmd == 1) send45 = true;
+    break;
+#endif
+
 #ifdef MOTEINOWEATHER
   case 51: // 051 - pressure from MOTEINO Weather (Real - ReadOnly)
     if (mes.cmd == 1) send51 = true;
