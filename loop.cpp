@@ -15,7 +15,11 @@ housekeeping(); // Assorted basic jobs that need to be checked up on.
 // check assorted locally attached DEVices, so we can 
 // send MQTT updates and/or act on them later in loop().
 #ifdef BUTTON1 or BUTTON2
-    checkbuttons();    // Check for status change on buttons(s)
+    checkbuttons();    // Check for status change on buttons
+#endif
+
+#ifdef SWITCH1 or SWITCH2
+    checkswitches();    // Check for status change on switches
 #endif
 
 #ifdef PIR1 or PIR2

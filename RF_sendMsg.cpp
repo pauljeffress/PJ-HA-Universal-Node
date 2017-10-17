@@ -79,15 +79,20 @@ void sendMsg() { // prepares values to be transmitted
       Serial.println("SENDMSG: sending dev4 - voltage");
     #endif
     mes.devID = 4;
-    long result; // Read 1.1V reference against AVcc
-    ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
-    delay(2); // Wait for Vref to settle
-    ADCSRA |= _BV(ADSC); // Convert
-    while (bit_is_set(ADCSRA,ADSC));
-    result = ADCL;
-    result |= ADCH<<8;
-    result = 1126400L / result; // Back-calculate in mV
-    mes.fltVal = float(result/1000.0); // Voltage in Volt (float)
+    #ifdef MOTEINONODE  //  The below code to measure battery voltage only applies to Moteino boards
+      long result; // Read 1.1V reference against AVcc
+      ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+      delay(2); // Wait for Vref to settle
+      ADCSRA |= _BV(ADSC); // Convert
+      while (bit_is_set(ADCSRA,ADSC));
+      result = ADCL;
+      result |= ADCH<<8;
+      result = 1126400L / result; // Back-calculate in mV
+      mes.fltVal = float(result/1000.0); // Voltage in Volt (float)
+    #else
+      mes.fltVal = 123.45;  // if it's not a Moteino board just send this fake number until I have time to setup 
+                            // code for other boards like my FeatherM0's.
+    #endif
     txRadio();
     send4 = false;
     mes.fltVal = 0;  // clear it after use.
@@ -255,7 +260,34 @@ void sendMsg() { // prepares values to be transmitted
       mes.intVal = 0;  // clear it after use.
     }
   #endif // PIR2
-  
+
+  #ifdef SWITCH1
+  if (send44) { // Binary input read
+    #ifdef DEBUG
+      Serial.println("SENDMSG: sending dev44 - Binary input read");
+    #endif
+    mes.devID = 44;
+    if (curSwitch1State == ON) mes.intVal = 1; // state (integer)
+    send44 = false;
+    txRadio();
+    mes.intVal = 0;  // clear it after use.
+  }
+#endif // SWITCH1
+
+#ifdef SWITCH2
+  if (send45) { // Binary input read
+    #ifdef DEBUG
+      Serial.println("SENDMSG: sending dev45 - Binary input read");
+    #endif
+    mes.devID = 45;
+    if (curSwitch2State == ON) mes.intVal = 1; // state (integer)
+    send45 = false;
+    txRadio();
+    mes.intVal = 0;  // clear it after use.
+  }
+#endif // SWITCH2  
+
+
   if (send48) { // Temperature
     mes.devID = 48;
     #ifdef DHT

@@ -11,8 +11,8 @@
 #include <RFM69.h>
 #include <Wire.h> // for I2C bus, used by many DEVices
 #include "RTClib.h"
-#include <SparkFunSerialGraphicLCD.h>//inculde the Serial Graphic LCD library
-#include <SoftwareSerial.h> // used by SparkFunSerialGraphicLCD library
+
+
 #include "pitches.h"  // my file with musical note definitions for BEEPER device.
 #include <Adafruit_Fingerprint.h> // Designed to work with  http://www.adafruit.com/products/751 finger sensor
 #include <SFE_BMP180.h>    //get it here: https://github.com/LowPowerLab/SFE_BMP180
@@ -24,7 +24,7 @@
 
 
 /* DEBUG CONFIGURATION PARAMETERS */
-//#define DEBUG // uncomment for debugging
+#define DEBUG // uncomment for debugging
 //#define DEBUGPJ1 // uncomment for debugging
 #define DEBUGPJ2 // uncomment for debugging
 #ifdef DEBUG
@@ -38,18 +38,35 @@
 //#define ETHNODETYPE // can only be one of these types, never both.
 #define RFNODETYPE   // can only be one of these types, never both.
 
+#define FEATHERM0RFM69  // uncomment if we are using an Adafruit FeatherM0-RFM69 or similar
+                        // Search code to see where this is used. 1st thing I found I needed to use it
+                        // for was to execute the RFM hard reset during setup(), as the Feather has a pin
+                        // wired to the RFM Reset pin to do it :)
+    #define IS_RFM69HCW true // set to 'true' if you are using an RFM69HCW module
+    #define IS_RFM69HW   // need to define both as RFM69 lib and Feather sample code use diff defines.
+    // for Feather M0 Radio
+    #define RFM69_CS 8
+    #define RFM69_IRQ 3
+    #define RFM69_IRQN 3 // Pin 3 is IRQ 3!
+    #define RFM69_RST 4
 
+    /* Feather m0 w/wing
+    #define RFM69_RST 11 // "A"
+    #define RFM69_CS 10 // "B"
+    #define RFM69_IRQ 6 // "D"
+    #define RFM69_IRQN digitalPinToInterrupt(RFM69_IRQ )
+    */
 
 #define VERSION "UNIvGitHub"  // this value can be queried as device 3
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           03       // unique node ID within the closed network
-#define NODEIDSTRING node03       // as per above.  
-#define COMMS_LED_PIN  7          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           97       // unique node ID within the closed network
+#define NODEIDSTRING node97       // as per above.  
+#define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                   // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 9               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 13               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -73,7 +90,7 @@
     //#define FREQUENCY RF69_433MHZ
     //#define FREQUENCY RF69_868MHZ
 #define FREQUENCY RF69_915MHZ
-    //#define IS_RFM69HW // uncomment only for RFM69HW!
+#define IS_RFM69HW // uncomment only for RFM69HW!
 #define ACK_TIME 50 // max # of ms to wait for an ack
 /***************************************************/
 
@@ -123,11 +140,15 @@
 //#define PIR2          // Have I attached a 2nd PIR
 //   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
 
-//#define BUTTON1       // Have I attached some buttons/switches...
-//   #define BUTTON1PIN 30      // signal pin from 1st BUTTON
+//#define BUTTON1       // Have I attached a button (momentary switches)
+//  #define BUTTON1PIN 999      // signal pin from 1st BUTTON
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
+#define SWITCH1       // Have I attached a switch (ON/OFF capable)
+#define SWITCH1PIN A5      // signal pin from 1st SWITCH
+//#define SWITCH22
+//    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
 // #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
 //      #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
@@ -161,8 +182,8 @@
 //   #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
 //   #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
 
-#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
-     #define RMT_PWR_ENA_PIN 5  // The pin to set high when I want to switch on a remote ATX PC power supply
+//#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
+//     #define RMT_PWR_ENA_PIN 5  // The pin to set high when I want to switch on a remote ATX PC power supply
                                 // that is providing the power for the actuator/LED etc, beyond just the 
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types. 
@@ -219,13 +240,13 @@
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
-#define LEDSTRIP
-  #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
-  #define STATIC_PATTERN    1 
-  #define DYNAMIC_PATTERN   2
+// #define LEDSTRIP
+//   #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
+//   #define STATIC_PATTERN    1 
+//   #define DYNAMIC_PATTERN   2
 
-  #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
-  #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
+//   #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
+//   #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
   
   //#define LEDSTRIPS_REMOTE         // see DEV299 
                                      // If its defined then it means LEDs are on subordinate MCU.
@@ -234,11 +255,11 @@
                                      // activities need to know, before this could be set by MQTT from somewhere else. Also need
                                      // to know it and have it correct in case Node restarts and has no comms. We need the LED initialisation
                                      // to still proceed properly.
-  #define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
-                                     //       not used if LEDSTRIPS_REMOTE defined
-  #define LEDSTRIP1_NUMPIXELS  75   // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
-                                     //       not used if LEDSTRIPS_REMOTE defined
-  #define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
+  // #define LEDSTRIP1_TYPE       1     // 0 = DUMBLEDSTRIP type, 1 = PIXELLEDSTRIP type. No other value is valid.
+  //                                    //       not used if LEDSTRIPS_REMOTE defined
+  // #define LEDSTRIP1_NUMPIXELS  75   // num WS28xx controller chips on this strip. Not used for DUMBLEDSTRIPs.
+  //                                    //       not used if LEDSTRIPS_REMOTE defined
+  // #define LEDSTRIP1_DATAPIN    6     // PIN used for data feed to this strip. Not used for DUMBLEDSTRIPs.
                                      // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                      //       not used if LEDSTRIPS_REMOTE defined
   //#define LEDSTRIP1_DUMB_R_PIN  xx     // What pin are all the DUMBLEDSTRIPs Red LEDs driven from? Not used for PIXELLEDSTRIPs.
@@ -320,7 +341,7 @@ void sendDevValueToSerial(int sendSerDev, int sendSerType, int sendSerInt, float
 void setStaticOneColourLEDStrip(int stripnum);
 void setStaticPatternLEDStripMode(int stripnum, int stripmode);
 void setDynamicPatternLEDStripMode(int stripnum, int stripmode);
-
+void checkswitches();
 
 // =============================================
 // Global variables as 'externs' so individual files can compile if they use them.
@@ -412,6 +433,16 @@ extern bool  toggleOnButton2;
   extern bool curPIR2State;
 #endif
 
+#ifdef SWITCH1
+  extern bool send44;
+  extern bool  curSwitch1State; 
+#endif
+
+#ifdef SWITCH2
+  extern bool send45;
+  extern bool  curSwitch2State; 
+#endif
+
 #ifdef PING1x
 extern int ping1Distance;
 extern int ping1RangeMin;
@@ -460,6 +491,8 @@ extern bool send300, send301, send302, send303, send304, send305, send306, send3
 #ifdef LCDGENERIC // dev320 - 329 LCD (Generic one) (#define LCDGENERIC)
 extern bool send320, send321, send322, send323, send324;
   #ifdef LCDGENERIC_SFGLCD  // items specific to the SparkFun LCD-09351
+    #include <SparkFunSerialGraphicLCD.h>//inculde the Serial Graphic LCD library
+    #include <SoftwareSerial.h> // used by SparkFunSerialGraphicLCD library
     extern LCD lcdGen; 
     extern int lcdGenXPos;
     extern int lcdGenYPos;

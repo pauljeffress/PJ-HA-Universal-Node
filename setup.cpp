@@ -15,10 +15,13 @@ void setup() {
 #endif
 
 #ifdef DEBUGPJ1
+  // while (!Serial);   // On FEATHERM0RFM69 you need this or you may miss first bits of output. 
+                        // But if no USB is connected then it will hang here.
   Serial.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
 #endif
 
 #ifdef DEBUGPJ2
+  // while (!Serial);
   Serial.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
 #endif
 
@@ -153,10 +156,19 @@ void setup() {
 #ifdef RFNODETYPE
   // Do all of the RFNODETYPE unique setup() actions.
   // xxxx - decide what LEDs will be on a standard RF Node and ensure they get pinMode intialiased and flashed here, like they do for ETH NODE
+  #ifdef FEATHERM0RFM69
+      // Hard Reset the RFM module
+      pinMode(RFM69_RST, OUTPUT);
+      digitalWrite(RFM69_RST, HIGH);
+      delay(100);
+      digitalWrite(RFM69_RST, LOW);
+      delay(100);
+  #endif  
   radio.initialize(FREQUENCY,NODEID,NETWORKID); // initialise radio
   #ifdef IS_RFM69HW
     radio.setHighPower(); // only for RFM69HW!
   #endif
+  radio.setPowerLevel(31); // power output ranges from 0 (5dBm) to 31 (20dBm)
   radio.encrypt(ENCRYPTKEY); // set radio encryption
   radio.promiscuous(promiscuousMode); // only listen to closed network
   wakeUp = true; // set flag to send wakeup message (because we have just started booted)
@@ -169,15 +181,49 @@ void setup() {
 #ifdef BUTTON1 // 1st Button ===============================================
   #ifdef DEBUGPJ2
     Serial.print("BUT1 PIN is:");
-    Serial.print(BUTTON1PIN);
-    Serial.println(": and setting it to Input");
+    Serial.println(BUTTON1PIN);
   #endif
-  pinMode(BUTTON1PIN, INPUT);
+  #ifdef FEATHERM0RFM69
+    pinMode(BUTTON1PIN, INPUT_PULLUP); // assumption is I'm using the built in pullups available on the M0.
+  #else
+    pinMode(BUTTON1PIN, INPUT);
+  #endif
 #endif
+
 #ifdef BUTTON2 // 2nd Button ===============================================
-  pinMode(BUTTON2PIN, INPUT);
+  #ifdef FEATHERM0RFM69
+    pinMode(BUTTON2PIN, INPUT_PULLUP); // assumption is I'm using the built in pullups available on the M0.
+  #else
+    pinMode(BUTTON2PIN, INPUT);
+  #endif
 #endif
- 
+
+#ifdef SWITCH1 // 1st Switch ===============================================
+  #ifdef DEBUGPJ2
+    Serial.print("SW1 PIN is:");
+    Serial.println(SWITCH1PIN);
+  #endif
+  #ifdef FEATHERM0RFM69
+    pinMode(SWITCH1PIN, INPUT_PULLUP); // assumption is I'm using the built in pullups available on the M0.
+  #else
+    pinMode(SWITCH1PIN, INPUT);
+  #endif
+  checkswitches();  // Get initial state of SWITCHes at reset/powerup, set curSwitchXState variables
+#endif
+
+#ifdef SWITCH2 // 2nd Switch ===============================================
+  #ifdef DEBUGPJ2
+    Serial.print("SW2 PIN is:");
+    Serial.println(SWITCH2PIN);
+  #endif
+  #ifdef FEATHERM0RFM69
+    pinMode(SWITCH2PIN, INPUT_PULLUP); // assumption is I'm using the built in pullups available on the M0.
+  #else
+    pinMode(SWITCH2PIN, INPUT);
+  #endif
+  checkswitches();  // Get initial state of SWITCHes at reset/powerup, set curSwitchXState variables
+#endif
+
 #ifdef ACTUATOR1 // 1st Actuator ===============================================
   pinMode(ACTUATOR1PIN, OUTPUT);
   #ifdef ACTUATOR1REVERSE // for reversed Actuator behaviour do this

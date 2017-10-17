@@ -46,7 +46,8 @@ int i;
 // =============== sendReal()
 //
 void sendReal(int sendNodeID, int sendDevID, float sendR){
-      dtostrf(sendR, 7, 2, buff_mess);        
+      //dtostrf(sendR, 7, 2, buff_mess);        
+      sprintf(buff_mess,  "%f", sendR);
       sprintf(buff_topic, "home/eth_nd/nb/node%02d/dev%03d", sendNodeID, sendDevID);  
       CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
       mqttClient.publish(buff_topic,buff_mess);             

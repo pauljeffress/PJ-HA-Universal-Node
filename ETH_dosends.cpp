@@ -136,6 +136,22 @@ void dosends() {
     }
 #endif
 
+#ifdef SWITCH1 // SWITCH1 is connected
+  if (send44)
+    {
+    sendStatusInteger(NODEID, 44, curSwitch1State);
+    send44 = false;
+    }
+#endif
+
+#ifdef SWITCH2 // SWITCH2 is connected
+if (send45)
+  {
+  sendStatusInteger(NODEID, 45, curSwitch2State);
+  send45 = false;
+  }
+#endif
+
 #ifdef MOTEINOWEATHER
   if (send51 || send54 || send55) 
     {
