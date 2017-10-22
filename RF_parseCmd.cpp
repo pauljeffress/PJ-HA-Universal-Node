@@ -464,7 +464,7 @@ switch (mes.devID) // devID indicates device (sensor) type
   case 400: // 400     - TestExtVar - purely for testing, does not represent any real external variable. (Real - R/W)
     if (mes.cmd == 0)  // WRITE
       {
-      extVar400 = mes.fltVal; 
+      extVar400 = mes.fltintVal; 
       if (setAck) send400 = true; // send message if required
       #ifdef DEBUGPJ2
         Serial.print("Setting extVar400 to ");
@@ -477,7 +477,7 @@ switch (mes.devID) // devID indicates device (sensor) type
   case 401: // 401     - MasterLEDBrightness (0-255) - if 0, tells DUE to turn off whole display. 1..255 means turn it on and set master brightness to X. (Real - R/W)
     if (mes.cmd == 0)  // WRITE
       {
-      extVar401 = mes.fltVal; 
+      extVar401 = mes.fltintVal; 
       if (setAck) send401 = true; // send message if required
       #ifdef DEBUGPJ2
         Serial.print("Setting extVar401 to ");

@@ -34,6 +34,8 @@
 
 #define SERIAL_BAUD 115200
 
+#define STRPAYLOADSIZE 32   // How many chars in the String Payload we send? (must match in GW and Node!!!!!)
+
 /* NODE TYPE - must select one ONLY!!!! */
 //#define ETHNODETYPE // can only be one of these types, never both.
 #define RFNODETYPE   // can only be one of these types, never both.
@@ -61,8 +63,8 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           97       // unique node ID within the closed network
-#define NODEIDSTRING node97       // as per above.  
+#define NODEID           51       // unique node ID within the closed network
+#define NODEIDSTRING node51       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                   // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
@@ -83,8 +85,8 @@
 
 /* RF NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
 ****************************************************/
-#define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
-#define NETWORKID 100	// network ID of the RF network
+#define GATEWAYID 50	    // node ID of the RF Gateway is always 1 
+#define NETWORKID 111	// network ID of the RF network
 #define ENCRYPTKEY "xxxxxxxxxxxxxxxx" // 16-char encryption key; same as on RF Gateway!
     // Wireless settings Match frequency to the hardware version of the radio
     //#define FREQUENCY RF69_433MHZ
@@ -275,13 +277,13 @@
 // ==============================================
 // 'struct's that I had to place here not in main ino file, to assist compilation.
 //
-typedef struct {        // Radio packet structure max 66 bytes
-  int     nodeID;       // node identifier
-  int     devID;        // device identifier 0 is node; 31 is temperature, 32 is humidity
-  int     cmd;          // read or write
-  long    intVal;       // integer payload
-  float   fltVal;       // floating payload
-  char    payLoad[32];  // char array payload
+typedef struct {			// Radio packet structure max 66 bytes (only transmitted between RF GW <> Nodes, not over IP)
+  long  nodeID;			// FROM node. Using a long as its 32bits on AVR and ARM. 
+  long	devID;			// device identifier 0 is node; 31 is temperature, 32 is humidity
+  long	cmd;			  // read or write
+  long	intVal;			// integer payload
+  long	fltintVal;	// floating point payload, but multiplied by 100 and transported as a long.  Works on ARM and AVR the same.
+  char	payLoad[STRPAYLOADSIZE];	// char array, String payload
   } Message;
 
 
@@ -342,6 +344,7 @@ void setStaticOneColourLEDStrip(int stripnum);
 void setStaticPatternLEDStripMode(int stripnum, int stripmode);
 void setDynamicPatternLEDStripMode(int stripnum, int stripmode);
 void checkswitches();
+long fltTofltint(float floatIn);
 
 // =============================================
 // Global variables as 'externs' so individual files can compile if they use them.
