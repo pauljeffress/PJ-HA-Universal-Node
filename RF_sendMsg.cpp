@@ -4,14 +4,14 @@
 #include "a.h" // My global defines and extern variables to help multi file comilation.
 
 void sendMsg() { // prepares values to be transmitted
-  
+  float tempFloat;
   bool tx = false; // transmission flag
   int i;
   // prep clean RF mes structure
   mes.nodeID=NODEID;
   mes.devID = 999; // If I every see this in a message, I know something is wrong.
   mes.intVal = 0;
-  mes.fltVal = 0;
+  mes.fltintVal = 0;
   mes.cmd = 0; // '0' means no action needed in gateway
   // clean up payload as well, so it is always empty unless explicitly used.
   for ( i = 0; i < 32; i++){
@@ -88,14 +88,15 @@ void sendMsg() { // prepares values to be transmitted
       result = ADCL;
       result |= ADCH<<8;
       result = 1126400L / result; // Back-calculate in mV
-      mes.fltVal = float(result/1000.0); // Voltage in Volt (float)
+      tempFloat = float(result/1000.0);  // Voltage in Volt (float) 
+      mes.fltintVal = fltTofltint(tempFloat); 
     #else
-      mes.fltVal = 123.45;  // if it's not a Moteino board just send this fake number until I have time to setup 
+      mes.fltintVal = fltTofltint(123.45);  // if it's not a Moteino board just send this fake number until I have time to setup 
                             // code for other boards like my FeatherM0's.
     #endif
     txRadio();
     send4 = false;
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
   
   if (send5) { // Acknowledge on 'SET'
@@ -296,10 +297,10 @@ void sendMsg() { // prepares values to be transmitted
     #ifdef DS18
       temp = sensors.getTempCByIndex(0);
     #endif
-    mes.fltVal = temp; // Degrees Celcius (float)
+    mes.fltintVal = temp; // Degrees Celcius (float)
     send48 = false;
     txRadio();
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
 
   if (send49) { // Humidity
@@ -307,10 +308,10 @@ void sendMsg() { // prepares values to be transmitted
     #ifdef DHT
       hum = dht.readHumidity();
     #endif
-    mes.fltVal = hum; // Percentage (float)
+    mes.fltintVal = fltTofltint(hum); // Percentage (float)
     send49 = false;
     txRadio();
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
 
   if (send50) { // Temperature
@@ -321,10 +322,10 @@ void sendMsg() { // prepares values to be transmitted
     #ifdef DS18
       temp = sensors.getTempCByIndex(1);
     #endif
-    mes.fltVal = temp; // Degrees Celcius (float)
+    mes.fltintVal = fltTofltint(temp); // Degrees Celcius (float)
     send50 = false;
     txRadio();
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
 
   #ifdef MOTEINOWEATHER
@@ -343,30 +344,30 @@ void sendMsg() { // prepares values to be transmitted
       Serial.println("SENDMSG: sending dev51 - pressure");
     #endif
     mes.devID = 51;
-    mes.fltVal = WeatherShieldData[0]; // get pressure from MOTEINO Weather
+    mes.fltintVal = fltTofltint(WeatherShieldData[0]); // get pressure from MOTEINO Weather
     txRadio();
     send51 = false;
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
   if (send54) { // humidity
     #ifdef DEBUG
       Serial.println("SENDMSG: sending dev54 - humidity");
     #endif
     mes.devID = 54;
-    mes.fltVal = WeatherShieldData[1]; // get humidity from MOTEINO Weather
+    mes.fltintVal = fltTofltint(WeatherShieldData[1]); // get humidity from MOTEINO Weather
     txRadio();
     send54 = false;
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
   if (send55) { // temperature
     #ifdef DEBUG
       Serial.println("SENDMSG: sending dev55 - temperature");
     #endif
     mes.devID = 55;
-    mes.fltVal = WeatherShieldData[2]; // get temp from MOTEINO Weather
+    mes.fltintVal = fltTofltint(WeatherShieldData[2]); // get temp from MOTEINO Weather
     txRadio();
     send55 = false;
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
   #endif // MOTEINOWEATHER
 
@@ -380,20 +381,20 @@ void sendMsg() { // prepares values to be transmitted
       Serial.println("SENDMSG: sending dev52 - visible light");
     #endif
     mes.devID = 52;
-    mes.fltVal = TSL2651Data[0]; // get visible light level from TSL2651
+    mes.fltintVal = fltTofltint(TSL2651Data[0]); // get visible light level from TSL2651
     txRadio();
     send52 = false;
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
   if (send53) { // IR light
     #ifdef DEBUG
       Serial.println("SENDMSG: sending dev53 - IR light");
     #endif
     mes.devID = 53;
-    mes.fltVal = TSL2651Data[1]; // get IR light level from TSL2651
+    mes.fltintVal = fltTofltint(TSL2651Data[1]); // get IR light level from TSL2651
     txRadio();
     send53 = false;
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
   }
   #endif // TSL2651
 
@@ -569,10 +570,10 @@ void sendMsg() { // prepares values to be transmitted
       Serial.println("SENDMSG: sending dev400-TestExtVar");
     #endif
     mes.devID = 400;
-    mes.fltVal = extVar400; // current value we have for it on this Node.
+    mes.fltintVal = fltTofltint(extVar400); // current value we have for it on this Node.
     txRadio();
     send400 = false;
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
     }
   if (send401)  // 401     - MasterLEDBrightness (0-255) - if 0, tells DUE to turn off whole display. 1..255 means turn it on and set master brightness to X. (Real - R/W)
     {
@@ -580,10 +581,10 @@ void sendMsg() { // prepares values to be transmitted
       Serial.println("SENDMSG: sending dev401-MasterLEDBrightness");
     #endif
     mes.devID = 401;
-    mes.fltVal = extVar401; // current value we have for it on this Node.
+    mes.fltintVal = fltTofltint(extVar401); // current value we have for it on this Node.
     txRadio();
     send401 = false;
-    mes.fltVal = 0;  // clear it after use.
+    mes.fltintVal = 0;  // clear it after use.
     }
 #endif // EXTVAR40X
 

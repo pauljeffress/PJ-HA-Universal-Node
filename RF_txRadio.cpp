@@ -37,8 +37,8 @@ void txRadio()
     Serial.print(mes.cmd);
     Serial.print(" intVal: ");
     Serial.print(mes.intVal);
-    Serial.print(" fltVal: ");
-    Serial.print(mes.fltVal);
+    Serial.print(" fltintVal: ");
+    Serial.print(mes.fltintVal);
     Serial.print(" payLoad:");
     Serial.print(mes.payLoad);
     Serial.print(" RSSI: ");
@@ -54,7 +54,7 @@ void txRadio()
 
   CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
   #ifdef DEBUG
-    Serial.print("about to call sendWithRetry()");  
+    Serial.println("about to call sendWithRetry()");  
   #endif
  
   // #ifdef FEATHERM0RFM69
@@ -62,7 +62,7 @@ void txRadio()
   //   else Serial.println("FEATHER:No con...or no ACK");
   // #else
     if (radio.sendWithRetry(GATEWAYID, (const void*)(&mes), sizeof(mes)));
-    else Serial.println("AVR:No con...or no ACK");
+    else Serial.println("No con...or no ACK");
         // xxxx - when we hit the ELSE above, we should also flash an error/pwr LED a few times if available??? S.O.S pattern :)
   // #endif
 
