@@ -208,11 +208,13 @@ void localactions(){
   if (current204 != serSent204) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
     {
       serSent204 = current204; // // update my sent copy of this variable
-      // Tell ATX PSU to wake up and supply the main +5v for LED strip
-      if (current204 != 0) // i.e we have been asked for a brightness > 0, remeber 0 means don't display anything, so turn on shared ATX PSU
-        RMT_PWROn();
-      else
-        RMT_PWROff();     // we have been asked for brightness 0, so turn ATX PSU off.
+      #ifdef RMT_PWR
+        // Tell ATX PSU to wake up and supply the main +5v for LED strip
+        if (current204 != 0) // i.e we have been asked for a brightness > 0, remeber 0 means don't display anything, so turn on shared ATX PSU
+          RMT_PWROn();
+        else
+          RMT_PWROff();     // we have been asked for brightness 0, so turn ATX PSU off.
+      #endif
       sendDevValueToSerial(204, 0, serSent204, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
     }
   if (current221 != serSent221) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
