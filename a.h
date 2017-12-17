@@ -63,12 +63,13 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           51       // unique node ID within the closed network
-#define NODEIDSTRING node51       // as per above.  
+#define NODEID           52       // unique node ID within the closed network
+#define NODEIDSTRING node52       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
-                                  // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
+                                   // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
+                                   // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 13               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 12               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -147,13 +148,13 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-#define SWITCH1       // Have I attached a switch (ON/OFF capable)
-#define SWITCH1PIN A5      // signal pin from 1st SWITCH
+//#define SWITCH1       // Have I attached a switch (ON/OFF capable)
+//    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
-// #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//      #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+      #define ACTUATOR1PIN 11    // contol pin for 1st ACTUATOR if attached, else ignored.
 //      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR2
 //     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
@@ -242,15 +243,14 @@
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
-// #define LEDSTRIP
-//   #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
-//   #define STATIC_PATTERN    1 
-//   #define DYNAMIC_PATTERN   2
-
-//   #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
-//   #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
+#define LEDSTRIP
+   #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
+   #define STATIC_PATTERN    1 
+   #define DYNAMIC_PATTERN   2
+   #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
+   #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
   
-  //#define LEDSTRIPS_REMOTE         // see DEV299 
+  #define LEDSTRIPS_REMOTE         // see DEV299 
                                      // If its defined then it means LEDs are on subordinate MCU.
                                      // If its not defined then it means LEDs are on local MCU.
                                      // Need to set this correctly right up front as a number of subsequent LEDSTRIP DEVice
