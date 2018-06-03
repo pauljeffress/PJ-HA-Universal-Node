@@ -129,18 +129,18 @@
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
 
-// #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//      #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
-//      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR2
-//     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
-//     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR3
-//     #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
-//     #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR4
-//     #define ACTUATOR4PIN 7    // contol pin for 4th ACTUATOR if attached, else ignored.
-//     #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+     #define ACTUATOR1PIN 16    // contol pin for 1st ACTUATOR if attached, else ignored.
+     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR2
+    #define ACTUATOR2PIN 17   // contol pin for 2nd ACTUATOR if attached, else ignored.
+    #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR3
+    #define ACTUATOR3PIN 18    // contol pin for 3rd ACTUATOR if attached, else ignored.
+    #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR4
+    #define ACTUATOR4PIN 19    // contol pin for 4th ACTUATOR if attached, else ignored.
+    #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 
 //#define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 
