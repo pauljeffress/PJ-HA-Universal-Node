@@ -7,28 +7,8 @@
 
 void txRadio() 
   {
-    // #ifdef FEATHERM0RFM69
-    //   typedef struct { // Radio packet structure max 66 bytes
-    //     int16_t nodeID; // node identifier
-    //     int16_t devID; // device identifier 0 is node; 31 is temperature, 32 is humidity
-    //     int16_t cmd; // read or write
-    //     int32_t intVal; // integer payload
-    //     float fltVal; // floating payload
-    //     char payLoad[32]; // char array payload
-    //     } AVRMessage;
-        
-    //   AVRMessage AVRmes;
-
-    //   AVRmes.nodeID = mes.nodeID;
-    //   AVRmes.devID = mes.devID;
-    //   AVRmes.cmd = mes.cmd;
-    //   AVRmes.intVal = mes.intVal;
-    //   AVRmes.fltVal = mes.fltVal;
-    //   AVRmes.payLoad[32] = mes.payLoad[32];
-    // #endif
-
-    #ifdef DEBUG
-    Serial.print("-> Attempint to transmit radio msg - ");  
+  #ifdef DEBUG
+    Serial.print("-> Atempting to  transmit radio msg - ");  
     Serial.print("Node: ");
     Serial.print(mes.nodeID);
     Serial.print(" device: ");
@@ -41,32 +21,47 @@ void txRadio()
     Serial.print(mes.fltintVal);
     Serial.print(" payLoad:");
     Serial.print(mes.payLoad);
-    Serial.print(" RSSI: ");
-    Serial.println(radio.RSSI);
+    //Serial.print(" RSSI: ");
+    //Serial.println(radio.RSSI);
+    Serial.print(" mes size:");
+    Serial.println(sizeof(mes));
   #endif
-
-  // Serial.print("AVRmes size:");
-  // Serial.println(sizeof(AVRmes));
-
-  Serial.print("mes size:");
-  Serial.println(sizeof(mes));
-
 
   CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
-  #ifdef DEBUG
-    Serial.println("about to call sendWithRetry()");  
-  #endif
- 
-  // #ifdef FEATHERM0RFM69
-  //   if (radio.sendWithRetry(GATEWAYID, (const void*)(&AVRmes), sizeof(AVRmes)));
-  //   else Serial.println("FEATHER:No con...or no ACK");
-  // #else
-    if (radio.sendWithRetry(GATEWAYID, (const void*)(&mes), sizeof(mes)));
-    else Serial.println("No con...or no ACK");
-        // xxxx - when we hit the ELSE above, we should also flash an error/pwr LED a few times if available??? S.O.S pattern :)
-  // #endif
+  
+  //RadioHead based sender code
+  Serial.print("Sending to Mesh Addr: ");
+  Serial.println(GATEWAYID);  
 
-  #ifdef DEBUG
+  // XXXX - copy mes into radioDataBuf here XXXXXX
+  // uint8_t junkdata[] = "Hello World!";
+  // for(int i=0; i++; i < sizeof(junkdata))
+  //   {
+  //     radioDataBuf[i] = junkdata[i];
+  //   } 
+
+  // Send a message to an rf69 mesh node
+  // A route to the destination will be automatically discovered.
+  if (manager.sendtoWait((uint8_t*)&mes, sizeof(mes), GATEWAYID) == RH_ROUTER_ERROR_NONE)
+  {
+    // It has been reliably delivered to the next node.
+    Serial.println("Message reliably delivered.");
+  }
+  else
+  {   
+    //The send failed...
+    Serial.println("sendtoWait failed. rf network issue?");
+    #ifdef DEBUGPJ2
+      Serial.print("No connection with GW RF node:");
+      Serial.println(GATEWAYID);
+    #endif
+  }
+
+  // code below is the old pre RadioHead rf send code.
+  //if (radio.sendWithRetry(GATEWAYID, (const void*)(&mes), sizeof(mes)));
+  //else Serial.println("No con...or no ACK");
+
+  #ifdef DEBUGXX
     Serial.println("txRadio() ending");  
   #endif
 } // end txRadio

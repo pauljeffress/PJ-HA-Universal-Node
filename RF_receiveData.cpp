@@ -8,51 +8,65 @@
 bool receiveData() {
   bool validPacket = false;
 
-  if (radio.receiveDone()) // check for received packets
-    {
-    #ifdef DEBUGx
-      Serial.println();
-      Serial.println("<<<rf-rx<<< so starting in receiveData()"); 
-    #endif
+  // if (radio.receiveDone()) // check for received packets
+  //   {
+  //   #ifdef DEBUGx
+  //     Serial.println();
+  //     Serial.println("<<<rf-rx<<< so starting in receiveData()"); 
+  //   #endif
     
-    CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
   
-    if (radio.DATALEN == sizeof(mes)) // we got valid sized message.
-      {
-      mes = *(Message*)radio.DATA;  // copy radio packet
-      #ifdef DEBUGPJ2
-        Serial.println("<<<< Inbound RF packet was correct size."); 
-      #endif
+  
+  //if (radio.DATALEN == sizeof(mes)) // we got valid sized message. // old pre RadioHead code.
+    
+  // New RadioHead code to check for and grab an RF packet
+  uint8_t len = sizeof(mes);
+  uint8_t from;
+  if (manager.recvfromAck((uint8_t*)&mes, &len, &from)) // a valid RadioHead message was received for this node.
+    {
+    CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
+    #ifdef DEBUGPJ2
+      Serial.print("Got a RadioHead message for this node from Node: ");
+      Serial.println(from);
       
-      validPacket = true; // YES, we have a packet !
-      signalStrength = radio.RSSI;
-      #ifdef DEBUGPJ2
-      Serial.print("Inbound Message from Node:");Serial.print(radio.SENDERID);Serial.print(" with RSSI:");Serial.println(radio.RSSI);
-      Serial.println("=========RF msg data===================");
-      Serial.print("From devID:");Serial.println(mes.devID);
-      Serial.print("       cmd:");Serial.println(mes.cmd);
-      Serial.print("    intVal:");Serial.println(mes.intVal);
-      Serial.print(" fltintVal:");Serial.println(mes.fltintVal);
-      Serial.print("To  NodeID:");Serial.println(mes.nodeID);
-      Serial.print("   payLoad:");
-            for (int i=0; i<32; i++) Serial.print(mes.payLoad[i]);
-      Serial.println(":");
-      Serial.println("=======================================");
-      #endif  
+    #endif
+      
+    if (len == HARFPACKSIZE) // we got valid sized home automation message from a node.
+      {
+      // XXXX populate mes from radioDataBuf, maybe use something like mes = *(Message*)radio.DATA;
+      validPacket = true; 
+      }
 
-      }  
-    else  // wrong message size means trouble
+    if (!validPacket) // Bad message size - wrong message size means trouble
       {
       #ifdef DEBUGPJ2
-        Serial.println("ERROR: Inbound RF packet was incorrect size.");
-        Serial.print("radio.DATALEN:");
-        Serial.println(radio.DATALEN);
+        Serial.println();
+        Serial.println("<<<< RF msg received but had invalid home automation message size.");
+        Serial.print("len:");
+        Serial.println(len);
         Serial.print("expected mes size:");
-        Serial.println(sizeof(mes));
-      #endif
+        Serial.println(HARFPACKSIZE);
+      #endif  // DEBUGPJ2
       }
- 
-  if (radio.ACKRequested()) radio.sendACK(); // respond to any ACK request
+    else  // HA message size is good...    
+      {
+      #ifdef DEBUGPJ2
+        Serial.println();
+        Serial.println("<<<< RF msg received with correct size.");
+        Serial.print("Inbound Message from Node:");Serial.println(from);
+        Serial.println("=========RF msg data===================");
+        Serial.print("From   NodeID:");Serial.println(mes.nodeID);
+        Serial.print("      devID:");Serial.println(mes.devID);
+        Serial.print("        cmd:");Serial.println(mes.cmd);
+        Serial.print("     intVal:");Serial.println(mes.intVal);
+        Serial.print("  fltintVal:");Serial.println(mes.fltintVal);
+        Serial.print("    payLoad:");
+        for (int i=0; i<32; i++) Serial.print(mes.payLoad[i]);
+        Serial.println(":");
+        Serial.println("=======================================");
+      #endif  // DEBUGPJ2 
+      }
+        // if (radio.ACKRequested()) radio.sendACK(); // respond to any ACK request // old pre RadioHead code.
     }
   return validPacket; // return code indicates packet received
 } // end recieveData()

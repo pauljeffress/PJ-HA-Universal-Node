@@ -13,7 +13,7 @@
 
 void dosends() {
 
-// xxxx - there should be a stanza here that acts on the wakeUp flag (like it does in RF sendMsg())
+// xxxx - there should be a stanza here that acts on the wakeUp flag (like it does in RF rfSendMsg())
 
   if (send0) 
     {
@@ -218,7 +218,7 @@ if (send45)
 #endif // PING1x
 
 // Dev09x - Error messages
-// xxxx - what other errors should be setup to send back from an ETHNODE (see RF_sendMsg etc on RF side for ideas)
+// xxxx - what other errors should be setup to send back from an ETHNODE (see RF_rfSendMsg etc on RF side for ideas)
 if (send92) 
     {
     sendString(NODEID, 92, DEV92ERRORSTR);

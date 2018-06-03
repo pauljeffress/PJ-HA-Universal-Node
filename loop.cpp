@@ -50,7 +50,8 @@ setPeriodicTransmissions();  // tag what parameters are to be sent in the "perio
 
 #ifdef RFNODETYPE
     /* SEND RADIO PACKETS */
-    sendMsg(); // send any radio messages whose sendXX flags are set.
+    if (rfTxAllowed) rfSendMsg(); // send any radio messages whose sendXX flags are set.
+    
     /* RECEIVE RADIO PACKETS and action them */
     if (receiveData()) parseCmd(); // receive from RF and parse/action any valid radio message.
 #endif

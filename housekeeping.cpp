@@ -71,6 +71,28 @@ void housekeeping() {
     if (lastMinute != (millis()/60000)) {     // another minute passed ?
       lastMinute = millis()/60000;
       upTime++;
+      #ifdef DEBUGXX
+        Serial.print("Uptime:");
+        Serial.print(upTime);
+        Serial.print("  CommsLEDonMillis:");
+        Serial.print(CommsLEDonMillis);
+        Serial.print("  millis:");
+        Serial.print(millis());
+        Serial.print("  COMMS_LED_ON_PERIOD:");
+        Serial.println(COMMS_LED_ON_PERIOD);        
+      #endif
+      }
+
+
+// Attend to the 'canRfTx' flag
+    if (lastRfTxTime != (millis()/CANRFTX_DELAY)) {     // has another period of CANRFTX_DELAY mSec passed ?
+      lastRfTxTime = millis()/CANRFTX_DELAY;  // Yes - well lets store the current millis time.
+      rfTxAllowed = true;                   // And allow a tx to happen.
+      
+      #ifdef DEBUGPJ
+        Serial.print("rfTxAllowed set at:");
+        Serial.println(lastRfTxTime);
+      #endif
       }
 
 } // END - housekeeping()

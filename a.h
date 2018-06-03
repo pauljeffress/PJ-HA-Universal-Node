@@ -5,10 +5,13 @@
 
 #include <arduino.h>
 
+#define RH_MESH_MAX_MESSAGE_LEN 80  // Max size of packet for RadioHead
+#define HARFPACKSIZE 52 // Proper packet size for one of my home automation RF packets
+#include <RHMesh.h>
+#include <RH_RF69.h>
 #include <SPI.h>
 #include <Ethernet.h>
 #include <PubSubClient.h>
-#include <RFM69.h>
 #include <Wire.h> // for I2C bus, used by many DEVices
 #include "RTClib.h"
 
@@ -22,6 +25,8 @@
 //#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
 //  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION_FPS etc.
 
+// RadioHead Mesh Addressing
+#define CLIENT_ADDRESS 2
 
 /* DEBUG CONFIGURATION PARAMETERS */
 #define DEBUG // uncomment for debugging
@@ -63,8 +68,8 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           52       // unique node ID within the closed network
-#define NODEIDSTRING node52       // as per above.  
+#define NODEID           02       // unique node ID within the closed network
+#define NODEIDSTRING node02       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
@@ -86,7 +91,7 @@
 
 /* RF NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
 ****************************************************/
-#define GATEWAYID 50	    // node ID of the RF Gateway is always 1 
+#define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
 #define NETWORKID 111	// network ID of the RF network
 #define ENCRYPTKEY "xxxxxxxxxxxxxxxx" // 16-char encryption key; same as on RF Gateway!
     // Wireless settings Match frequency to the hardware version of the radio
@@ -95,6 +100,7 @@
 #define FREQUENCY RF69_915MHZ
 #define IS_RFM69HW // uncomment only for RFM69HW!
 #define ACK_TIME 50 // max # of ms to wait for an ack
+#define CANRFTX_DELAY 200 // mSec - gates how often rfSendMsg() is called. See "rftx".
 /***************************************************/
 
 
@@ -148,13 +154,13 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-//#define SWITCH1       // Have I attached a switch (ON/OFF capable)
-//    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
+#define SWITCH1       // Have I attached a switch (ON/OFF capable)
+    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
-#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-      #define ACTUATOR1PIN 11    // contol pin for 1st ACTUATOR if attached, else ignored.
+//#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+//      #define ACTUATOR1PIN A5    // contol pin for 1st ACTUATOR if attached, else ignored.
 //      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR2
 //     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
@@ -243,14 +249,14 @@
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
-#define LEDSTRIP
-   #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
-   #define STATIC_PATTERN    1 
-   #define DYNAMIC_PATTERN   2
-   #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
-   #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
+// #define LEDSTRIP
+//    #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
+//    #define STATIC_PATTERN    1 
+//    #define DYNAMIC_PATTERN   2
+//    #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
+//    #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
   
-  #define LEDSTRIPS_REMOTE         // see DEV299 
+//   #define LEDSTRIPS_REMOTE         // see DEV299 
                                      // If its defined then it means LEDs are on subordinate MCU.
                                      // If its not defined then it means LEDs are on local MCU.
                                      // Need to set this correctly right up front as a number of subsequent LEDSTRIP DEVice
@@ -302,7 +308,7 @@ void mqtt_subs_switch();
 void localactions();
 void setPeriodicTransmissions();
 void dosends();
-void sendMsg();
+void rfSendMsg();
 void parseCmd();
 void txRadio();
 void sendserialtoslave();
@@ -394,10 +400,14 @@ extern char  *clientName;
 extern char  buff_topic[30];      
 extern char  buff_mess[32]; 
 extern bool  msgBlock;      
-
+extern uint8_t radioDataBuf[RH_MESH_MAX_MESSAGE_LEN];
 extern Message mes;
 extern bool wakeUp;
-extern RFM69 radio;
+extern long lastRfTxTime;
+extern bool rfTxAllowed;
+//extern RFM69 radio;
+extern RH_RF69 driver;  
+extern RHMesh manager;
 
 #ifdef BUTTON1
 extern bool send40;
