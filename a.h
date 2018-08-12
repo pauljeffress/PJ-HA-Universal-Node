@@ -26,7 +26,7 @@
 //  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION_FPS etc.
 
 // RadioHead Mesh Addressing
-#define CLIENT_ADDRESS 2
+#define CLIENT_ADDRESS 3
 
 /* DEBUG CONFIGURATION PARAMETERS */
 #define DEBUG // uncomment for debugging
@@ -68,8 +68,8 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
-#define NODEID           02       // unique node ID within the closed network
-#define NODEIDSTRING node02       // as per above.  
+#define NODEID           03       // unique node ID within the closed network
+#define NODEIDSTRING node03       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
