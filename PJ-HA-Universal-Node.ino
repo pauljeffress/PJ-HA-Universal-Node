@@ -107,17 +107,22 @@ char foo;
 /* RF NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES */
 // These parameters are only used/required if RF Node Type else ignored.
 #ifdef RFNODETYPE
-    #include <RFM69.h>
+    //#include <RFM69.h>
     #include <SPI.h>
     bool	promiscuousMode = false; // only listen to nodes within the closed network
     bool  wakeUp = true; // wakeup flag
-    //#ifdef FEATHERM0RFM69 // Need to specify all pins if not using a Moteino board.
+    
     //RFM69 radio = RFM69(RFM69_CS, RFM69_IRQ, IS_RFM69HCW, RFM69_IRQN);
-    RFM69 radio = RFM69(RFM69_CS, RFM69_IRQ, IS_RFM69HCW, RFM69_IRQN);
-    //#else
-    //  RFM69 radio;
-    //#endif
+  
 
+    // Define our RFM69 RadioHead 'driver'.
+    RH_RF69 driver(RFM69_CS, RFM69_IRQ);  
+
+    // RadioHead 'manager' to manage message delivery and receipt, using the driver declared above
+    RHMesh manager(driver, CLIENT_ADDRESS);
+
+    long lastRfTxTime = 0;  // helps gate how often rfSendMsg() is called.
+    bool rfTxAllowed = true; // helps gate how often rfSendMsg() is called.
 #endif
 
 //
@@ -255,7 +260,7 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
 //-------------------------------------------------------------------------
 // GENERAL STARTUP VARIABLES & DEFAULTS 
 //-------------------------------------------------------------------------
-long  TXinterval = 600; // periodic transmission interval in seconds (This is Dev001 for this Node)
+long  TXinterval = 120; // periodic transmission interval in seconds (This is Dev001 for this Node)
 long  TIMinterval = 20; // timer interval in seconds (This is Dev007 for this Node)
 bool  toggleOnButton = true; // toggle output on button (This is Dev006 for this Node)
 bool	ackButton = false; // flag for message on button press
@@ -277,6 +282,8 @@ long  StatusLEDonMillis;        // timestamp when Status LED was turned on. Used
 bool  msgBlock = false; // flag to hold button messages to prevent overload
 
 Message mes;
+
+uint8_t radioDataBuf[RH_MESH_MAX_MESSAGE_LEN]; //RadioHead tx/rx data
 //-------------------------------------------------------------------------
 
 

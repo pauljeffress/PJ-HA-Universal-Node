@@ -17,6 +17,9 @@ void setup() {
 #ifdef DEBUGPJ1
   // while (!Serial);   // On FEATHERM0RFM69 you need this or you may miss first bits of output. 
                         // But if no USB is connected then it will hang here.
+  delay(5000);  // A better way to ensure Serial is ready on boards like Feathers, that does not block
+                // the whole sketch from running if no USB plugged in. But still gives device
+                // time to get it going so I don't miss first few debug outputs.
   Serial.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
 #endif
 
@@ -40,7 +43,7 @@ void setup() {
   #ifdef RFNODETYPE
     Serial.println("RF Node Type");
     Serial.print("Freq ");
-    Serial.print(FREQUENCY==RF69_433MHZ ? 433 : FREQUENCY==RF69_868MHZ ? 868 : 915);
+    Serial.print(915);
     Serial.println(" Mhz");
   #endif
   #ifdef ETHNODETYPE
@@ -85,6 +88,9 @@ void setup() {
 
 
   // Setup indicator LEDs to initial state
+  #ifdef DEBUGPJ2
+    Serial.println("Starting LED flash"); 
+  #endif
   pinMode(COMMS_LED_PIN, OUTPUT);   // set pin of IP indicator
 #ifdef ETHNODETYPE  
   pinMode(MQCON, OUTPUT);           // set pin for MQTT connection indicator
@@ -132,7 +138,9 @@ void setup() {
 #endif
   digitalWrite(COMMS_LED_PIN, LOW);             
   delay(300);
-  
+  #ifdef DEBUGPJ2
+    Serial.println("Ended LED flash"); 
+  #endif
 #ifdef ETHNODETYPE   // Do all of the ETHNODETYPE unique setup() actions.
 // Setup Ethernet port
   Ethernet.begin(mac, ip);     // start the Ethernet connection with static IP
@@ -156,24 +164,58 @@ void setup() {
 #ifdef RFNODETYPE
   // Do all of the RFNODETYPE unique setup() actions.
   // xxxx - decide what LEDs will be on a standard RF Node and ensure they get pinMode intialiased and flashed here, like they do for ETH NODE
-  #ifdef FEATHERM0RFM69
-      // Hard Reset the RFM module
-      pinMode(RFM69_RST, OUTPUT);
-      digitalWrite(RFM69_RST, HIGH);
-      delay(100);
-      digitalWrite(RFM69_RST, LOW);
-      delay(100);
-  #endif  
-  radio.initialize(FREQUENCY,NODEID,NETWORKID); // initialise radio
-  #ifdef IS_RFM69HW
-    radio.setHighPower(); // only for RFM69HW!
+  
+  #ifdef DEBUGPJ2
+    Serial.println("radio initialisation starting.");
   #endif
-  radio.setPowerLevel(31); // power output ranges from 0 (5dBm) to 31 (20dBm)
-  radio.encrypt(ENCRYPTKEY); // set radio encryption
-  radio.promiscuous(promiscuousMode); // only listen to closed network
-  wakeUp = true; // set flag to send wakeup message (because we have just started booted)
-  delay(5000); // xxxx - do I need this?
-  radio.sleep();  // xxxx - do I need this?
+
+  // RadioHead radio initialisation code
+   if (!manager.init())
+    Serial.println("init FAILED");
+  else
+    Serial.println("init succeded");
+  // Defaults after init are 434.0MHz, modulation GFSK_Rb250Fd250, +13dbM (for low power module)
+  // No encryption
+  
+  if (!driver.setFrequency(915.0))
+    Serial.println("setFrequency FAILED");
+  else
+    Serial.println("setFrequency succeded");
+    
+  // If you are using a high power RF69 eg RFM69HW, you *must* set a Tx power with the
+  // ishighpowermodule flag set like this:
+  driver.setTxPower(13, true);
+    
+  // The encryption key has to be the same as the one in the client
+  uint8_t key[] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+                    0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+  //driver.setEncryptionKey(key); Serial.println("Encryption ENABLED");
+  Serial.println("Encryption DISABLED");
+
+  #ifdef DEBUGPJ2
+    Serial.println("radio initialisation is done.");
+  #endif
+
+  // Below is the no longer needed code from pre RadioHead days.
+  // #ifdef FEATHERM0RFM69
+  //     // Hard Reset the RFM module
+  //     pinMode(RFM69_RST, OUTPUT);
+  //     digitalWrite(RFM69_RST, HIGH);
+  //     delay(100);
+  //     digitalWrite(RFM69_RST, LOW);
+  //     delay(100);
+  // #endif  
+  // radio.initialize(FREQUENCY,NODEID,NETWORKID); // initialise radio
+  // #ifdef IS_RFM69HW
+  //   radio.setHighPower(); // only for RFM69HW!
+  // #endif
+  // radio.setPowerLevel(31); // power output ranges from 0 (5dBm) to 31 (20dBm)
+  // radio.encrypt(ENCRYPTKEY); // set radio encryption
+  // radio.promiscuous(promiscuousMode); // only listen to closed network
+  // wakeUp = true; // set flag to send wakeup message (because we have just started booted)
+  // delay(5000); // xxxx - do I need this?
+  // radio.sleep();  // xxxx - do I need this?
+
 #endif  // RFNODETYPE
 
 // Do any device specific initialisations (note these cmds can't be used before setup()...compiler errors
