@@ -170,7 +170,7 @@ void setup() {
   #endif
 
   // RadioHead radio initialisation code
-   if (!driver.init())
+   if (!manager.init())
     Serial.println("init FAILED");
   else
     Serial.println("init succeded");

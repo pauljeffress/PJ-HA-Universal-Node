@@ -27,6 +27,8 @@ void txRadio()
     Serial.println(sizeof(mes));
   #endif
 
+  uint8_t RH_SendStatus = 0;  // I use this to track detailed response from RH's sendtoWait function.
+
   CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
   
   //RadioHead based sender code
@@ -42,24 +44,31 @@ void txRadio()
 
   // Send a message to an rf69 mesh node
   // A route to the destination will be automatically discovered.
-  if (manager.sendtoWait((uint8_t*)&mes, sizeof(mes), GATEWAYID) == RH_ROUTER_ERROR_NONE)
-  {
-    // It has been reliably delivered to the next node.
-    Serial.println("Message reliably delivered.");
-  }
-  else
-  {   
-    //The send failed...
-    Serial.println("sendtoWait failed. rf network issue?");
-    #ifdef DEBUGPJ2
-      Serial.print("No connection with GW RF node:");
-      Serial.println(GATEWAYID);
-    #endif
-  }
+  // if (manager.sendtoWait((uint8_t*)&mes, sizeof(mes), GATEWAYID) == RH_ROUTER_ERROR_NONE)
+  // {
+  //   // It has been reliably delivered to the next node.
+  //   Serial.println("Message reliably delivered.");
+  // }
+  // else
+  // {   
+  //   //The send failed...
+  //   Serial.println("sendtoWait failed. rf network issue?");
+  //   #ifdef DEBUGPJ2
+  //     Serial.print("No connection with GW RF node:");
+  //     Serial.println(GATEWAYID);
+  //   #endif
+  // }
 
-  // code below is the old pre RadioHead rf send code.
-  //if (radio.sendWithRetry(GATEWAYID, (const void*)(&mes), sizeof(mes)));
-  //else Serial.println("No con...or no ACK");
+  RH_SendStatus = manager.sendtoWait((uint8_t*)&mes, sizeof(mes), GATEWAYID);
+  
+  if (RH_SendStatus == RH_ROUTER_ERROR_NONE) Serial.println("Message reliably delivered.");
+  else if (RH_SendStatus == RH_ROUTER_ERROR_INVALID_LENGTH) Serial.println("SEND FAIL: RH library - message too large.");     
+  else if (RH_SendStatus == RH_ROUTER_ERROR_NO_ROUTE) Serial.println("SEND FAIL: RH library - no route found.");
+  else if (RH_SendStatus == RH_ROUTER_ERROR_UNABLE_TO_DELIVER) Serial.println("SEND FAIL: RH library - Unable to deliver.");
+  else Serial.println("SEND FAIL: returned error");     
+
+
+
 
   #ifdef DEBUGXX
     Serial.println("txRadio() ending");  

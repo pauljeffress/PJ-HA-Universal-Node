@@ -27,6 +27,7 @@
 
 // RadioHead Mesh Addressing
 #define CLIENT_ADDRESS 3
+#define debug_mode 1  // Set debug_mode to 1 for Serial Monitor
 
 /* DEBUG CONFIGURATION PARAMETERS */
 #define DEBUG // uncomment for debugging
@@ -154,8 +155,8 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-#define SWITCH1       // Have I attached a switch (ON/OFF capable)
-    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
+//#define SWITCH1       // Have I attached a switch (ON/OFF capable)
+    //#define SWITCH1PIN A5      // signal pin from 1st SWITCH
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 

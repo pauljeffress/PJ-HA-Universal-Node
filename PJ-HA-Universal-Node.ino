@@ -260,7 +260,7 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
 //-------------------------------------------------------------------------
 // GENERAL STARTUP VARIABLES & DEFAULTS 
 //-------------------------------------------------------------------------
-long  TXinterval = 600; // periodic transmission interval in seconds (This is Dev001 for this Node)
+long  TXinterval = 120; // periodic transmission interval in seconds (This is Dev001 for this Node)
 long  TIMinterval = 20; // timer interval in seconds (This is Dev007 for this Node)
 bool  toggleOnButton = true; // toggle output on button (This is Dev006 for this Node)
 bool	ackButton = false; // flag for message on button press
