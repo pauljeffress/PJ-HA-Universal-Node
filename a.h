@@ -44,7 +44,8 @@
 //#define ETHNODETYPE // can only be one of these types, never both.
 #define RFNODETYPE   // can only be one of these types, never both.
 
-#define FEATHERM0RFM69  // uncomment if we are using an Adafruit FeatherM0-RFM69 or similar
+#define FEATHERM0       // uncomment if we are using an Adafruit Feather M0
+#define FEATHERM0RFM69  // also uncomment if we are using an Adafruit FeatherM0-RFM69 or similar
                         // Search code to see where this is used. 1st thing I found I needed to use it
                         // for was to execute the RFM hard reset during setup(), as the Feather has a pin
                         // wired to the RFM Reset pin to do it :)
@@ -67,10 +68,10 @@
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
 
-#define CLIENT_ADDRESS 2          // RadioHead Mesh Addressing
+#define CLIENT_ADDRESS    3       // RadioHead Mesh Addressing
 #define debug_mode 1              // Set debug_mode to 1 for Serial Monitor (RH lib?)
-#define NODEID           02       // unique node ID within the closed network
-#define NODEIDSTRING node02       // as per above.  
+#define NODEID           03       // unique node ID within the closed network
+#define NODEIDSTRING node03       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.

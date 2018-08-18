@@ -38,7 +38,7 @@ void dosends() {
 
   if (send4)
     {
-    sendReal(NODEID, 4, 99.99); //    xxxx - put code in here to extract battery voltage (see my RF Node code). Just faking 99.99v for now
+    sendReal(NODEID, 4, 99.99); //    xxxx - put code in here to extract battery voltage (see my RF_sendMsg() code). Just faking 99.99v for now
     send4 = false;
     }
 
