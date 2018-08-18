@@ -25,9 +25,7 @@
 //#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
 //  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION_FPS etc.
 
-// RadioHead Mesh Addressing
-#define CLIENT_ADDRESS 3
-#define debug_mode 1  // Set debug_mode to 1 for Serial Monitor
+
 
 /* DEBUG CONFIGURATION PARAMETERS */
 #define DEBUG // uncomment for debugging
@@ -46,12 +44,12 @@
 //#define ETHNODETYPE // can only be one of these types, never both.
 #define RFNODETYPE   // can only be one of these types, never both.
 
-#define FEATHERM0RFM69  // uncomment if we are using an Adafruit FeatherM0-RFM69 or similar
+#define FEATHERM0       // uncomment if we are using an Adafruit Feather M0
+#define FEATHERM0RFM69  // also uncomment if we are using an Adafruit FeatherM0-RFM69 or similar
                         // Search code to see where this is used. 1st thing I found I needed to use it
                         // for was to execute the RFM hard reset during setup(), as the Feather has a pin
                         // wired to the RFM Reset pin to do it :)
     #define IS_RFM69HCW true // set to 'true' if you are using an RFM69HCW module
-    #define IS_RFM69HW   // need to define both as RFM69 lib and Feather sample code use diff defines.
     // for Feather M0 Radio
     #define RFM69_CS 8
     #define RFM69_IRQ 3
@@ -69,6 +67,9 @@
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
+
+#define CLIENT_ADDRESS    3       // RadioHead Mesh Addressing
+#define debug_mode 1              // Set debug_mode to 1 for Serial Monitor (RH lib?)
 #define NODEID           03       // unique node ID within the closed network
 #define NODEIDSTRING node03       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
@@ -94,14 +95,8 @@
 ****************************************************/
 #define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
 #define NETWORKID 111	// network ID of the RF network
-#define ENCRYPTKEY "xxxxxxxxxxxxxxxx" // 16-char encryption key; same as on RF Gateway!
-    // Wireless settings Match frequency to the hardware version of the radio
-    //#define FREQUENCY RF69_433MHZ
-    //#define FREQUENCY RF69_868MHZ
-#define FREQUENCY RF69_915MHZ
-#define IS_RFM69HW // uncomment only for RFM69HW!
-#define ACK_TIME 50 // max # of ms to wait for an ack
-#define CANRFTX_DELAY 200 // mSec - gates how often rfSendMsg() is called. See "rftx".
+#define CANRFTX_DELAY 200 // mSec - gates how often rfSendMsg() is called.
+// Note: Many additional RF Parameters are can be found within setup().
 /***************************************************/
 
 
@@ -155,8 +150,8 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-//#define SWITCH1       // Have I attached a switch (ON/OFF capable)
-    //#define SWITCH1PIN A5      // signal pin from 1st SWITCH
+#define SWITCH1       // Have I attached a switch (ON/OFF capable)
+    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 

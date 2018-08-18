@@ -90,6 +90,21 @@ void rfSendMsg() { // prepares values to be transmitted
       Serial.println("rfSendMsg: sending dev4 - voltage");
     #endif
     mes.devID = 4;
+    mes.fltintVal = fltTofltint(123.45);  // send this fake number unless one of the below board specific routines kicks in.
+    
+    #ifdef FEATHERM0 //  The below code to measure battery voltage only applies to Feather M0 boards
+      #define VBATPIN A7
+      float measuredvbat = analogRead(VBATPIN);
+      measuredvbat *= 2;    // we divided by 2, so multiply back
+      measuredvbat *= 3.3;  // Multiply by 3.3V, our reference voltage
+      measuredvbat /= 1024; // convert to voltage
+      mes.fltintVal = fltTofltint(measuredvbat);   // convert to one of my special fltints ready to send.
+      #ifdef DEBUG
+        Serial.print("VBat: " ); Serial.println(measuredvbat);
+        Serial.print("as fltintVal: "); Serial.println(mes.fltintVal);
+      #endif
+    #endif
+
     #ifdef MOTEINONODE  //  The below code to measure battery voltage only applies to Moteino boards
       long result; // Read 1.1V reference against AVcc
       ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
@@ -101,10 +116,8 @@ void rfSendMsg() { // prepares values to be transmitted
       result = 1126400L / result; // Back-calculate in mV
       tempFloat = float(result/1000.0);  // Voltage in Volt (float) 
       mes.fltintVal = fltTofltint(tempFloat); 
-    #else
-      mes.fltintVal = fltTofltint(123.45);  // if it's not a Moteino board just send this fake number until I have time to setup 
-                            // code for other boards like my FeatherM0's.
     #endif
+     
     txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
     send4 = false;
     mes.fltintVal = 0;  // clear it after use.
