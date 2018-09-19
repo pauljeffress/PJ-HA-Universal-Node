@@ -3,6 +3,7 @@
         {
             "name": "Mac",
             "includePath": [
+                "/Users/pauljeffress/Library/Arduino15/packages/adafruit/hardware/samd/1.2.1/**",
                 "/usr/include",
                 "/usr/local/include",
                 "${workspaceRoot}"
@@ -21,6 +22,9 @@
             "macFrameworkPath": [
                 "/System/Library/Frameworks",
                 "/Library/Frameworks"
+            ],
+            "forcedInclude": [
+                "/Users/pauljeffress/Library/Arduino15/packages/adafruit/hardware/samd/1.2.1/cores/arduino/Arduino.h"
             ]
         },
         {

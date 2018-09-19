@@ -68,15 +68,15 @@
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
 
-#define CLIENT_ADDRESS    3       // RadioHead Mesh Addressing
+#define CLIENT_ADDRESS    7       // RadioHead Mesh Addressing
 #define debug_mode 1              // Set debug_mode to 1 for Serial Monitor (RH lib?)
-#define NODEID           03       // unique node ID within the closed network
-#define NODEIDSTRING node03       // as per above.  
-#define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           07       // unique node ID within the closed network
+#define NODEIDSTRING node07       // as per above.  
+#define COMMS_LED_PIN A4          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 12               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN A5              // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -150,17 +150,17 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-#define SWITCH1       // Have I attached a switch (ON/OFF capable)
-    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
+//#define SWITCH1       // Have I attached a switch (ON/OFF capable)
+    //#define SWITCH1PIN A5      // signal pin from 1st SWITCH
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
-//#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//      #define ACTUATOR1PIN A5    // contol pin for 1st ACTUATOR if attached, else ignored.
-//      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR2
-//     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
-//     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+      #define ACTUATOR1PIN A1    // contol pin for 1st ACTUATOR if attached, else ignored.
+      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+ #define ACTUATOR2
+      #define ACTUATOR2PIN A2   // contol pin for 2nd ACTUATOR if attached, else ignored.
+      #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR3
 //     #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
 //     #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
