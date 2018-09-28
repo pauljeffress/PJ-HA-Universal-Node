@@ -156,10 +156,10 @@
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
 #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-      #define ACTUATOR1PIN A1    // contol pin for 1st ACTUATOR if attached, else ignored.
+      #define ACTUATOR1PIN A3    // contol pin for 1st ACTUATOR if attached, else ignored.
       #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
  #define ACTUATOR2
-      #define ACTUATOR2PIN A2   // contol pin for 2nd ACTUATOR if attached, else ignored.
+      #define ACTUATOR2PIN A1   // contol pin for 2nd ACTUATOR if attached, else ignored.
       #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR3
 //     #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
