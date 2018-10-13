@@ -83,7 +83,7 @@ void housekeeping() {
       #endif
       }
 
-
+#ifdef RFNODETYPE
 // Attend to the 'canRfTx' flag
     if (lastRfTxTime != (millis()/CANRFTX_DELAY)) {     // has another period of CANRFTX_DELAY mSec passed ?
       lastRfTxTime = millis()/CANRFTX_DELAY;  // Yes - well lets store the current millis time.
@@ -94,5 +94,5 @@ void housekeeping() {
         Serial.println(lastRfTxTime);
       #endif
       }
-
+#endif
 } // END - housekeeping()

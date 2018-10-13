@@ -10,7 +10,8 @@
 #include <RHMesh.h>
 #include <RH_RF69.h>
 #include <SPI.h>
-#include <Ethernet.h>
+//#include <Ethernet.h>
+#include <Ethernet2.h>        // Ethernet2 library, Adafruits Fork. Required for Feather Ethernet Wing.
 #include <PubSubClient.h>
 #include <Wire.h> // for I2C bus, used by many DEVices
 #include "RTClib.h"
@@ -41,42 +42,42 @@
 #define STRPAYLOADSIZE 32   // How many chars in the String Payload we send? (must match in GW and Node!!!!!)
 
 /* NODE TYPE - must select one ONLY!!!! */
-//#define ETHNODETYPE // can only be one of these types, never both.
-#define RFNODETYPE   // can only be one of these types, never both.
+#define ETHNODETYPE // can only be one of these types, never both.
+//#define RFNODETYPE   // can only be one of these types, never both.
 
 #define FEATHERM0       // uncomment if we are using an Adafruit Feather M0
-#define FEATHERM0RFM69  // also uncomment if we are using an Adafruit FeatherM0-RFM69 or similar
-                        // Search code to see where this is used. 1st thing I found I needed to use it
-                        // for was to execute the RFM hard reset during setup(), as the Feather has a pin
-                        // wired to the RFM Reset pin to do it :)
-    #define IS_RFM69HCW true // set to 'true' if you are using an RFM69HCW module
-    // for Feather M0 Radio
-    #define RFM69_CS 8
-    #define RFM69_IRQ 3
-    #define RFM69_IRQN 3 // Pin 3 is IRQ 3!
-    #define RFM69_RST 4
+// #define FEATHERM0RFM69  // also uncomment if we are using an Adafruit FeatherM0-RFM69 or similar
+//                         // Search code to see where this is used. 1st thing I found I needed to use it
+//                         // for was to execute the RFM hard reset during setup(), as the Feather has a pin
+//                         // wired to the RFM Reset pin to do it :)
+//     #define IS_RFM69HCW true // set to 'true' if you are using an RFM69HCW module
+//     // for Feather M0 Radio
+//     #define RFM69_CS 8
+//     #define RFM69_IRQ 3
+//     #define RFM69_IRQN 3 // Pin 3 is IRQ 3!
+//     #define RFM69_RST 4
 
-    /* Feather m0 w/wing
-    #define RFM69_RST 11 // "A"
-    #define RFM69_CS 10 // "B"
-    #define RFM69_IRQ 6 // "D"
-    #define RFM69_IRQN digitalPinToInterrupt(RFM69_IRQ )
-    */
+//     /* Feather m0 w/wing
+//     #define RFM69_RST 11 // "A"
+//     #define RFM69_CS 10 // "B"
+//     #define RFM69_IRQ 6 // "D"
+//     #define RFM69_IRQN digitalPinToInterrupt(RFM69_IRQ )
+//     */
 
 #define VERSION "UNIvGitHub"  // this value can be queried as device 3
 
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
 
-#define CLIENT_ADDRESS    3       // RadioHead Mesh Addressing
+#define CLIENT_ADDRESS    23       // RadioHead Mesh Addressing
 #define debug_mode 1              // Set debug_mode to 1 for Serial Monitor (RH lib?)
-#define NODEID           03       // unique node ID within the closed network
-#define NODEIDSTRING node03       // as per above.  
+#define NODEID           23       // unique node ID within the closed network
+#define NODEIDSTRING node23       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 12               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 11               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -85,28 +86,45 @@
 
 /* ETH NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
 *****************************************************/
-//#define SUBTOPICSTR "home/eth_nd/sb/node23/#"   // MQTT topic, only used in ETH Node type
-//#define CLIENTNAMESTR "PJ_HA_Eth_Node_23_HouseFPS"  // MQTT topic, only used in ETH Node type
-//#define MQCON 24          // GREEN - MQTT Connection indicator, only used in ETH Node type
+#define SUBTOPICSTR "home/eth_nd/sb/node23/#"   // MQTT topic, only used in ETH Node type
+#define CLIENTNAMESTR "PJ_HA_Eth_Node_23_HouseBTDL"  // MQTT topic, only used in ETH Node type
+#define MQCON 12          // GREEN - MQTT Connection indicator, only used in ETH Node type
+// Ethernet settings
+// for use with Adafruit Ethernet FeatherWing
+#if defined(ESP8266)
+  // default for ESPressif
+  #define WIZ_CS 15
+#elif defined(ESP32)
+  #define WIZ_CS 33
+#elif defined(ARDUINO_STM32_FEATHER)
+  // default for WICED
+  #define WIZ_CS PB4
+#elif defined(TEENSYDUINO)
+  #define WIZ_CS 10
+#elif defined(ARDUINO_FEATHER52)
+  #define WIZ_CS 11
+#else   // default for 328p, 32u4, M4 and M0
+  #define WIZ_CS 10
+#endif
 /***************************************************/
 
 
 /* RF NODE TYPE CONFIGURATION PARAMETERS & LIBRARIES 
 ****************************************************/
-#define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
-#define NETWORKID 111	// network ID of the RF network
-#define CANRFTX_DELAY 200 // mSec - gates how often rfSendMsg() is called.
+//#define GATEWAYID 1	    // node ID of the RF Gateway is always 1 
+//#define NETWORKID 111	// network ID of the RF network
+//#define CANRFTX_DELAY 200 // mSec - gates how often rfSendMsg() is called.
 // Note: Many additional RF Parameters are can be found within setup().
 /***************************************************/
 
 
 // define types of Serial messages, this is the protocol used for slaveserial type devices.
-#define HELLO 1
-#define KEYPRESSED 2
-#define TOGGLEEXTENDEDACTUATOR 3
-#define EXTENDEDACTUATORON 4
-#define EXTENDEDACTUATOROFF 5
-#define SERIALWATCHDOGTIMEOUT 30  // How long (in secs) before we consider serial comms lost
+// #define HELLO 1
+// #define KEYPRESSED 2
+// #define TOGGLEEXTENDEDACTUATOR 3
+// #define EXTENDEDACTUATORON 4
+// #define EXTENDEDACTUATOROFF 5
+// #define SERIALWATCHDOGTIMEOUT 30  // How long (in secs) before we consider serial comms lost
 
 // Error Dev Types (Dev9x etc)
 #define DEV92ERRORSTR "Error message - You tried to READ from a WO device"
@@ -150,8 +168,8 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-#define SWITCH1       // Have I attached a switch (ON/OFF capable)
-    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
+//#define SWITCH1       // Have I attached a switch (ON/OFF capable)
+//    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 

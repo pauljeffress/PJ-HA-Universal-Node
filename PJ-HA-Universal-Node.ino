@@ -230,11 +230,12 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
 // These parameters are only used/required if Eth Node Type else ignored.
 #ifdef ETHNODETYPE
     #include <SPI.h>
-    #include <Ethernet.h>
+  //#include <Ethernet.h>
+    #include <Ethernet2.h>        // Ethernet2 library, Adafruits Fork. Required for Feather Ethernet Wing.
     #include <PubSubClient.h>
     byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0x00, 0x23 };  // MAC address for ethernet << MUST CHANGE per node!!!!!>>
-    byte mqtt_server[] = { 192, 168, 200, 241};   // MQTT broker address
-    byte ip[] = { 192, 168, 200 , 238 };      // Gateway address (if DHCP fails) << MUST CHANGE per node.
+    byte mqtt_server[] = { 192, 168, 1, 10};   // MQTT broker address
+    byte ip[] = { 192, 168, 1 , 14 };      // Gateway address (if DHCP fails) << MUST CHANGE per node.
     String strPayload;  // used in mqtt_subs() etc, when ingesting a new MQTT message.
     //void mqtt_subs(char* topic, byte* payload, unsigned int length);  // I had to put this prototype here or else I could not compile
     EthernetClient ethClient;

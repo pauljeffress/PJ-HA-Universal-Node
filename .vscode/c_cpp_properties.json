@@ -45,6 +45,7 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\Paul\\AppData\\Local\\Arduino15\\packages\\adafruit\\hardware\\samd\\1.2.3\\**",
                 "C:/Program Files (x86)/Arduino",
                 "C:/Users/Paul/Dropbox/Electronics/Arduino/PJ Sketches",
                 "${workspaceRoot}"
@@ -62,7 +63,10 @@
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
-            }
+            },
+            "forcedInclude": [
+                "C:\\Users\\Paul\\AppData\\Local\\Arduino15\\packages\\adafruit\\hardware\\samd\\1.2.3\\cores\\arduino\\Arduino.h"
+            ]
         }
     ],
     "version": 4
