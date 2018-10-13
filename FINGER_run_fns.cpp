@@ -67,8 +67,8 @@ void FPSRunModeSM()
             #ifdef LCDGEN
 				localwriteLCDGEN(0, 0, "Unknown FPS Run State");
 			#endif
-			#ifdef LCDNEXTION_FPS
-				writeLCDNEXTION_FPS_instruction("Unknown FPS Run State - Halting Mega");
+			#ifdef LCDNEXTION
+				writeLCDNEXTION_instruction("Unknown FPS Run State - Halting Mega");
 			#endif
 			while (1)	// if we hit this state, we have a problem, so just stay here forever.
 			{
@@ -120,8 +120,8 @@ void FPSRunStartIdentify()
   	localwriteLCDGEN(0, 5, "Scan your finger now");
   #endif //LCDGEN
 
-  #ifdef LCDNEXTION_FPS
-  	writeLCDNEXTION_FPS_instruction("Place finger on scanner.");
+  #ifdef LCDNEXTION
+  	writeLCDNEXTION_instruction("Place finger on scanner.");
   #endif
 
 	#ifdef BEEPER
@@ -161,8 +161,8 @@ void FPSRunDoIdentify()
       #ifdef LCDGEN
 	  	localwriteLCDGEN(0, 6, "Finger but no match.");
 	  #endif
-	  #ifdef LCDNEXTION_FPS
-	  	writeLCDNEXTION_FPS_instruction("No Match");
+	  #ifdef LCDNEXTION
+	  	writeLCDNEXTION_instruction("No Match");
 	  #endif
       #ifdef BEEPER
         tone(BEEPERPIN, beeperNotes[1], beeperDurations[1]);  // play tone to get user attention, FAIL.
@@ -174,8 +174,8 @@ void FPSRunDoIdentify()
       #ifdef LCDGEN
 	  	localwriteLCDGEN(0, 7, "FPS - Other Error Occured.");
 	  #endif
-	  #ifdef LCDNEXTION_FPS
-	  	writeLCDNEXTION_FPS_instruction("FPS - Other Error Occured.");
+	  #ifdef LCDNEXTION
+	  	writeLCDNEXTION_instruction("FPS - Other Error Occured.");
 	  #endif	  
       #ifdef BEEPER
         tone(BEEPERPIN, beeperNotes[1], beeperDurations[1]);  // play tone to get user attention, FAIL.
@@ -188,8 +188,8 @@ void FPSRunDoIdentify()
       #ifdef LCDGEN
 	  localwriteLCDGEN(0, 5, "Identity Verified OK ");
 	  #endif
-	  #ifdef LCDNEXTION_FPS
-	  	writeLCDNEXTION_FPS_instruction("Identity Verified OK ");
+	  #ifdef LCDNEXTION
+	  	writeLCDNEXTION_instruction("Identity Verified OK ");
 	  #endif
       #ifdef BEEPER
         tone(BEEPERPIN, beeperNotes[3], beeperDurations[3]);  // play tone to get user attention, SUCCESS.
@@ -208,8 +208,8 @@ void FPSRunDoorUnlocker()
 	#ifdef LCDGEN
 		localwriteLCDGEN(0, 6, "Door Unlocked"); 
 	#endif
-	#ifdef LCDNEXTION_FPS
-	  	writeLCDNEXTION_FPS_instruction("Door Unlocked");
+	#ifdef LCDNEXTION
+	  	writeLCDNEXTION_instruction("Door Unlocked");
 	#endif		 
 	FPSRunState = FPS_RUN_DOOR_UNLOCKED;	// Transition to next state.
 }  // END - FPSDoorUnlocker()
@@ -240,8 +240,8 @@ void FPSRunDoorLocker()
 	#ifdef LCDGEN
 		localwriteLCDGEN(0, 6, "Door Locked  ");  
 	#endif
-	#ifdef LCDNEXTION_FPS
-	  	writeLCDNEXTION_FPS_instruction("Door Locked");
+	#ifdef LCDNEXTION
+	  	writeLCDNEXTION_instruction("Door Locked");
 	#endif		
 	FPSRunState = FPS_RUN_EXIT;	// Transition to next state.
 }  // END - FPSDoorLocker()
@@ -259,8 +259,8 @@ void FPSRunExit()
   	localwriteLCDGEN(0, 6, "                     ");  // erase bottom of screen
   	localwriteLCDGEN(0, 7, "                     ");  // erase bottom of screen
   #endif
-  #ifdef LCDNEXTION_FPS
-	writeLCDNEXTION_FPS_instruction("Ready");
+  #ifdef LCDNEXTION
+	writeLCDNEXTION_instruction("Ready");
   #endif	  
   FPSRunState = FPS_RUN_START;	// Transition to next state. Ensure when we return to FPS Run Mode we start in start mode.
 	EnableFPSRunModeStateMachine = false; // flag that we need to stop running FPS RUN MODE state machine.

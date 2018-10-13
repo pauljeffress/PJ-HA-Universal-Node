@@ -521,12 +521,12 @@ uint8_t radioDataBuf[RH_MESH_MAX_MESSAGE_LEN]; //RadioHead tx/rx data
   #endif // LCDGENERIC_BLAH
 #endif // LCDGENERIC
 
-#ifdef LCDNEXTION_FPS // dev330 Nextion LCD used on FPS Node specifically
+#ifdef LCDNEXTION // dev330 Nextion LCD used on FPS/Bluetooth door lock Nodes specifically
   bool send330 = false;  // northbound message triggers
   NexText text0 = NexText(0, 2, "text0");             // The big font title text on the Nextion LCD
   NexText scroll_inst = NexText(0, 3, "scroll_inst");           // The scrolling instruction to user text on the Nextion LCD
   NexText scroll0 = NexText(0, 1, "scroll0");   // The scrolling line of node data across bottom of Nextion LCD
-  char NextionLCD_FPS_buffer[LCDNEXTION_FPS_BUFSIZE] = {0};  // create a char buffer for use with writting text to Nextion LCD.
+  char NextionLCD_buffer[LCDNEXTION_BUFSIZE] = {0};  // create a char buffer for use with writting text to Nextion LCD.
 #endif
 
 #ifdef BEEPER // dev340 - 349 BEEPER

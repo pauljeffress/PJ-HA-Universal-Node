@@ -155,8 +155,8 @@ void localactions(){
     #ifdef LCDGENERIC // if we have an LCD....
       localwriteLCDGEN(0, 4, "FPS DB  Mode");
     #endif
-    #ifdef LCDNEXTION_FPS
-	    writeLCDNEXTION_FPS_instruction("FPS DB  Mode");
+    #ifdef LCDNEXTION
+	    writeLCDNEXTION_instruction("FPS DB  Mode");
     #endif
 
     // xxxx - add code to do DB stuff here :)
@@ -233,5 +233,9 @@ void localactions(){
       sendDevValueToSerial(291, 0, serSent291, 0.0);  //  Tell the downstream system which variable changed and what its new value is.
     }
 #endif// LEDSTRIPS_REMOTE
+
+
+
+
 
 } //END - localactions()

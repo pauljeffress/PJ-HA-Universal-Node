@@ -24,7 +24,7 @@
 #include <Adafruit_Sensor.h>      // required for TSL2561 sensor stuff
 #include <Adafruit_TSL2561_U.h>
 //#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
-//  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION_FPS etc.
+//  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION etc.
 
 
 
@@ -237,9 +237,9 @@
 //  #endif // LCDGENERIC_BLAH
 //
 
-#define LCDNEXTION_FPS  // have I got a Nextion LCD setup to work on an FPS node, this node?
+#define LCDNEXTION  // have I got a Nextion LCD setup to work on an FPS/Bluetooth door lock node, this node?
     #include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
-    #define LCDNEXTION_FPS_BUFSIZE 100  // Size of the character buffer, make sure its big enough for any strings you send to the Nextion. 
+    #define LCDNEXTION_BUFSIZE 100  // Size of the character buffer, make sure its big enough for any strings you send to the Nextion. 
 
 #define BEEPER  // is there one of my beepers attached to this node?
   #define BEEPERPIN A0  // PWM pin that the speaker is attached to.
@@ -358,7 +358,7 @@ void getWeatherShield();
 void getTSL2651();
 void displaySensorDetails(void);
 void configureSensor(void);
-void writeLCDNEXTION_FPS_instruction(char* theStr);  
+void writeLCDNEXTION_instruction(char* theStr);  
 void sendDevValueToSerial(int sendSerDev, int sendSerType, int sendSerInt, float sendSerFloat);
 void setStaticOneColourLEDStrip(int stripnum);
 void setStaticPatternLEDStripMode(int stripnum, int stripmode);
@@ -530,12 +530,12 @@ extern bool send320, send321, send322, send323, send324;
   #endif // LCDGENERIC_BLAH
 #endif // LCDGENERIC
 
-#ifdef LCDNEXTION_FPS  // dev330 Nextion LCD used on FPS Node specifically
+#ifdef LCDNEXTION  // dev330 Nextion LCD used on FPS/Bluetooth door lock Nodes specifically
   extern bool send330;
   extern NexText text0; 
   extern NexText scroll_inst;
   extern NexText scroll0;
-  extern char NextionLCD_FPS_buffer[LCDNEXTION_FPS_BUFSIZE];
+  extern char NextionLCD_buffer[LCDNEXTION_BUFSIZE];
 #endif
 
 #ifdef BEEPER
