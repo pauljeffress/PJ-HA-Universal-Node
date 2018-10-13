@@ -4,7 +4,7 @@ char foo;
  * June 2016 - I am going to take my current RF Node (PJ_HA_computourist_node_v2_23v14) and my
  * current Eth Node (Shed_HA_Mega_ard_v4) and try to build them into one Sketch with lots
  * of DEFINE statements to allow selective builds, while retaining and maintaining one code base.
- * Sept 2016 - Migrated this project from Arduino IDE to GitHub etc.
+ * Sept 2016 - Migrated this pdetachroject from Arduino IDE to GitHub etc.
  *
  * RF Node Type - specifics
  * ------------

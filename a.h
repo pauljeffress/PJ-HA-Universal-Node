@@ -31,7 +31,7 @@
 /* DEBUG CONFIGURATION PARAMETERS */
 #define DEBUG // uncomment for debugging
 //#define DEBUGPJ1 // uncomment for debugging
-#define DEBUGPJ2 // uncomment for debugging
+#define DEBUGPJ // uncomment for debugging
 #ifdef DEBUG
   #define DEBUGPJ1 // if DEBUG thern ensure DEBUGPJ1 is enabled as it includes things DEBUG needs.
   #define DEBUGPJ2 // if DEBUG thern ensure DEBUGPJ2 is enabled as it includes things DEBUG needs.
@@ -173,11 +173,11 @@
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
-//#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//      #define ACTUATOR1PIN A5    // contol pin for 1st ACTUATOR if attached, else ignored.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+      #define ACTUATOR1PIN A1    // contol pin for 1st ACTUATOR if attached, else ignored.
 //      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR2
-//     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
+ #define ACTUATOR2
+     #define ACTUATOR2PIN A2   // contol pin for 2nd ACTUATOR if attached, else ignored.
 //     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR3
 //     #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
@@ -211,12 +211,12 @@
                                 // power for the Moteino/Arduino itself.
                                 // Chose this pin for now, but may conflict with actuators of other types. 
 
-//#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
-//    #define PING1TRIGGERPIN A12
-//    #define PING1ECHOPIN A11
-//    #define PING1MIN 10     // range min, in cm, to consider a detection.
-//    #define PING1MAX 20    // range max, in cm, to consider a detection.
-//    #define PING1HOLDTIME 5   // seconds - to wait before attempting another PING after a detection.
+#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
+    #define PING1TRIGGERPIN A4
+    #define PING1ECHOPIN A3
+    #define PING1MIN 10     // range min, in cm, to consider a detection.
+    #define PING1MAX 20    // range max, in cm, to consider a detection.
+    #define PING1HOLDTIME 2   // seconds - to wait before attempting another PING after a detection.
 //
 //#define RTC     // is there some sort of RTC attached to this node.
 //
@@ -237,13 +237,13 @@
 //  #endif // LCDGENERIC_BLAH
 //
 
-//#define LCDNEXTION_FPS  // have I got a Nextion LCD setup to work on an FPS node, this node?
-//    #include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
-//    #define LCDNEXTION_FPS_BUFSIZE 100  // Size of the character buffer, make sure its big enough for any strings you send to the Nextion. 
+#define LCDNEXTION_FPS  // have I got a Nextion LCD setup to work on an FPS node, this node?
+    #include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
+    #define LCDNEXTION_FPS_BUFSIZE 100  // Size of the character buffer, make sure its big enough for any strings you send to the Nextion. 
 
-//#define BEEPER  // is there one of my beepers attached to this node?
-//  #define BEEPERPIN A0  // PWM pin that the speaker is attached to.
-//  #define BEEPNUMMAX 4 // how many beeps are defined on this node.
+#define BEEPER  // is there one of my beepers attached to this node?
+  #define BEEPERPIN A0  // PWM pin that the speaker is attached to.
+  #define BEEPNUMMAX 4 // how many beeps are defined on this node.
 
 //#define FINGER  // is there one of my Finger Print Scanners attached to this node?
 // #define FINGERSERIALPORT Serial1  // Which port is it attached to. Serial, Serial1..3 (Megga only) or SoftSerial etc
