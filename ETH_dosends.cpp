@@ -152,6 +152,18 @@ if (send45)
   }
 #endif
 
+#ifdef DHTSENSOR
+    if (send48) { // Temperature DHT
+      sendReal(NODEID, 48, dht.readTemperature()); // Degrees Celcius (float)
+      send48 = false;
+    }
+
+    if (send49) { // Humidity
+      sendReal(NODEID, 49, dht.readHumidity());  // Percentage (float)
+      send49 = false;
+    }
+  #endif  // DHTSENSOR
+
 #ifdef MOTEINOWEATHER
   if (send51 || send54 || send55) 
     {

@@ -287,70 +287,58 @@ void rfSendMsg() { // prepares values to be transmitted
   #endif // PIR2
 
   #ifdef SWITCH1
-  if (txOnce && send44) { // Binary input read
-    #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev44 - Binary input read");
-    #endif
-    mes.devID = 44;
-    if (curSwitch1State == ON) mes.intVal = 1; // state (integer)
-    send44 = false;
-    txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
-    mes.intVal = 0;  // clear it after use.
-  }
-#endif // SWITCH1
+    if (txOnce && send44) { // Binary input read
+      #ifdef DEBUG
+        Serial.println("rfSendMsg: sending dev44 - Binary input read");
+      #endif
+      mes.devID = 44;
+      if (curSwitch1State == ON) mes.intVal = 1; // state (integer)
+      send44 = false;
+      txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
+      mes.intVal = 0;  // clear it after use.
+    }
+  #endif // SWITCH1
 
-#ifdef SWITCH2
-  if (txOnce && send45) { // Binary input read
-    #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev45 - Binary input read");
-    #endif
-    mes.devID = 45;
-    if (curSwitch2State == ON) mes.intVal = 1; // state (integer)
-    send45 = false;
-    txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
-    mes.intVal = 0;  // clear it after use.
-  }
-#endif // SWITCH2  
+  #ifdef SWITCH2
+    if (txOnce && send45) { // Binary input read
+      #ifdef DEBUG
+        Serial.println("rfSendMsg: sending dev45 - Binary input read");
+      #endif
+      mes.devID = 45;
+      if (curSwitch2State == ON) mes.intVal = 1; // state (integer)
+      send45 = false;
+      txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
+      mes.intVal = 0;  // clear it after use.
+    }
+  #endif // SWITCH2  
 
+  #ifdef DHTSENSOR
+    if (txOnce && send48) { // Temperature DHT
+      mes.devID = 48;
+      mes.fltintVal = fltTofltint(dht.readTemperature());  // Degrees Celcius (float)
+      send48 = false;
+      txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
+      mes.fltintVal = 0;  // clear it after use.
+    }
 
-  if (txOnce && send48) { // Temperature
-    mes.devID = 48;
-    #ifdef DHT
-      temp = dht.readTemperature();
-    #endif
-    #ifdef DS18
-      temp = sensors.getTempCByIndex(0);
-    #endif
-    mes.fltintVal = temp; // Degrees Celcius (float)
-    send48 = false;
-    txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
-    mes.fltintVal = 0;  // clear it after use.
-  }
+    if (txOnce && send49) { // Humidity
+      mes.devID = 49;
+      mes.fltintVal = fltTofltint(dht.readHumidity()); // Percentage (float)
+      send49 = false;
+      txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
+      mes.fltintVal = 0;  // clear it after use.
+    }
+  #endif  // DHTSENSOR
 
-  if (txOnce && send49) { // Humidity
-    mes.devID = 49;
-    #ifdef DHT
-      hum = dht.readHumidity();
-    #endif
-    mes.fltintVal = fltTofltint(hum); // Percentage (float)
-    send49 = false;
-    txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
-    mes.fltintVal = 0;  // clear it after use.
-  }
-
-  if (txOnce && send50) { // Temperature
-    mes.devID = 50;
-    #ifdef DHT
-      temp = dht.readTemperature();
-    #endif
-    #ifdef DS18
-      temp = sensors.getTempCByIndex(1);
-    #endif
-    mes.fltintVal = fltTofltint(temp); // Degrees Celcius (float)
-    send50 = false;
-    txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
-    mes.fltintVal = 0;  // clear it after use.
-  }
+  #ifdef DS18
+    if (txOnce && send50) { // Temperature
+      mes.devID = 50;
+      mes.fltintVal = fltTofltint(sensors.getTempCByIndex(1)); // Degrees Celcius (float)
+      send50 = false;
+      txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
+      mes.fltintVal = 0;  // clear it after use.
+    }
+  #endif  // DS18
 
   #ifdef MOTEINOWEATHER
   if (txOnce && send51 || send54 || send55) 

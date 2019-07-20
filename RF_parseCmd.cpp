@@ -206,6 +206,7 @@ switch (mes.devID) // devID indicates device (sensor) type
   break;
 #endif // SWITCH2
 
+#ifdef DHTSENSOR
   case (48): // temperature
   if (mes.cmd == 1) send48 = true;  // cmd == 1 means read
   else send93 = true;  // tried to write to RO dev
@@ -215,11 +216,14 @@ switch (mes.devID) // devID indicates device (sensor) type
   if (mes.cmd == 1) send49 = true;  // cmd == 1 means read
   else send93 = true;  // tried to write to RO dev
   break;
+#endif
 
+#ifdef DS18
   case (50): // temperature
   if (mes.cmd == 1) send50 = true;  // cmd == 1 means read
   else send93 = true;  // tried to write to RO dev
   break;
+#endif
 
   #ifdef XMASLIGHTS
   case (100): // Xmas Lights Mode Value

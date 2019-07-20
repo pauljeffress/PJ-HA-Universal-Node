@@ -216,6 +216,15 @@ int i;
     break;
 #endif
 
+#ifdef DHTSENSOR
+  case 48: // 048 - temp from DHT (Real - ReadOnly)
+    if (mes.cmd == 1) send48 = true;
+    break;
+  case 49: // 049 - humidity from DHT (Real - ReadOnly)
+    if (mes.cmd == 1) send49 = true;
+    break;
+#endif
+
 #ifdef MOTEINOWEATHER
   case 51: // 051 - pressure from MOTEINO Weather (Real - ReadOnly)
     if (mes.cmd == 1) send51 = true;

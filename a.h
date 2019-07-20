@@ -23,8 +23,7 @@
 #include <Adafruit_Sensor.h>      // required for TSL2561 sensor stuff
 #include <Adafruit_TSL2561_U.h>
 //#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
-//  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION_FPS etc.
-
+//  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION_FPS etc.   
 
 
 /* DEBUG CONFIGURATION PARAMETERS */
@@ -76,7 +75,7 @@
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 12               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 13               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -131,7 +130,10 @@
 // NODE devices selection (actuators and sensors etc)
 //-------------------------------------------------------------------------
 // What kind of devices are enabled on this node?: (add PIN config in applicable segments below)
-//#define DHT
+#define DHTSENSOR   // note this was previously "DHT" but that is in fact used in the DHT library, so I shouldn't have it as a define myself!
+    #include "DHT.h" 
+    #define DHTPIN 10     // Pin on Arduino the DHxx's Data pin is connected to.
+    #define	DHTTYPE	DHT11 // type of sensor... DHT11 or DHT22
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
@@ -150,8 +152,8 @@
 //#define BUTTON2
 //    #define BUTTON2PIN 999      // signal pin from 2nd BUTTON
 
-#define SWITCH1       // Have I attached a switch (ON/OFF capable)
-    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
+//#define SWITCH1       // Have I attached a switch (ON/OFF capable)
+//    #define SWITCH1PIN A5      // signal pin from 1st SWITCH
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
@@ -363,8 +365,8 @@ extern float hum, temp;
 extern int signalStrength;
 extern bool promiscuousMode;
 extern bool setAck;
-extern bool	send0, send1, send2, send3, send4, send5, send6, send7, send48, send49;
-extern bool	send16, send17, send18, send19, send40, send42, send50;
+extern bool	send0, send1, send2, send3, send4, send5, send6, send7;
+extern bool	send16, send17, send18, send19, send40, send42;
 extern bool send92, send93, send94, send95; 
 extern bool send11, send12; // compilation info
 extern bool actuator1status, actuator2status, actuator3status, actuator4status; 
@@ -404,6 +406,15 @@ extern bool rfTxAllowed;
 //extern RFM69 radio;
 extern RH_RF69 driver;  
 extern RHMesh manager;
+
+#ifdef DHTSENSOR
+extern bool send48, send49;
+extern DHT dht;
+#endif
+
+#ifdef DS18
+extern bool send50;
+#endif
 
 #ifdef BUTTON1
 extern bool send40;

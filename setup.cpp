@@ -72,9 +72,7 @@ void setup() {
   #endif  
 #endif
 
-  //serSent200 = 5;
-  //Serial.print("current200 = "); Serial.print(current200); Serial.print("   serSent200 = "); Serial.println(serSent200);
-  //delay(1000);
+
 
 
 #ifdef BEEPER
@@ -316,7 +314,7 @@ void setup() {
   Serial.println("");
 #endif
   
-#ifdef DHT
+#ifdef DHTSENSOR
   delay(50);
   dht.begin(); // initialise temp/hum sensor
 #endif
