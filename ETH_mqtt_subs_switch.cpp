@@ -216,6 +216,15 @@ int i;
     break;
 #endif
 
+#ifdef DHTSENSOR
+  case 48: // 048 - temp from DHT (Real - ReadOnly)
+    if (mes.cmd == 1) send48 = true;
+    break;
+  case 49: // 049 - humidity from DHT (Real - ReadOnly)
+    if (mes.cmd == 1) send49 = true;
+    break;
+#endif
+
 #ifdef MOTEINOWEATHER
   case 51: // 051 - pressure from MOTEINO Weather (Real - ReadOnly)
     if (mes.cmd == 1) send51 = true;
@@ -237,6 +246,17 @@ int i;
     break;
 #endif
 
+#ifdef SOILMOISTURE1
+  case 68: // 068 - Soil moisture (Int - ReadOnly)
+    if (mes.cmd == 1) send68 = true;
+    break;
+#endif
+
+#ifdef SOILMOISTURE2
+  case 69: // 069 - Soil moisture (Int - ReadOnly)
+    if (mes.cmd == 1) send69 = true;
+    break;
+#endif
 
 // xxxx - add switch for XMASLIGHTS, R/W, send100 etc - see stuff in main ino.
 //          see stuff in ETH_dosends();

@@ -295,16 +295,9 @@ uint8_t radioDataBuf[RH_MESH_MAX_MESSAGE_LEN]; //RadioHead tx/rx data
 
 
 
-#ifdef DHT // DHT11 sensor ================================================
-  // insert any pre setup() code for this specific device here.
-  #include <DHT.h>
-  // DHT 11 / sensor setting
-  //#define DHTPIN 4	// DHT data connection
-  #define DHTPIN A0	// DHT data connection
-  #define DHT11_PIN A0 // analog pin we're connected to
-  #define	DHTTYPE	DHT11 // type of sensor
-  DHT dht(DHTPIN, DHTTYPE, 3); // initialise temp/humidity sensor for 3.3 Volt arduino
-#endif  // DHT
+#ifdef DHTSENSOR // DHT11/22 sensor ================================================
+  DHT dht(DHTPIN, DHTTYPE); // initialise temp/humidity sensor
+#endif  // DHTSENSOR
 
 #ifdef DS18 // OneWire DS18S20, DS18B20, DS1822 Temperature ==============
   // insert any pre setup() code for this specific device here.
@@ -316,6 +309,14 @@ uint8_t radioDataBuf[RH_MESH_MAX_MESSAGE_LEN]; //RadioHead tx/rx data
   OneWire oneWire(ONE_WIRE_BUS); // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
   DallasTemperature sensors(&oneWire); // Pass our oneWire reference to Dallas Temperature.
 #endif  // DS18
+
+#ifdef SOILMOISTURE1
+  bool send68 = false;
+#endif
+
+#ifdef SOILMOISTURE2
+  bool send69 = false;
+#endif
 
 #ifdef SLEEPY
   #include <SPIFlash.h> for devices with onboard flash

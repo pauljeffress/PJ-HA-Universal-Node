@@ -81,6 +81,19 @@ void setPeriodicTransmissions()
             send45 = true; // SWITCH2 status
         #endif  
         
+        #ifdef DHTSENSOR
+          send48 = true;  // temperature reading
+          send49 = true;  // humidity reading
+        #endif
+
+        #ifdef SOILMOISTURE1
+            send68 = true; // 1st Soil Moisture sensor
+        #endif
+        #ifdef SOILMOISTURE2
+            send69 = true; // 2nd Soil Moisture sensor
+        #endif  
+
+
         #ifdef TSL2651
           send52 = true;  // TSL2651 visible light level
           send53 = true;  // TSL2651 IR light level
@@ -115,7 +128,7 @@ void setPeriodicTransmissions()
       }
   #endif
 
-        #ifdef DHT
+        #ifdef DHTSENSOR
           send48 = true; // send temperature DHT or DS18
           send49 = true; // send humidity
         #endif

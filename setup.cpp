@@ -72,9 +72,7 @@ void setup() {
   #endif  
 #endif
 
-  //serSent200 = 5;
-  //Serial.print("current200 = "); Serial.print(current200); Serial.print("   serSent200 = "); Serial.println(serSent200);
-  //delay(1000);
+
 
 
 #ifdef BEEPER
@@ -316,7 +314,7 @@ void setup() {
   Serial.println("");
 #endif
   
-#ifdef DHT
+#ifdef DHTSENSOR
   delay(50);
   dht.begin(); // initialise temp/hum sensor
 #endif
@@ -324,6 +322,18 @@ void setup() {
 #ifdef DS18
   delay(50);
   sensors.begin(); // Onewire: Start up the library
+#endif
+
+#ifdef SOILMOISTURE1
+  pinMode(SOILMOISTUREPIN1, INPUT); //Set as INPUT 
+  pinMode(SOILPOWERPIN1, OUTPUT);   //Set as an OUTPUT
+  digitalWrite(SOILPOWERPIN1, LOW); //Set to LOW so no power is flowing through the sensor when not in use.
+#endif
+
+#ifdef SOILMOISTURE2
+  pinMode(SOILMOISTUREPIN2, INPUT); //Set as INPUT 
+  pinMode(SOILPOWERPIN2, OUTPUT);   //Set as an OUTPUT
+  digitalWrite(SOILPOWERPIN2, LOW); //Set to LOW so no power is flowing through the sensor when not in use.
 #endif
 
 #ifdef SLEEPY
