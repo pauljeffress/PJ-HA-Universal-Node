@@ -68,15 +68,15 @@
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
 
-#define CLIENT_ADDRESS    3       // RadioHead Mesh Addressing
+#define CLIENT_ADDRESS    60       // RadioHead Mesh Addressing
 #define debug_mode 1              // Set debug_mode to 1 for Serial Monitor (RH lib?)
-#define NODEID           03       // unique node ID within the closed network
-#define NODEIDSTRING node03       // as per above.  
+#define NODEID           60       // unique node ID within the closed network
+#define NODEIDSTRING node60       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 12               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 13               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -131,7 +131,7 @@
 // NODE devices selection (actuators and sensors etc)
 //-------------------------------------------------------------------------
 // What kind of devices are enabled on this node?: (add PIN config in applicable segments below)
-//#define DHT
+#define DHT
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 

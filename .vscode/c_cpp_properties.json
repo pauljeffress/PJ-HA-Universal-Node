@@ -5,7 +5,10 @@
             "includePath": [
                 "/usr/include",
                 "/usr/local/include",
-                "${workspaceRoot}"
+                "${workspaceRoot}",
+                "/Applications/Arduino.app/Contents",
+                "/Users/pauljeffress/Dropbox/Electronics/Arduino/PJ Sketches",
+                "/Users/ladmin/Dropbox/Electronics/Arduino/PJ Sketches"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
