@@ -246,6 +246,17 @@ int i;
     break;
 #endif
 
+#ifdef SOILMOISTURE1
+  case 68: // 068 - Soil moisture (Int - ReadOnly)
+    if (mes.cmd == 1) send68 = true;
+    break;
+#endif
+
+#ifdef SOILMOISTURE2
+  case 69: // 069 - Soil moisture (Int - ReadOnly)
+    if (mes.cmd == 1) send69 = true;
+    break;
+#endif
 
 // xxxx - add switch for XMASLIGHTS, R/W, send100 etc - see stuff in main ino.
 //          see stuff in ETH_dosends();

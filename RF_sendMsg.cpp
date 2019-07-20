@@ -340,6 +340,28 @@ void rfSendMsg() { // prepares values to be transmitted
     }
   #endif  // DS18
 
+  #ifdef SOILMOISTURE1
+    if (txOnce && send68) { // Soil Moisture
+      mes.devID = 68;
+      mes.intVal = readSoilMoisture(SOILPOWERPIN1, SOILMOISTUREPIN1); // Moisture (float)
+      send68 = false;
+      txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
+      mes.intVal = 0;  // clear it after use.
+    }
+  #endif
+
+  #ifdef SOILMOISTURE2
+    if (txOnce && send69) { // Soil Moisture
+      mes.devID = 69;
+      mes.intVal = readSoilMoisture(SOILPOWERPIN2, SOILMOISTUREPIN2); // Moisture (float)
+      send69 = false;
+      txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
+      mes.intVal = 0;  // clear it after use.
+    }
+  #endif
+
+
+
   #ifdef MOTEINOWEATHER
   if (txOnce && send51 || send54 || send55) 
     {

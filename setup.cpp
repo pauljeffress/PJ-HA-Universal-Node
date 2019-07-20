@@ -324,6 +324,18 @@ void setup() {
   sensors.begin(); // Onewire: Start up the library
 #endif
 
+#ifdef SOILMOISTURE1
+  pinMode(SOILMOISTUREPIN1, INPUT); //Set as INPUT 
+  pinMode(SOILPOWERPIN1, OUTPUT);   //Set as an OUTPUT
+  digitalWrite(SOILPOWERPIN1, LOW); //Set to LOW so no power is flowing through the sensor when not in use.
+#endif
+
+#ifdef SOILMOISTURE2
+  pinMode(SOILMOISTUREPIN2, INPUT); //Set as INPUT 
+  pinMode(SOILPOWERPIN2, OUTPUT);   //Set as an OUTPUT
+  digitalWrite(SOILPOWERPIN2, LOW); //Set to LOW so no power is flowing through the sensor when not in use.
+#endif
+
 #ifdef SLEEPY
     // Configure wake up pin as input.
     // This will consumes few uA of current.

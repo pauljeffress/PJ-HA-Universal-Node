@@ -157,6 +157,14 @@
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
+#define SOILMOISTURE1
+      #define SOILMOISTUREPIN1 A4 // Pin to read the Analog value from the soil moisture sensor 
+      #define SOILPOWERPIN1 6     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
+
+#define SOILMOISTURE2
+      #define SOILMOISTUREPIN2 A5 // Pin to read the Analog value from the soil moisture sensor 
+      #define SOILPOWERPIN2 9     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
+
 //#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
 //      #define ACTUATOR1PIN A5    // contol pin for 1st ACTUATOR if attached, else ignored.
 //      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
@@ -414,6 +422,16 @@ extern DHT dht;
 
 #ifdef DS18
 extern bool send50;
+#endif
+
+#ifdef SOILMOISTURE1
+extern bool send68;
+extern int readSoilMoisture(int powerPin, int moisturePin);
+#endif
+
+#ifdef SOILMOISTURE2
+extern  bool send69;
+extern int readSoilMoisture(int powerPin, int moisturePin);
 #endif
 
 #ifdef BUTTON1

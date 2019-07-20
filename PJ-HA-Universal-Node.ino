@@ -310,6 +310,14 @@ uint8_t radioDataBuf[RH_MESH_MAX_MESSAGE_LEN]; //RadioHead tx/rx data
   DallasTemperature sensors(&oneWire); // Pass our oneWire reference to Dallas Temperature.
 #endif  // DS18
 
+#ifdef SOILMOISTURE1
+  bool send68 = false;
+#endif
+
+#ifdef SOILMOISTURE2
+  bool send69 = false;
+#endif
+
 #ifdef SLEEPY
   #include <SPIFlash.h> for devices with onboard flash
   #include <LowPower.h> //https://github.com/rocketscream/Low-Power

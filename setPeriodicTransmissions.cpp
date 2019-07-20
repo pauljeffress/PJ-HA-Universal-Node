@@ -86,6 +86,14 @@ void setPeriodicTransmissions()
           send49 = true;  // humidity reading
         #endif
 
+        #ifdef SOILMOISTURE1
+            send68 = true; // 1st Soil Moisture sensor
+        #endif
+        #ifdef SOILMOISTURE2
+            send69 = true; // 2nd Soil Moisture sensor
+        #endif  
+
+
         #ifdef TSL2651
           send52 = true;  // TSL2651 visible light level
           send53 = true;  // TSL2651 IR light level

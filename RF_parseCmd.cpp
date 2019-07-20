@@ -225,6 +225,20 @@ switch (mes.devID) // devID indicates device (sensor) type
   break;
 #endif
 
+#ifdef SOILMOISTURE1
+  case (68): // 1st soil sensor
+  if (mes.cmd == 1) send68 = true;  // cmd == 1 means read
+  else send93 = true;  // tried to write to RO dev
+  break;
+#endif
+
+#ifdef SOILMOISTURE2
+  case (69): // 2nd soil sensor
+  if (mes.cmd == 1) send69 = true;  // cmd == 1 means read
+  else send93 = true;  // tried to write to RO dev
+  break;
+#endif
+
   #ifdef XMASLIGHTS
   case (100): // Xmas Lights Mode Value
   if (mes.cmd == 0) { // cmd == 0 means write

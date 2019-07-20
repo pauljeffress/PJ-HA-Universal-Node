@@ -164,6 +164,20 @@ if (send45)
     }
   #endif  // DHTSENSOR
 
+#ifdef SOILMOISTURE1
+    if (send68) { // 1st Soil Moisture sensor reading
+      sendInteger(NODEID, 68, readSoilMoisture(SOILPOWERPIN1, SOILMOISTUREPIN1)); // Soil Moisture (int)
+      send68 = false;
+    }
+#endif
+
+#ifdef SOILMOISTURE2
+    if (send69) { // 2nd Soil Moisture sensor reading
+      sendInteger(NODEID, 69, readSoilMoisture(SOILPOWERPIN2, SOILMOISTUREPIN2)); // Soil Moisture (int)
+      send69 = false;
+    }
+#endif
+
 #ifdef MOTEINOWEATHER
   if (send51 || send54 || send55) 
     {
