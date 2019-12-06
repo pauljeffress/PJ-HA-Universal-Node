@@ -67,15 +67,15 @@
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
 
-#define CLIENT_ADDRESS    3       // RadioHead Mesh Addressing
+#define CLIENT_ADDRESS   31       // RadioHead Mesh Addressing
 #define debug_mode 1              // Set debug_mode to 1 for Serial Monitor (RH lib?)
-#define NODEID           03       // unique node ID within the closed network
-#define NODEIDSTRING node03       // as per above.  
+#define NODEID           31       // unique node ID within the closed network
+#define NODEIDSTRING node31       // as per above.  
 #define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 13               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 12               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -130,10 +130,10 @@
 // NODE devices selection (actuators and sensors etc)
 //-------------------------------------------------------------------------
 // What kind of devices are enabled on this node?: (add PIN config in applicable segments below)
-#define DHTSENSOR   // note this was previously "DHT" but that is in fact used in the DHT library, so I shouldn't have it as a define myself!
-    #include "DHT.h" 
-    #define DHTPIN 10     // Pin on Arduino the DHxx's Data pin is connected to.
-    #define	DHTTYPE	DHT11 // type of sensor... DHT11 or DHT22
+//#define DHTSENSOR   // note this was previously "DHT" but that is in fact used in the DHT library, so I shouldn't have it as a define myself!
+//    #include "DHT.h" 
+//    #define DHTPIN 10     // Pin on Arduino the DHxx's Data pin is connected to.
+//    #define	DHTTYPE	DHT11 // type of sensor... DHT11 or DHT22
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
@@ -157,16 +157,16 @@
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
-#define SOILMOISTURE1
-      #define SOILMOISTUREPIN1 A4 // Pin to read the Analog value from the soil moisture sensor 
-      #define SOILPOWERPIN1 6     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
+// #define SOILMOISTURE1
+//       #define SOILMOISTUREPIN1 A4 // Pin to read the Analog value from the soil moisture sensor 
+//       #define SOILPOWERPIN1 6     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
 
-#define SOILMOISTURE2
-      #define SOILMOISTUREPIN2 A5 // Pin to read the Analog value from the soil moisture sensor 
-      #define SOILPOWERPIN2 9     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
+// #define SOILMOISTURE2
+//       #define SOILMOISTUREPIN2 A5 // Pin to read the Analog value from the soil moisture sensor 
+//       #define SOILPOWERPIN2 9     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
 
-//#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//      #define ACTUATOR1PIN A5    // contol pin for 1st ACTUATOR if attached, else ignored.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+      #define ACTUATOR1PIN 11    // contol pin for 1st ACTUATOR if attached, else ignored.
 //      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 // #define ACTUATOR2
 //     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
@@ -255,14 +255,14 @@
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
-// #define LEDSTRIP
-//    #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
-//    #define STATIC_PATTERN    1 
-//    #define DYNAMIC_PATTERN   2
-//    #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
-//    #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
+#define LEDSTRIP
+  #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
+  #define STATIC_PATTERN    1 
+  #define DYNAMIC_PATTERN   2
+  #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
+  #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
   
-//   #define LEDSTRIPS_REMOTE         // see DEV299 
+  #define LEDSTRIPS_REMOTE         // see DEV299 
                                      // If its defined then it means LEDs are on subordinate MCU.
                                      // If its not defined then it means LEDs are on local MCU.
                                      // Need to set this correctly right up front as a number of subsequent LEDSTRIP DEVice
