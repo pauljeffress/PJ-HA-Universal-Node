@@ -67,15 +67,15 @@
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
 
-#define CLIENT_ADDRESS    3       // RadioHead Mesh Addressing
+#define CLIENT_ADDRESS    5       // RadioHead Mesh Addressing
 #define debug_mode 1              // Set debug_mode to 1 for Serial Monitor (RH lib?)
-#define NODEID           03       // unique node ID within the closed network
-#define NODEIDSTRING node03       // as per above.  
-#define COMMS_LED_PIN  13          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           05       // unique node ID within the closed network
+#define NODEIDSTRING node05       // as per above.  
+#define COMMS_LED_PIN  6          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 13               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 20               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -130,19 +130,19 @@
 // NODE devices selection (actuators and sensors etc)
 //-------------------------------------------------------------------------
 // What kind of devices are enabled on this node?: (add PIN config in applicable segments below)
-#define DHTSENSOR   // note this was previously "DHT" but that is in fact used in the DHT library, so I shouldn't have it as a define myself!
-    #include "DHT.h" 
-    #define DHTPIN 10     // Pin on Arduino the DHxx's Data pin is connected to.
-    #define	DHTTYPE	DHT11 // type of sensor... DHT11 or DHT22
+//#define DHTSENSOR   // note this was previously "DHT" but that is in fact used in the DHT library, so I shouldn't have it as a define myself!
+//    #include "DHT.h" 
+//    #define DHTPIN 10     // Pin on Arduino the DHxx's Data pin is connected to.
+//    #define	DHTTYPE	DHT11 // type of sensor... DHT11 or DHT22
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
-// #define PIR1          // Have I attached a PIR
-//      #define PIR1PIN 4   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+#define PIR1          // Have I attached a PIR
+      #define PIR1PIN 5   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
 
-//                           // signal pin from 1st PIR if attached, else ignored.
-//      #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
-//      #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
+                           // signal pin from 1st PIR if attached, else ignored.
+      #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
+      #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
 
 //#define PIR2          // Have I attached a 2nd PIR
 //   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
@@ -157,26 +157,26 @@
 //#define SWITCH22
 //    #define SWITCH2PIN 999      // signal pin from 2nd SWITCH
 
-#define SOILMOISTURE1
-      #define SOILMOISTUREPIN1 A4 // Pin to read the Analog value from the soil moisture sensor 
-      #define SOILPOWERPIN1 6     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
+// #define SOILMOISTURE1
+//       #define SOILMOISTUREPIN1 A4 // Pin to read the Analog value from the soil moisture sensor 
+//       #define SOILPOWERPIN1 6     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
 
-#define SOILMOISTURE2
-      #define SOILMOISTUREPIN2 A5 // Pin to read the Analog value from the soil moisture sensor 
-      #define SOILPOWERPIN2 9     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
+// #define SOILMOISTURE2
+//       #define SOILMOISTUREPIN2 A5 // Pin to read the Analog value from the soil moisture sensor 
+//       #define SOILPOWERPIN2 9     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
 
-//#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-//      #define ACTUATOR1PIN A5    // contol pin for 1st ACTUATOR if attached, else ignored.
-//      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR2
-//     #define ACTUATOR2PIN 3   // contol pin for 2nd ACTUATOR if attached, else ignored.
-//     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR3
-//     #define ACTUATOR3PIN 6    // contol pin for 3rd ACTUATOR if attached, else ignored.
-//     #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-// #define ACTUATOR4
-//     #define ACTUATOR4PIN 7    // contol pin for 4th ACTUATOR if attached, else ignored.
-//     #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
+     #define ACTUATOR1PIN 21    // contol pin for 1st ACTUATOR if attached, else ignored.
+     #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR2
+    #define ACTUATOR2PIN 14   // contol pin for 2nd ACTUATOR if attached, else ignored.
+    #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR3
+    #define ACTUATOR3PIN 15   // contol pin for 3rd ACTUATOR if attached, else ignored.
+    #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+#define ACTUATOR4
+    #define ACTUATOR4PIN 16   // contol pin for 4th ACTUATOR if attached, else ignored.
+    #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 
 //#define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 
