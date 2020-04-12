@@ -18,8 +18,8 @@
 
 #include "pitches.h"  // my file with musical note definitions for BEEPER device.
 #include <Adafruit_Fingerprint.h> // Designed to work with  http://www.adafruit.com/products/751 finger sensor
-#include <SFE_BMP180.h>    //get it here: https://github.com/LowPowerLab/SFE_BMP180
-#include <SI7021.h>        //get it here: https://github.com/LowPowerLab/SI7021
+#include <Adafruit_BMP085.h>    //get it from Library Manager - Previously I used: https://github.com/LowPowerLab/SFE_BMP180
+#include <Adafruit_Si7021.h>        //get it from Library Manager - Previously I used: https://github.com/LowPowerLab/SI7021
 #include <Adafruit_Sensor.h>      // required for TSL2561 sensor stuff
 #include <Adafruit_TSL2561_U.h>
 //#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
@@ -75,7 +75,7 @@
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 20               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 18               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -166,7 +166,7 @@
 //       #define SOILPOWERPIN2 9     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
 
 #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-     #define ACTUATOR1PIN 21    // contol pin for 1st ACTUATOR if attached, else ignored.
+     #define ACTUATOR1PIN 17    // contol pin for 1st ACTUATOR if attached, else ignored.
      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 #define ACTUATOR2
     #define ACTUATOR2PIN 14   // contol pin for 2nd ACTUATOR if attached, else ignored.
