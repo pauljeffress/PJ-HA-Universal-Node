@@ -12,7 +12,7 @@
 void ToneBeep(int note, int duration)
 {
 	#ifdef DEBUGPJ2
-		Serial.println("S:ToneBeep()");
+		CONSOLE_PORT.println("S:ToneBeep()");
 	#endif
 	
     tone(BEEPERPIN, note, duration);

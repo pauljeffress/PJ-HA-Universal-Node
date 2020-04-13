@@ -11,7 +11,7 @@
 void RMT_PWROn()
 {
   #ifdef DEBUGPJ2
-    Serial.println("RMT_PWROn()");
+    CONSOLE_PORT.println("RMT_PWROn()");
   #endif
   
   //RMT_PWR_State = 1;
@@ -34,7 +34,7 @@ void RMT_PWROn()
 void RMT_PWROff()
 {
   #ifdef DEBUGPJ2
-    Serial.println("RMT_PWROff()");
+    CONSOLE_PORT.println("RMT_PWROff()");
   #endif
   
   RMT_PWR_State = 0;

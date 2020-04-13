@@ -522,7 +522,7 @@ int i;
         if (!rtcOk) // check if clock was ok at startup, only work on it if it was ok.
           {
           #ifdef DEBUGPJ2
-            Serial.print("rtcOk = false, so rtc was either not found or was not running at startup");
+            CONSOLE_PORT.print("rtcOk = false, so rtc was either not found or was not running at startup");
             // xxxx - should trigger the send of an error MQTT msg here.
           #endif  
           }
@@ -530,10 +530,10 @@ int i;
           {
           now = rtc.now();     // get current time record from the RTC.
           #ifdef DEBUGPJ2
-            Serial.print("setting RTC year to:");
-            Serial.println(rtcYear);
-            Serial.print("It was :");
-            Serial.println(now.year());
+            CONSOLE_PORT.print("setting RTC year to:");
+            CONSOLE_PORT.println(rtcYear);
+            CONSOLE_PORT.print("It was :");
+            CONSOLE_PORT.println(now.year());
           #endif
           rtc.adjust(DateTime(rtcYear, now.month(), now.day(), now.hour(), now.minute(), now.second()));     // set new data record back to the RTC.
           }
@@ -555,7 +555,7 @@ int i;
         if (!rtcOk) // check if clock was ok at startup, only work on it if it was ok.
           {
           #ifdef DEBUGPJ2
-            Serial.print("rtcOk = false, so rtc was either not found or was not running at startup");
+            CONSOLE_PORT.print("rtcOk = false, so rtc was either not found or was not running at startup");
             // xxxx - should trigger the send of an error MQTT msg here.
           #endif  
           }
@@ -563,10 +563,10 @@ int i;
           {
           now = rtc.now();     // get current time record from the RTC.
           #ifdef DEBUGPJ2
-            Serial.print("setting RTC Month to:");
-            Serial.println(rtcMonth);
-            Serial.print("It was :");
-            Serial.println(now.month());
+            CONSOLE_PORT.print("setting RTC Month to:");
+            CONSOLE_PORT.println(rtcMonth);
+            CONSOLE_PORT.print("It was :");
+            CONSOLE_PORT.println(now.month());
           #endif
           rtc.adjust(DateTime(now.year(), rtcMonth, now.day(), now.hour(), now.minute(), now.second()));     // set new data record back to the RTC.         
           }
@@ -588,7 +588,7 @@ int i;
         if (!rtcOk) // check if clock was ok at startup, only work on it if it was ok.
           {
           #ifdef DEBUGPJ2
-            Serial.print("rtcOk = false, so rtc was either not found or was not running at startup");
+            CONSOLE_PORT.print("rtcOk = false, so rtc was either not found or was not running at startup");
             // xxxx - should trigger the send of an error MQTT msg here.
           #endif  
           }
@@ -596,10 +596,10 @@ int i;
           {
           now = rtc.now();     // get current time record from the RTC.
           #ifdef DEBUGPJ2
-            Serial.print("setting RTC Day to:");
-            Serial.println(rtcDay);
-            Serial.print("It was :");
-            Serial.println(now.day());
+            CONSOLE_PORT.print("setting RTC Day to:");
+            CONSOLE_PORT.println(rtcDay);
+            CONSOLE_PORT.print("It was :");
+            CONSOLE_PORT.println(now.day());
           #endif
           rtc.adjust(DateTime(now.year(), now.month(), rtcDay, now.hour(), now.minute(), now.second()));     // set new data record back to the RTC.         
           }
@@ -633,7 +633,7 @@ int i;
         if (!rtcOk) // check if clock was ok at startup, only work on it if it was ok.
           {
           #ifdef DEBUGPJ2
-            Serial.print("rtcOk = false, so rtc was either not found or was not running at startup");
+            CONSOLE_PORT.print("rtcOk = false, so rtc was either not found or was not running at startup");
             // xxxx - should trigger the send of an error MQTT msg here.
           #endif  
           }
@@ -641,10 +641,10 @@ int i;
           {
           now = rtc.now();     // get current time record from the RTC.
           #ifdef DEBUGPJ2
-            Serial.print("setting RTC Hour to:");
-            Serial.println(rtcHour);
-            Serial.print("It was :");
-            Serial.println(now.hour());
+            CONSOLE_PORT.print("setting RTC Hour to:");
+            CONSOLE_PORT.println(rtcHour);
+            CONSOLE_PORT.print("It was :");
+            CONSOLE_PORT.println(now.hour());
           #endif
           rtc.adjust(DateTime(now.year(), now.month(), now.day(), rtcHour, now.minute(), now.second()));     // set new data record back to the RTC.         
           }
@@ -666,7 +666,7 @@ int i;
         if (!rtcOk) // check if clock was ok at startup, only work on it if it was ok.
           {
           #ifdef DEBUGPJ2
-            Serial.print("rtcOk = false, so rtc was either not found or was not running at startup");
+            CONSOLE_PORT.print("rtcOk = false, so rtc was either not found or was not running at startup");
             // xxxx - should trigger the send of an error MQTT msg here.
           #endif  
           }
@@ -674,10 +674,10 @@ int i;
           {
           now = rtc.now();     // get current time record from the RTC.
           #ifdef DEBUGPJ2
-            Serial.print("setting RTC Minute to:");
-            Serial.println(rtcMinute);
-            Serial.print("It was :");
-            Serial.println(now.minute());
+            CONSOLE_PORT.print("setting RTC Minute to:");
+            CONSOLE_PORT.println(rtcMinute);
+            CONSOLE_PORT.print("It was :");
+            CONSOLE_PORT.println(now.minute());
           #endif
           rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), rtcMinute, now.second()));     // set new data record back to the RTC.         
           }
@@ -699,7 +699,7 @@ int i;
         if (!rtcOk) // check if clock was ok at startup, only work on it if it was ok.
           {
           #ifdef DEBUGPJ2
-            Serial.print("rtcOk = false, so rtc was either not found or was not running at startup");
+            CONSOLE_PORT.print("rtcOk = false, so rtc was either not found or was not running at startup");
             // xxxx - should trigger the send of an error MQTT msg here.
           #endif  
           }
@@ -707,10 +707,10 @@ int i;
           {
           now = rtc.now();     // get current time record from the RTC.
           #ifdef DEBUGPJ2
-            Serial.print("setting RTC Second to:");
-            Serial.println(rtcSecond);
-            Serial.print("It was :");
-            Serial.println(now.second());
+            CONSOLE_PORT.print("setting RTC Second to:");
+            CONSOLE_PORT.println(rtcSecond);
+            CONSOLE_PORT.print("It was :");
+            CONSOLE_PORT.println(now.second());
           #endif
           rtc.adjust(DateTime(now.year(), now.month(), now.day(), now.hour(), now.minute(), rtcSecond));     // set new data record back to the RTC.         
           }
@@ -840,7 +840,7 @@ int i;
       else  // WRITE - invalid, this is a RO device type.
         {
         #ifdef DEBUGPJ2
-          Serial.println("mqtt_subs_switch(): sending dev93 - error message you tried to write to a RO device");
+          CONSOLE_PORT.println("mqtt_subs_switch(): sending dev93 - error message you tried to write to a RO device");
         #endif
         send93 = true;  // send appropriate error message
         if (setAck) send350 = true; // acknowledge message  
@@ -879,8 +879,8 @@ int i;
 
   default:
       // We really should not get to here unless I forgot to cater for a particular DevID OR that DevID is not supported on this Node???
-      Serial.println(); // make sure I get a new line before printing below messages.
-      Serial.println("mqtt_subs_switch() - error = 11 (Somehow we have go this far but the DevID has not been SWITCH'd! - is it even supported on this node?");
+      CONSOLE_PORT.println(); // make sure I get a new line before printing below messages.
+      CONSOLE_PORT.println("mqtt_subs_switch() - error = 11 (Somehow we have go this far but the DevID has not been SWITCH'd! - is it even supported on this node?");
       error = 11;
       mqtt_subs_senderror(); 
   }

@@ -15,8 +15,8 @@ void writeLCDNEXTION_FPS_instruction(char* theStr)
   // theStr - the string to display at the above coordinates.
   
   #ifdef DEBUGPJ2
-    Serial.println("S: localwriteLCDGEN");
-    Serial.print(">");Serial.print("theStr");Serial.println("<");
+    CONSOLE_PORT.println("S: localwriteLCDGEN");
+    CONSOLE_PORT.print(">");CONSOLE_PORT.print("theStr");CONSOLE_PORT.println("<");
   #endif
 
   strcpy(NextionLCD_FPS_buffer, theStr);

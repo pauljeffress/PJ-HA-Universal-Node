@@ -25,17 +25,30 @@
 //#include "Nextion.h"              //get it here: https://github.com/itead/ITEADLIB_Arduino_Nextion 
 //  no longer including this lib from here, I have moved its include down to where I actually #define LCDNEXTION_FPS etc.   
 
+// Define which Serial the debugs/console output go to.
+// ----------------------------------------------------
+// I added this in April 2020 when working on Node05 (Rear Sprinkler) as I wanted to redirect 
+// this output to Serial1 when I use a Feather. This is because  
+// Feathers only expose Serial1 on pins that you can connect to, Serial is only on the USB port.
+// The reason I want to be able to redirect to a Serial port that is brought out on physical pins
+// is so that when I attach one of my new esp-link ESP8266 modules to the "console" of a Node, it needs
+// access to physical serial port pins to see the debug/console output. See also my Evernote "esp-link for 8266".
+// SELECT ONLY ONE OF THE BELOW;
+// #define CONSOLE_PORT Serial    
+#define CONSOLE_PORT Serial1   // BE CAREFUL - Serial1 is used by some DEVices.
+// #define CONSOLE_PORT Serial2
 
 /* DEBUG CONFIGURATION PARAMETERS */
-#define DEBUG // uncomment for debugging
-//#define DEBUGPJ1 // uncomment for debugging
-#define DEBUGPJ2 // uncomment for debugging
-#ifdef DEBUG
-  #define DEBUGPJ1 // if DEBUG thern ensure DEBUGPJ1 is enabled as it includes things DEBUG needs.
-  #define DEBUGPJ2 // if DEBUG thern ensure DEBUGPJ2 is enabled as it includes things DEBUG needs.
+#define DEBUG // uncomment for debugging. This will enable DEBUGPJ1 and DEBUGPJ2 as well.
+//#define DEBUGPJ1 // uncomment for debugging just items tagged as DEBUGPJ1
+//#define DEBUGPJ2 // uncomment for debugging just items tagged as DEBUGPJ2
+
+#ifdef DEBUG  // We assume that if DEBUG is defined, you want all debugging on, so DEBUGPJ1 and DEBUGPJ2 as well as DEBUG.
+  #define DEBUGPJ1
+  #define DEBUGPJ2 
 #endif
 
-#define SERIAL_BAUD 115200
+#define SERIAL_BAUD 115200  // Console/Debug port speed.
 
 #define STRPAYLOADSIZE 32   // How many chars in the String Payload we send? (must match in GW and Node!!!!!)
 
@@ -48,6 +61,8 @@
                         // Search code to see where this is used. 1st thing I found I needed to use it
                         // for was to execute the RFM hard reset during setup(), as the Feather has a pin
                         // wired to the RFM Reset pin to do it :)
+                        // THIS FEATHERM0RFM69 could probably be acheived just by the FEATHERM0 define.  Should look at this one day...
+
     #define IS_RFM69HCW true // set to 'true' if you are using an RFM69HCW module
     // for Feather M0 Radio
     #define RFM69_CS 8

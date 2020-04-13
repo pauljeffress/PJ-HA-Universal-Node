@@ -9,7 +9,7 @@
 bool checkPINGs()
 {
   #ifdef DEBUGPJx
-	  Serial.println("S: CheckPINGs");
+	  CONSOLE_PORT.println("S: CheckPINGs");
   #endif
 
 //xxxx - temp commented out all of the below as my sensor was going off all the time and causing probs while 
@@ -33,8 +33,8 @@ if (((millis() - ping1OnMillis) / 1000) > PING1HOLDTIME) // i.e. holdtime from l
 	ping1Distance = ping1Duration / 58.2;
 
     #ifdef DEBUGPJx
-	    Serial.print("F: CheckApproach - Dist = ");
-	    Serial.println(ping1Distance);
+	    CONSOLE_PORT.print("F: CheckApproach - Dist = ");
+	    CONSOLE_PORT.println(ping1Distance);
     #endif
 
 	if (ping1Distance >= ping1RangeMax || ping1Distance <= ping1RangeMin)
@@ -42,7 +42,7 @@ if (((millis() - ping1OnMillis) / 1000) > PING1HOLDTIME) // i.e. holdtime from l
 		// We do NOT have a detection within range.
 		ping1Detect = false;
 		#ifdef DEBUGPJx
-			Serial.println("Nothing detected in proximity range."); 
+			CONSOLE_PORT.println("Nothing detected in proximity range."); 
 		#endif
 		//Delay 50ms before next reading otherwise PING becomes unstable.
 		delay(50);
@@ -56,9 +56,9 @@ if (((millis() - ping1OnMillis) / 1000) > PING1HOLDTIME) // i.e. holdtime from l
 		send67 = true;	// proactively send an MQTT update if there is a detection.
 		send64 = true;		// and send the detection distance with it.
 		#ifdef DEBUGPJ2
-			Serial.print("Object has been detected at range - ");
-			Serial.print(ping1Distance);
-			Serial.println("cm");
+			CONSOLE_PORT.print("Object has been detected at range - ");
+			CONSOLE_PORT.print(ping1Distance);
+			CONSOLE_PORT.println("cm");
 		#endif
 		//Delay 50ms before next reading otherwise PING becomes unstable.
 		delay(50);

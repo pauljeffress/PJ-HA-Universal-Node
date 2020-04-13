@@ -147,12 +147,12 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
   error = 999;               // set it to 999 just so I can monitor it while debugging. 999 is not a real value.
 
   #ifdef DEBUGPJ
-    Serial.println();
-    Serial.println("=============================================");
-    Serial.println("Southbound MQTT Topic received from Mosquitto");
-    Serial.print("Topic is:");
-    Serial.println(topic);
-    Serial.print("Payload is:");
+    CONSOLE_PORT.println();
+    CONSOLE_PORT.println("=============================================");
+    CONSOLE_PORT.println("Southbound MQTT Topic received from Mosquitto");
+    CONSOLE_PORT.print("Topic is:");
+    CONSOLE_PORT.println(topic);
+    CONSOLE_PORT.print("Payload is:");
   #endif
 
   if (strlen(topic) != 28)        // is the 'topic' we received the correct length ?
@@ -160,9 +160,9 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
     {   // The 'topic' we received was not of correct length
     error = 1;
     #ifdef DEBUGPJ
-        Serial.println(); // make sure I get a new line before printing below messages.
-        Serial.println("mqtt_subs() - error = 1 (due to 'topic' being incorrect length)");
-        //Serial.println("mqtt_subs() - wrong message format in MQTT subscription.");
+        CONSOLE_PORT.println(); // make sure I get a new line before printing below messages.
+        CONSOLE_PORT.println("mqtt_subs() - error = 1 (due to 'topic' being incorrect length)");
+        //CONSOLE_PORT.println("mqtt_subs() - wrong message format in MQTT subscription.");
     #endif
     mqtt_subs_senderror();
     }
@@ -170,8 +170,8 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
   else if (length == 0) // no payload sent in the southbound MQTT msg...thats not valid so error out.
         {
         #ifdef DEBUGPJ
-            Serial.println(); // make sure I get a new line before printing below messages.
-            Serial.println("mqtt_subs() - error = 2 (due to length of payload = 0)");
+            CONSOLE_PORT.println(); // make sure I get a new line before printing below messages.
+            CONSOLE_PORT.println("mqtt_subs() - error = 2 (due to length of payload = 0)");
         #endif
         error = 2;
         mqtt_subs_senderror();
@@ -184,14 +184,14 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
         payload[length] = '\0';                     // terminate the payload string we received with '0'
         strPayload = String((char*)payload); // convert the payload to string, as it was a ptr to some bytes when we received it.
         #ifdef DEBUGPJ
-            Serial.println(strPayload);
-            Serial.println("=============================================");
+            CONSOLE_PORT.println(strPayload);
+            CONSOLE_PORT.println("=============================================");
         #endif
         if (destNodeID != NODEID)  // Somehow we have go this far but the MQTT topic is not for this Node!
           {
           #ifdef DEBUGPJ
-            Serial.println(); // make sure I get a new line before printing below messages.
-            Serial.println("mqtt_subs() - error = 10 (Somehow we have go this far but the MQTT topic is not for this Node!");
+            CONSOLE_PORT.println(); // make sure I get a new line before printing below messages.
+            CONSOLE_PORT.println("mqtt_subs() - error = 10 (Somehow we have go this far but the MQTT topic is not for this Node!");
           #endif
           error = 10;
           mqtt_subs_senderror();       

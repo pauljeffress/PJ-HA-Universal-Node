@@ -30,7 +30,7 @@ void rfSendMsg() { // prepares values to be transmitted
         
   if (wakeUp) { // send wakeUp call
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev99 - wakeUp call");
+      CONSOLE_PORT.println("rfSendMsg: sending dev99 - wakeUp call");
     #endif
     mes.devID = 99;
     wakeUp = false; // reset transmission flag for this message
@@ -39,7 +39,7 @@ void rfSendMsg() { // prepares values to be transmitted
     
   if (txOnce && send0) {
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev0 - mins uptime");
+      CONSOLE_PORT.println("rfSendMsg: sending dev0 - mins uptime");
     #endif
     mes.devID = 0;
     mes.intVal = upTime; // minutes uptime
@@ -50,7 +50,7 @@ void rfSendMsg() { // prepares values to be transmitted
  
   if (txOnce && send1) { // transmission interval
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev1 - tx interval");
+      CONSOLE_PORT.println("rfSendMsg: sending dev1 - tx interval");
     #endif
     mes.devID = 1;
     mes.intVal = TXinterval; // seconds (integer)
@@ -61,7 +61,7 @@ void rfSendMsg() { // prepares values to be transmitted
     
   if (txOnce && send2) {  // As this whole function only runs if we are on RFNODETYPE, I don't need to check again here.
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev2 - sig strength");
+      CONSOLE_PORT.println("rfSendMsg: sending dev2 - sig strength");
     #endif
     mes.devID = 2;
     mes.intVal = signalStrength; // signal strength (integer)
@@ -72,7 +72,7 @@ void rfSendMsg() { // prepares values to be transmitted
   
   if (txOnce && send3) { // node software version (string)
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev3 - node sw version string");
+      CONSOLE_PORT.println("rfSendMsg: sending dev3 - node sw version string");
     #endif
     mes.devID = 3; // node sw version (string)
     // place software version in payload string
@@ -87,7 +87,7 @@ void rfSendMsg() { // prepares values to be transmitted
   
   if (txOnce && send4) { // measure voltage.. xxxx - is this appropriate for my Moteino nodes and others?
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev4 - voltage");
+      CONSOLE_PORT.println("rfSendMsg: sending dev4 - voltage");
     #endif
     mes.devID = 4;
     mes.fltintVal = fltTofltint(123.45);  // send this fake number unless one of the below board specific routines kicks in.
@@ -100,8 +100,8 @@ void rfSendMsg() { // prepares values to be transmitted
       measuredvbat /= 1024; // convert to voltage
       mes.fltintVal = fltTofltint(measuredvbat);   // convert to one of my special fltints ready to send.
       #ifdef DEBUG
-        Serial.print("VBat: " ); Serial.println(measuredvbat);
-        Serial.print("as fltintVal: "); Serial.println(mes.fltintVal);
+        CONSOLE_PORT.print("VBat: " ); CONSOLE_PORT.println(measuredvbat);
+        CONSOLE_PORT.print("as fltintVal: "); CONSOLE_PORT.println(mes.fltintVal);
       #endif
     #endif
 
@@ -125,7 +125,7 @@ void rfSendMsg() { // prepares values to be transmitted
     
   if (txOnce && send5) { // Acknowledge on 'SET'
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev5 - Ack on SET");
+      CONSOLE_PORT.println("rfSendMsg: sending dev5 - Ack on SET");
     #endif
     mes.devID = 5;
     if (setAck) mes.intVal = 1; else mes.intVal = 0;// state (integer)
@@ -136,7 +136,7 @@ void rfSendMsg() { // prepares values to be transmitted
   
   if (txOnce && send6) { // Toggle on Buttonpress
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev6 - toogle on button press");
+      CONSOLE_PORT.println("rfSendMsg: sending dev6 - toogle on button press");
     #endif
     mes.devID = 6;
     if (toggleOnButton) mes.intVal = 1; // read state of toggle flag
@@ -148,7 +148,7 @@ void rfSendMsg() { // prepares values to be transmitted
 
   if (txOnce && send7) { // timer interval
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev7 - timer interval");
+      CONSOLE_PORT.println("rfSendMsg: sending dev7 - timer interval");
     #endif
     mes.devID = 7;
     mes.intVal = TIMinterval; // seconds (integer)
@@ -159,7 +159,7 @@ void rfSendMsg() { // prepares values to be transmitted
 
   if (txOnce && send11) { // Compiled Date: Gets embedded into code at compile time (string)(RO)
     #ifdef DEBUGPJ
-      Serial.println("rfSendMsg: sending dev11");
+      CONSOLE_PORT.println("rfSendMsg: sending dev11");
     #endif
     mes.devID = 11; 
     for ( i = 0; i < sizeof(__DATE__); i++){
@@ -173,7 +173,7 @@ void rfSendMsg() { // prepares values to be transmitted
 
   if (txOnce && send12) { // Compiled Time: Gets embedded into code at compile time (string)(RO)
     #ifdef DEBUGPJ
-      Serial.println("rfSendMsg: sending dev12");
+      CONSOLE_PORT.println("rfSendMsg: sending dev12");
     #endif
     mes.devID = 12; 
     for ( i = 0; i < sizeof(__TIME__); i++){
@@ -188,7 +188,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef ACTUATOR1
     if (txOnce && send16) { // state of Actuator 1
       #ifdef DEBUG
-        Serial.println("rfSendMsg: sending dev16 - state of Actuator 1");
+        CONSOLE_PORT.println("rfSendMsg: sending dev16 - state of Actuator 1");
       #endif
       mes.devID = 16;
       mes.intVal = actuator1status; // state (integer)
@@ -201,7 +201,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef ACTUATOR2
     if (txOnce && send17) { // state of Actuator 2
       #ifdef DEBUG
-        Serial.println("rfSendMsg: sending dev17 - state of Actuator 2");
+        CONSOLE_PORT.println("rfSendMsg: sending dev17 - state of Actuator 2");
       #endif
       mes.devID = 17;
       mes.intVal = actuator2status; // state (integer)
@@ -214,7 +214,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef ACTUATOR3
     if (txOnce && send18) { // state of Actuator 3
       #ifdef DEBUG
-        Serial.println("rfSendMsg: sending dev18 - state of Actuator 3");
+        CONSOLE_PORT.println("rfSendMsg: sending dev18 - state of Actuator 3");
       #endif
       mes.devID = 18;
       mes.intVal = actuator3status; // state (integer)
@@ -227,7 +227,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef ACTUATOR4
     if (txOnce && send19) { // state of Actuator 4
       #ifdef DEBUG
-        Serial.println("rfSendMsg: sending dev19 - state of Actuator 4");
+        CONSOLE_PORT.println("rfSendMsg: sending dev19 - state of Actuator 4");
       #endif
       mes.devID = 19;
       mes.intVal = actuator4status; // state (integer)
@@ -240,7 +240,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef BUTTON1
     if (txOnce && send40) { // Binary input read
       #ifdef DEBUG
-        Serial.println("rfSendMsg: sending dev40 - Binary input read");
+        CONSOLE_PORT.println("rfSendMsg: sending dev40 - Binary input read");
       #endif
       mes.devID = 40;
       if (curBtn1State == LOW) mes.intVal = 1; // state (integer)
@@ -253,7 +253,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef BUTTON2
     if (txOnce && send42) { // Binary input read
       #ifdef DEBUG
-        Serial.println("rfSendMsg: sending dev42 - Binary input read");
+        CONSOLE_PORT.println("rfSendMsg: sending dev42 - Binary input read");
       #endif
       mes.devID = 42;
       if (curBtn2State == LOW) mes.intVal = 1; // state (integer)
@@ -266,7 +266,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef PIR1
     if (txOnce && send41) { // PIR Binary input read
       #ifdef DEBUGPJ2
-        Serial.println("rfSendMsg: sending dev41 - PIR");
+        CONSOLE_PORT.println("rfSendMsg: sending dev41 - PIR");
       #endif
       mes.devID = 41;
       if (curPIR1State == HIGH) mes.intVal = 1; // state (integer) 1 for ON
@@ -289,7 +289,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef SWITCH1
     if (txOnce && send44) { // Binary input read
       #ifdef DEBUG
-        Serial.println("rfSendMsg: sending dev44 - Binary input read");
+        CONSOLE_PORT.println("rfSendMsg: sending dev44 - Binary input read");
       #endif
       mes.devID = 44;
       if (curSwitch1State == ON) mes.intVal = 1; // state (integer)
@@ -302,7 +302,7 @@ void rfSendMsg() { // prepares values to be transmitted
   #ifdef SWITCH2
     if (txOnce && send45) { // Binary input read
       #ifdef DEBUG
-        Serial.println("rfSendMsg: sending dev45 - Binary input read");
+        CONSOLE_PORT.println("rfSendMsg: sending dev45 - Binary input read");
       #endif
       mes.devID = 45;
       if (curSwitch2State == ON) mes.intVal = 1; // state (integer)
@@ -366,16 +366,16 @@ void rfSendMsg() { // prepares values to be transmitted
   if (txOnce && send51 || send54 || send55) 
     {
       #ifdef DEBUGPJx
-        Serial.println("call getW");
+        CONSOLE_PORT.println("call getW");
       #endif
       getWeatherShield();  // if we have to send any of these, get them all first.
       #ifdef DEBUG PJx
-        Serial.println("back from getW");
+        CONSOLE_PORT.println("back from getW");
       #endif
     }
   if (txOnce && send51) { // pressure
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev51 - pressure");
+      CONSOLE_PORT.println("rfSendMsg: sending dev51 - pressure");
     #endif
     mes.devID = 51;
     mes.fltintVal = fltTofltint(WeatherShieldData[0]); // get pressure from MOTEINO Weather
@@ -385,7 +385,7 @@ void rfSendMsg() { // prepares values to be transmitted
   }
   if (txOnce && send54) { // humidity
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev54 - humidity");
+      CONSOLE_PORT.println("rfSendMsg: sending dev54 - humidity");
     #endif
     mes.devID = 54;
     mes.fltintVal = fltTofltint(WeatherShieldData[1]); // get humidity from MOTEINO Weather
@@ -395,7 +395,7 @@ void rfSendMsg() { // prepares values to be transmitted
   }
   if (txOnce && send55) { // temperature
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev55 - temperature");
+      CONSOLE_PORT.println("rfSendMsg: sending dev55 - temperature");
     #endif
     mes.devID = 55;
     mes.fltintVal = fltTofltint(WeatherShieldData[2]); // get temp from MOTEINO Weather
@@ -412,7 +412,7 @@ void rfSendMsg() { // prepares values to be transmitted
     }
   if (txOnce && send52) { // visible light
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev52 - visible light");
+      CONSOLE_PORT.println("rfSendMsg: sending dev52 - visible light");
     #endif
     mes.devID = 52;
     mes.fltintVal = fltTofltint(TSL2651Data[0]); // get visible light level from TSL2651
@@ -422,7 +422,7 @@ void rfSendMsg() { // prepares values to be transmitted
   }
   if (txOnce && send53) { // IR light
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev53 - IR light");
+      CONSOLE_PORT.println("rfSendMsg: sending dev53 - IR light");
     #endif
     mes.devID = 53;
     mes.fltintVal = fltTofltint(TSL2651Data[1]); // get IR light level from TSL2651
@@ -436,7 +436,7 @@ void rfSendMsg() { // prepares values to be transmitted
 
   if (txOnce && send92) { // error message invalid device
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev92 - error message invalid device");
+      CONSOLE_PORT.println("rfSendMsg: sending dev92 - error message invalid device");
     #endif
     mes.intVal = mes.devID;
     mes.devID = 92;
@@ -447,7 +447,7 @@ void rfSendMsg() { // prepares values to be transmitted
 
   if (txOnce && send93) { // error message 
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev93 - error message you tried to write to a RO device");
+      CONSOLE_PORT.println("rfSendMsg: sending dev93 - error message you tried to write to a RO device");
     #endif
     mes.intVal = mes.devID;
     mes.devID = 93;
@@ -458,7 +458,7 @@ void rfSendMsg() { // prepares values to be transmitted
 
   if (txOnce && send94) { // error message 
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev94 - error message you to READ a WRITEONLY device");
+      CONSOLE_PORT.println("rfSendMsg: sending dev94 - error message you to READ a WRITEONLY device");
     #endif
     mes.intVal = mes.devID;
     mes.devID = 94;
@@ -469,7 +469,7 @@ void rfSendMsg() { // prepares values to be transmitted
 
   if (txOnce && send95) { // error message 
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev95 - error message Value to be WRITTEN is out of range");
+      CONSOLE_PORT.println("rfSendMsg: sending dev95 - error message Value to be WRITTEN is out of range");
     #endif
     mes.intVal = mes.devID;
     mes.devID = 95;
@@ -601,7 +601,7 @@ void rfSendMsg() { // prepares values to be transmitted
   if (txOnce && send400)  // 400     - TestExtVar - purely for testing, does not represent any real external variable. (Real - R/W)
     {
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev400-TestExtVar");
+      CONSOLE_PORT.println("rfSendMsg: sending dev400-TestExtVar");
     #endif
     mes.devID = 400;
     mes.fltintVal = fltTofltint(extVar400); // current value we have for it on this Node.
@@ -612,7 +612,7 @@ void rfSendMsg() { // prepares values to be transmitted
   if (txOnce && send401)  // 401     - MasterLEDBrightness (0-255) - if 0, tells DUE to turn off whole display. 1..255 means turn it on and set master brightness to X. (Real - R/W)
     {
     #ifdef DEBUG
-      Serial.println("rfSendMsg: sending dev401-MasterLEDBrightness");
+      CONSOLE_PORT.println("rfSendMsg: sending dev401-MasterLEDBrightness");
     #endif
     mes.devID = 401;
     mes.fltintVal = fltTofltint(extVar401); // current value we have for it on this Node.

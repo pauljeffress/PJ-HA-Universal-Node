@@ -10,7 +10,7 @@
 
 void parseCmd() { // parse messages received from the gateway
 #ifdef DEBUGPJ2
-  Serial.println("starting parseCmd()");
+  CONSOLE_PORT.println("starting parseCmd()");
 #endif
 
 switch (mes.devID) // devID indicates device (sensor) type
@@ -26,9 +26,9 @@ switch (mes.devID) // devID indicates device (sensor) type
     if (TXinterval <10 && TXinterval !=0) TXinterval = 10; // minimum interval is 10 seconds
     if (setAck) send1 = true; // send message if required
     #ifdef DEBUG
-      Serial.print("Setting interval to ");
-      Serial.print(TXinterval);
-      Serial.println(" seconds.");
+      CONSOLE_PORT.print("Setting interval to ");
+      CONSOLE_PORT.print(TXinterval);
+      CONSOLE_PORT.println(" seconds.");
     #endif
     }
   else send1 = true; // cmd == 1 is a read request, so send polling interval
@@ -41,7 +41,7 @@ switch (mes.devID) // devID indicates device (sensor) type
 
   case (3): // software version
   #ifdef DEBUGPJ2
-    Serial.println("parseCmd() case3 hit");
+    CONSOLE_PORT.println("parseCmd() case3 hit");
   #endif
   if (mes.cmd == 1) send3 = true; // cmd == 1 means read
   else send93 = true;  // tried to write to RO dev
@@ -81,7 +81,7 @@ switch (mes.devID) // devID indicates device (sensor) type
 
   case (11): // Compiled Date: Gets embedded into code at compile time (string)(RO)
   #ifdef DEBUGPJ2
-    Serial.println("parseCmd() case11 hit");
+    CONSOLE_PORT.println("parseCmd() case11 hit");
   #endif
   if (mes.cmd == 1) send11 = true; // cmd == 1 means read
   else send93 = true;  // tried to write to RO dev
@@ -89,7 +89,7 @@ switch (mes.devID) // devID indicates device (sensor) type
 
   case (12): // Compiled Time: Gets embedded into code at compile time (string)(RO)
   #ifdef DEBUGPJ2
-    Serial.println("parseCmd() case12 hit");
+    CONSOLE_PORT.println("parseCmd() case12 hit");
     //delay(1000);
   #endif
   if (mes.cmd == 1) send12 = true; // cmd == 1 means read
@@ -104,8 +104,8 @@ switch (mes.devID) // devID indicates device (sensor) type
       // digitalWrite(ACTUATOR1PIN, actuator1status);
       if (setAck) send16 = true; // acknowledge message ?
       // #ifdef DEBUGPJ2
-      //   Serial.print("Set LED to ");
-      //   Serial.println(actuator1status);
+      //   CONSOLE_PORT.print("Set LED to ");
+      //   CONSOLE_PORT.println(actuator1status);
       // #endif
     }
   }
@@ -121,8 +121,8 @@ switch (mes.devID) // devID indicates device (sensor) type
       // digitalWrite(ACTUATOR2PIN, actuator2status);
       if (setAck) send17 = true; // acknowledge message ?
       // #ifdef DEBUGPJ2
-      //   Serial.print("Set LED to ");
-      //   Serial.println(actuator2status);
+      //   CONSOLE_PORT.print("Set LED to ");
+      //   CONSOLE_PORT.println(actuator2status);
       // #endif
     }
   }
@@ -138,8 +138,8 @@ switch (mes.devID) // devID indicates device (sensor) type
       // digitalWrite(ACTUATOR3PIN, actuator3status);
       if (setAck) send18 = true; // acknowledge message ?
       // #ifdef DEBUGPJ2
-      //   Serial.print("Set LED to ");
-      //   Serial.println(actuator3status);
+      //   CONSOLE_PORT.print("Set LED to ");
+      //   CONSOLE_PORT.println(actuator3status);
       // #endif
     }
   }
@@ -155,8 +155,8 @@ switch (mes.devID) // devID indicates device (sensor) type
       // digitalWrite(ACTUATOR4PIN, actuator4status);
       if (setAck) send19 = true; // acknowledge message ?
       // #ifdef DEBUGPJ2
-      //   Serial.print("Set LED to ");
-      //   Serial.println(actuator4status);
+      //   CONSOLE_PORT.print("Set LED to ");
+      //   CONSOLE_PORT.println(actuator4status);
       // #endif
     }
   }
@@ -245,7 +245,7 @@ switch (mes.devID) // devID indicates device (sensor) type
     if(mes.intVal >= 0 || mes.intVal <= 31) {   // test for correct value thats in range.
       XmasLightsMode = mes.intVal;
       #ifdef DEBUG
-        Serial.println("calling setXmasLightsMode()");
+        CONSOLE_PORT.println("calling setXmasLightsMode()");
       #endif
       setXmasLightsMode();
       if (setAck) send100 = true; // acknowledge message ?
@@ -485,8 +485,8 @@ switch (mes.devID) // devID indicates device (sensor) type
       extVar400 = mes.fltintVal; 
       if (setAck) send400 = true; // send message if required
       #ifdef DEBUGPJ2
-        Serial.print("Setting extVar400 to ");
-        Serial.println(extVar400);
+        CONSOLE_PORT.print("Setting extVar400 to ");
+        CONSOLE_PORT.println(extVar400);
       #endif
       }
     else // READ
@@ -498,8 +498,8 @@ switch (mes.devID) // devID indicates device (sensor) type
       extVar401 = mes.fltintVal; 
       if (setAck) send401 = true; // send message if required
       #ifdef DEBUGPJ2
-        Serial.print("Setting extVar401 to ");
-        Serial.println(extVar401);
+        CONSOLE_PORT.print("Setting extVar401 to ");
+        CONSOLE_PORT.println(extVar401);
       #endif
       }
     else // READ

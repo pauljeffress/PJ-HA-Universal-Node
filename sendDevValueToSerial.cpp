@@ -50,14 +50,14 @@ void sendDevValueToSerial(int sendSerDev, int sendSerType, int sendSerInt, float
   sendSerFloatRightByte = (sendSerFloat - sendSerFloat)* 10;  // will give us the first digit after the decimal place.
 
   #ifdef DEBUGPJ2
-    Serial.println("===== Sending Serial Frame ======");
-    Serial.println("Header=PJ");
-    Serial.print("sendSerDev="); Serial.print(sendSerDev); Serial.print("  High Byte="); Serial.print(sendSerDevHighByte); Serial.print("  Low Byte="); Serial.println(sendSerDevLowByte );
-    Serial.print("sendSerType="); Serial.print(sendSerType); Serial.print("  Single Byte="); Serial.println(sendSerTypeByte);
-    Serial.print("sendSerInt="); Serial.print(sendSerInt); Serial.print("  High Byte="); Serial.print(sendSerIntHighByte); Serial.print("  Low Byte="); Serial.println(sendSerIntLowByte );
-    Serial.print("sendSerFloat="); Serial.print(sendSerFloat); Serial.print("  Left Byte="); Serial.print(sendSerFloatLeftByte); Serial.print("  Right Byte="); Serial.println(sendSerFloatRightByte);
-    Serial.println("Trailer=pj");
-    Serial.println("=================================");
+    CONSOLE_PORT.println("===== Sending Serial Frame ======");
+    CONSOLE_PORT.println("Header=PJ");
+    CONSOLE_PORT.print("sendSerDev="); CONSOLE_PORT.print(sendSerDev); CONSOLE_PORT.print("  High Byte="); CONSOLE_PORT.print(sendSerDevHighByte); CONSOLE_PORT.print("  Low Byte="); CONSOLE_PORT.println(sendSerDevLowByte );
+    CONSOLE_PORT.print("sendSerType="); CONSOLE_PORT.print(sendSerType); CONSOLE_PORT.print("  Single Byte="); CONSOLE_PORT.println(sendSerTypeByte);
+    CONSOLE_PORT.print("sendSerInt="); CONSOLE_PORT.print(sendSerInt); CONSOLE_PORT.print("  High Byte="); CONSOLE_PORT.print(sendSerIntHighByte); CONSOLE_PORT.print("  Low Byte="); CONSOLE_PORT.println(sendSerIntLowByte );
+    CONSOLE_PORT.print("sendSerFloat="); CONSOLE_PORT.print(sendSerFloat); CONSOLE_PORT.print("  Left Byte="); CONSOLE_PORT.print(sendSerFloatLeftByte); CONSOLE_PORT.print("  Right Byte="); CONSOLE_PORT.println(sendSerFloatRightByte);
+    CONSOLE_PORT.println("Trailer=pj");
+    CONSOLE_PORT.println("=================================");
   #endif
   
   // Serial tx the frame to the other system.

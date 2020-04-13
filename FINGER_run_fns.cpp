@@ -33,7 +33,7 @@ unsigned long FPSRunUnlockedTimer;  // determines when to re lock the door after
 void FPSRunModeSM()
 {
    #ifdef DEBUGPJx
-      Serial.println("FPSRunModeSM switcher");
+      CONSOLE_PORT.println("FPSRunModeSM switcher");
    #endif
 
    switch (FPSRunState)			//Pick a state and execute it.
@@ -61,8 +61,8 @@ void FPSRunModeSM()
 			break;
 		default:
 			#ifdef DEBUGPJ2
-				Serial.print("Unknown FPS Run State: ");
-				Serial.println(FPSRunState);
+				CONSOLE_PORT.print("Unknown FPS Run State: ");
+				CONSOLE_PORT.println(FPSRunState);
 			#endif
             #ifdef LCDGEN
 				localwriteLCDGEN(0, 0, "Unknown FPS Run State");
@@ -82,7 +82,7 @@ void FPSRunModeSM()
 void FPSRunStart()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("F: FPSRunStart");
+		CONSOLE_PORT.println("F: FPSRunStart");
 	#endif
 	FPSTurnFootlightOn();
 
@@ -97,11 +97,11 @@ void FPSRunStart()
   FPSRunIdentifyTimer = millis() + (FPS_IDENTIFY_TIME * 1000L);	// set timer to a time a number of seconds in the future
 	//FPSRunIdentifyTimer = 70000;
 	#ifdef DEBUGPJx
-        Serial.println("-----");
-        Serial.print("                millis() = "); Serial.println(millis());
-        Serial.print("FPS_IDENTIFY_TIME * 1000 = "); Serial.println(FPS_IDENTIFY_TIME * 1000L);
-        Serial.print("     FPSRunIdentifyTimer = "); Serial.println(FPSRunIdentifyTimer);
-        Serial.println("-----");
+        CONSOLE_PORT.println("-----");
+        CONSOLE_PORT.print("                millis() = "); CONSOLE_PORT.println(millis());
+        CONSOLE_PORT.print("FPS_IDENTIFY_TIME * 1000 = "); CONSOLE_PORT.println(FPS_IDENTIFY_TIME * 1000L);
+        CONSOLE_PORT.print("     FPSRunIdentifyTimer = "); CONSOLE_PORT.println(FPSRunIdentifyTimer);
+        CONSOLE_PORT.println("-----");
         //while(1);
      #endif
   FPSRunState = FPS_RUN_START_IDENTIFY;  // Transition to next state.
@@ -111,7 +111,7 @@ void FPSRunStart()
 void FPSRunStartIdentify()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("F: FPSRunStartIdentify");
+		CONSOLE_PORT.println("F: FPSRunStartIdentify");
 	#endif
   
   #ifdef LCDGEN
@@ -134,13 +134,13 @@ void FPSRunStartIdentify()
 void FPSRunDoIdentify()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("F: FPSRunDoIdentify");
+		CONSOLE_PORT.println("F: FPSRunDoIdentify");
 	#endif
 
 	if (millis() > FPSRunIdentifyTimer)	// i.e. timer has expired and we still have not made a positive identification...
 		{
 		#ifdef DEBUGPJ2
-        Serial.println("FPSRunIdentifyTimer expired");
+        CONSOLE_PORT.println("FPSRunIdentifyTimer expired");
         //while (1);
     #endif
     FPSRunState = FPS_RUN_EXIT;  // Transition to next state.	
@@ -218,7 +218,7 @@ void FPSRunDoorUnlocker()
 void FPSRunDoorUnlocked()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("F: FPSDoorUnlocked");
+		CONSOLE_PORT.println("F: FPSDoorUnlocked");
 	#endif
 	if (millis() > FPSRunUnlockedTimer)	// i.e. timer has expired, time to lock door again...
 		{
@@ -234,7 +234,7 @@ void FPSRunDoorUnlocked()
 void FPSRunDoorLocker()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("F: FPSDoorLocker");
+		CONSOLE_PORT.println("F: FPSDoorLocker");
 	#endif
   FPSLockDoor(); // Lock the door.
 	#ifdef LCDGEN
@@ -250,7 +250,7 @@ void FPSRunDoorLocker()
 void FPSRunExit()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("F: FPSRunExit");
+		CONSOLE_PORT.println("F: FPSRunExit");
 	#endif
   FPSTurnFootlightOff();  // don't need to worry about a timer, if we get to this state, just turn it off.
   #ifdef LCDGENERIC

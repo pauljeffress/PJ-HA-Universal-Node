@@ -10,17 +10,17 @@ int readSoilMoisture(int powerPin, int moisturePin)
     int sample = 0;
     digitalWrite(powerPin, HIGH);//turn power to sensor "On"
     delay(10);//wait 10 milliseconds 
-    Serial.print("Starting soil samples ");
+    CONSOLE_PORT.print("Starting soil samples ");
     for(int i = 0; i<5; i++)
         {
             sample = analogRead(moisturePin);//Read the SIG value form sensor 
-            Serial.print(sample);
-            Serial.print(" ");
+            CONSOLE_PORT.print(sample);
+            CONSOLE_PORT.print(" ");
             soilValue += sample; // Sum the samples
             delay(100); //wait between samples
         }
     soilValue = soilValue / 5; // average the 5 samples
-    Serial.println(soilValue);
+    CONSOLE_PORT.println(soilValue);
     digitalWrite(powerPin, LOW);//turn power to sensor "Off"
     return soilValue;//send current moisture value
 }    

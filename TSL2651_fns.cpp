@@ -13,13 +13,13 @@ void getTSL2651()
   /* Display the results (light is measured in lux) */
   if (event.light)
   {
-    Serial.print(event.light); Serial.println(" lux");
+    CONSOLE_PORT.print(event.light); CONSOLE_PORT.println(" lux");
   }
   else
   {
     /* If event.light = 0 lux the sensor is probably saturated
        and no reliable data could be generated! */
-    Serial.println("Sensor overload");
+    CONSOLE_PORT.println("Sensor overload");
   }
   
   // put values into the global array.
@@ -37,15 +37,15 @@ void displaySensorDetails(void)
 {
   sensor_t sensor;
   tsl.getSensor(&sensor);
-  Serial.println("------------------------------------");
-  Serial.print  ("Sensor:       "); Serial.println(sensor.name);
-  Serial.print  ("Driver Ver:   "); Serial.println(sensor.version);
-  Serial.print  ("Unique ID:    "); Serial.println(sensor.sensor_id);
-  Serial.print  ("Max Value:    "); Serial.print(sensor.max_value); Serial.println(" lux");
-  Serial.print  ("Min Value:    "); Serial.print(sensor.min_value); Serial.println(" lux");
-  Serial.print  ("Resolution:   "); Serial.print(sensor.resolution); Serial.println(" lux");  
-  Serial.println("------------------------------------");
-  Serial.println("");
+  CONSOLE_PORT.println("------------------------------------");
+  CONSOLE_PORT.print  ("Sensor:       "); CONSOLE_PORT.println(sensor.name);
+  CONSOLE_PORT.print  ("Driver Ver:   "); CONSOLE_PORT.println(sensor.version);
+  CONSOLE_PORT.print  ("Unique ID:    "); CONSOLE_PORT.println(sensor.sensor_id);
+  CONSOLE_PORT.print  ("Max Value:    "); CONSOLE_PORT.print(sensor.max_value); CONSOLE_PORT.println(" lux");
+  CONSOLE_PORT.print  ("Min Value:    "); CONSOLE_PORT.print(sensor.min_value); CONSOLE_PORT.println(" lux");
+  CONSOLE_PORT.print  ("Resolution:   "); CONSOLE_PORT.print(sensor.resolution); CONSOLE_PORT.println(" lux");  
+  CONSOLE_PORT.println("------------------------------------");
+  CONSOLE_PORT.println("");
   delay(500);
 }
 
@@ -68,10 +68,10 @@ void configureSensor(void)
 
   /* Update these values depending on what you've set above! */ 
   #ifdef DEBUGPJx 
-    Serial.println("------------------------------------");
-    Serial.print  ("Gain:         "); Serial.println("Auto");
-    Serial.print  ("Timing:       "); Serial.println("13 ms");
-    Serial.println("------------------------------------");
+    CONSOLE_PORT.println("------------------------------------");
+    CONSOLE_PORT.print  ("Gain:         "); CONSOLE_PORT.println("Auto");
+    CONSOLE_PORT.print  ("Timing:       "); CONSOLE_PORT.println("13 ms");
+    CONSOLE_PORT.println("------------------------------------");
   #endif
 }
 

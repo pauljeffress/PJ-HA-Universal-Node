@@ -6,69 +6,82 @@ void setup() {
 
 #ifdef SLEEPY // uncomment if flash on board
 /*  if (flash.initialize()) {
-      Serial.println("Flash Init OK!");
+      CONSOLE_PORT.println("Flash Init OK!");
       flash.sleep();          // put flash (if it exists) into low power mode
-      Serial.println("Flash sleeping");
+      CONSOLE_PORT.println("Flash sleeping");
     } else {
-      Serial.println("Flash Init FAIL!");
+      CONSOLE_PORT.println("Flash Init FAIL!");
     } */
 #endif
 
-#ifdef DEBUGPJ1
-  // while (!Serial);   // On FEATHERM0RFM69 you need this or you may miss first bits of output. 
-                        // But if no USB is connected then it will hang here.
-  delay(5000);  // A better way to ensure Serial is ready on boards like Feathers, that does not block
+#ifdef DEBUG
+  delay(5000);  // Rather than using "while (!Serial);" a better way to ensure 
+                // Serial is ready on boards like Feathers, that does not block
                 // the whole sketch from running if no USB plugged in. But still gives device
                 // time to get it going so I don't miss first few debug outputs.
-  Serial.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
+  CONSOLE_PORT.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
+  CONSOLE_PORT.println("DEBUG enabled at compile time.");
+#endif
+
+#ifdef DEBUGPJ1
+  delay(5000);  // Rather than using "while (!Serial);" a better way to ensure 
+                // Serial is ready on boards like Feathers, that does not block
+                // the whole sketch from running if no USB plugged in. But still gives device
+                // time to get it going so I don't miss first few debug outputs.
+  CONSOLE_PORT.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
+  CONSOLE_PORT.println("DEBUGPJ1 enabled at compile time.");
 #endif
 
 #ifdef DEBUGPJ2
-  // while (!Serial);
-  Serial.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
+  delay(5000);  // Rather than using "while (!Serial);" a better way to ensure 
+                // Serial is ready on boards like Feathers, that does not block
+                // the whole sketch from running if no USB plugged in. But still gives device
+                // time to get it going so I don't miss first few debug outputs.
+  CONSOLE_PORT.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
+  CONSOLE_PORT.println("DEBUGPJ2 enabled at compile time.");
 #endif
 
 
 #ifdef DEBUGPJ2
-  Serial.print( F("Compiled: "));
-  Serial.print( F(__DATE__));
-  Serial.print( F(", "));
-  Serial.println( F(__TIME__));
+  CONSOLE_PORT.print( F("Compiled: "));
+  CONSOLE_PORT.print( F(__DATE__));
+  CONSOLE_PORT.print( F(", "));
+  CONSOLE_PORT.println( F(__TIME__));
   
-  Serial.println(F("PJ HA Unified Node"));
-  Serial.print("N ");
-  Serial.print(NODEID);
-  Serial.print(" ");
-  Serial.println(VERSION);
+  CONSOLE_PORT.println(F("PJ HA Unified Node"));
+  CONSOLE_PORT.print("N ");
+  CONSOLE_PORT.print(NODEID);
+  CONSOLE_PORT.print(" ");
+  CONSOLE_PORT.println(VERSION);
   #ifdef RFNODETYPE
-    Serial.println("RF Node Type");
-    Serial.print("Freq ");
-    Serial.print(915);
-    Serial.println(" Mhz");
+    CONSOLE_PORT.println("RF Node Type");
+    CONSOLE_PORT.print("Freq ");
+    CONSOLE_PORT.print(915);
+    CONSOLE_PORT.println(" Mhz");
   #endif
   #ifdef ETHNODETYPE
-    Serial.println("ETH Node Type");
-    Serial.print("MAC ");
+    CONSOLE_PORT.println("ETH Node Type");
+    CONSOLE_PORT.print("MAC ");
     for (int i = 0; i < 6; i++)
       {
-      Serial.print(mac[i], HEX);
-      Serial.print(":");
+      CONSOLE_PORT.print(mac[i], HEX);
+      CONSOLE_PORT.print(":");
       }
-    Serial.println();  
-    Serial.print("Node IP Addr: ");
+    CONSOLE_PORT.println();  
+    CONSOLE_PORT.print("Node IP Addr: ");
     for (int i = 0; i < 4; i++)
       {
-      Serial.print(ip[i]);
-      Serial.print(".");
+      CONSOLE_PORT.print(ip[i]);
+      CONSOLE_PORT.print(".");
       }
-    Serial.println();  
-    Serial.print("MQTT Broker: ");
+    CONSOLE_PORT.println();  
+    CONSOLE_PORT.print("MQTT Broker: ");
     for (int i = 0; i < 4; i++)
       {
-      Serial.print(mqtt_server[i]);
-      Serial.print(".");
+      CONSOLE_PORT.print(mqtt_server[i]);
+      CONSOLE_PORT.print(".");
       }
-    Serial.println();    
+    CONSOLE_PORT.println();    
   #endif  
 #endif
 
@@ -87,7 +100,7 @@ void setup() {
 
   // Setup indicator LEDs to initial state
   #ifdef DEBUGPJ2
-    Serial.println("Starting LED flash"); 
+    CONSOLE_PORT.println("Starting LED flash"); 
   #endif
   pinMode(COMMS_LED_PIN, OUTPUT);   // set pin of IP indicator
 #ifdef ETHNODETYPE  
@@ -137,26 +150,26 @@ void setup() {
   digitalWrite(COMMS_LED_PIN, LOW);             
   delay(300);
   #ifdef DEBUGPJ2
-    Serial.println("Ended LED flash"); 
+    CONSOLE_PORT.println("Ended LED flash"); 
   #endif
 #ifdef ETHNODETYPE   // Do all of the ETHNODETYPE unique setup() actions.
 // Setup Ethernet port
   Ethernet.begin(mac, ip);     // start the Ethernet connection with static IP
   // Make initial connection to MQTT Broker via IP
-  Serial.println("MQTT connecting...");
+  CONSOLE_PORT.println("MQTT connecting...");
   mqttCon = 0;          // reset connection flag
   mqttCon = mqttClient.connect(clientName);  // try first time to connect to broker.
   while(mqttCon != 1){        // retry MQTT connection every 2 seconds
-      Serial.println("con failed...");
+      CONSOLE_PORT.println("con failed...");
       mqttCon = mqttClient.connect(clientName); // retry connection to broker
       delay(2000);          // every 2 seconds
         }
   if(mqttCon){          // Connected !
-    Serial.println("con with MQTT server");
+    CONSOLE_PORT.println("con with MQTT server");
     digitalWrite(MQCON, HIGH);      // switch on MQTT connection indicator LED
     mqttClient.subscribe(subTopic);     // subscribe to all southbound messages
     }
-    else Serial.println("no con with MQTT server");
+    else CONSOLE_PORT.println("no con with MQTT server");
 #endif  // ETHNODETYPE
 
 #ifdef RFNODETYPE
@@ -164,21 +177,21 @@ void setup() {
   // xxxx - decide what LEDs will be on a standard RF Node and ensure they get pinMode intialiased and flashed here, like they do for ETH NODE
   
   #ifdef DEBUGPJ2
-    Serial.println("radio initialisation starting.");
+    CONSOLE_PORT.println("radio initialisation starting.");
   #endif
 
   // RadioHead radio initialisation code
    if (!manager.init())
-    Serial.println("init FAILED");
+    CONSOLE_PORT.println("init FAILED");
   else
-    Serial.println("init succeded");
+    CONSOLE_PORT.println("init succeded");
   // Defaults after init are 434.0MHz, modulation GFSK_Rb250Fd250, +13dbM (for low power module)
   // No encryption
   
   if (!driver.setFrequency(915.0))
-    Serial.println("setFrequency FAILED");
+    CONSOLE_PORT.println("setFrequency FAILED");
   else
-    Serial.println("setFrequency succeded");
+    CONSOLE_PORT.println("setFrequency succeded");
     
   // If you are using a high power RF69 eg RFM69HW, you *must* set a Tx power with the
   // ishighpowermodule flag set like this:
@@ -187,11 +200,11 @@ void setup() {
   // The encryption key has to be the same as the one in the client
   uint8_t key[] = { 0x02, 0x03, 0x07, 0x02, 0x06, 0x06, 0x01, 0x01,
                     0x02, 0x03, 0x07, 0x02, 0x06, 0x06, 0x01, 0x01};
-  driver.setEncryptionKey(key); Serial.println("Encryption ENABLED");
-  //Serial.println("Encryption DISABLED");
+  driver.setEncryptionKey(key); CONSOLE_PORT.println("Encryption ENABLED");
+  //CONSOLE_PORT.println("Encryption DISABLED");
 
   #ifdef DEBUGPJ2
-    Serial.println("radio initialisation is done.");
+    CONSOLE_PORT.println("radio initialisation is done.");
   #endif
 
   // Below is the no longer needed code from pre RadioHead days.
@@ -220,8 +233,8 @@ void setup() {
 
 #ifdef BUTTON1 // 1st Button ===============================================
   #ifdef DEBUGPJ2
-    Serial.print("BUT1 PIN is:");
-    Serial.println(BUTTON1PIN);
+    CONSOLE_PORT.print("BUT1 PIN is:");
+    CONSOLE_PORT.println(BUTTON1PIN);
   #endif
   #ifdef FEATHERM0RFM69
     pinMode(BUTTON1PIN, INPUT_PULLUP); // assumption is I'm using the built in pullups available on the M0.
@@ -240,8 +253,8 @@ void setup() {
 
 #ifdef SWITCH1 // 1st Switch ===============================================
   #ifdef DEBUGPJ2
-    Serial.print("SW1 PIN is:");
-    Serial.println(SWITCH1PIN);
+    CONSOLE_PORT.print("SW1 PIN is:");
+    CONSOLE_PORT.println(SWITCH1PIN);
   #endif
   #ifdef FEATHERM0RFM69
     pinMode(SWITCH1PIN, INPUT_PULLUP); // assumption is I'm using the built in pullups available on the M0.
@@ -253,8 +266,8 @@ void setup() {
 
 #ifdef SWITCH2 // 2nd Switch ===============================================
   #ifdef DEBUGPJ2
-    Serial.print("SW2 PIN is:");
-    Serial.println(SWITCH2PIN);
+    CONSOLE_PORT.print("SW2 PIN is:");
+    CONSOLE_PORT.println(SWITCH2PIN);
   #endif
   #ifdef FEATHERM0RFM69
     pinMode(SWITCH2PIN, INPUT_PULLUP); // assumption is I'm using the built in pullups available on the M0.
@@ -306,12 +319,12 @@ void setup() {
   lastPIR2 = millis();
 #endif
 #ifdef PIR1 or PIR2  
-  Serial.print("cal PIR(s) ");
+  CONSOLE_PORT.print("cal PIR(s) ");
     for(int i = 0; i < calibrationTime; i++){
-      Serial.print(".");
+      CONSOLE_PORT.print(".");
       delay(1000);
       }
-  Serial.println("");
+  CONSOLE_PORT.println("");
 #endif
   
 #ifdef DHTSENSOR
@@ -394,12 +407,12 @@ void setup() {
   pinMode(MOTEINO_WEATHERSHIELD_V_VALUE_PIN, INPUT);  // Setup the pin the Moteino can analog read the Vin/Batt level on, as per cct on WeatherShield.
 
   if (SI7021sensor.begin())
-    Serial.println("SI7021Ok");
+    CONSOLE_PORT.println("SI7021Ok");
   else
   {
     // Oops, something went wrong, this is usually a connection problem,
     // see the comments at the top of this sketch for the proper connections.
-    Serial.println("SI7021fail");
+    CONSOLE_PORT.println("SI7021fail");
     #ifdef DEBUG
       while(1); // Pause forever.
     #endif
@@ -410,13 +423,13 @@ void setup() {
   // missing a BMP180 chip.  See my Evernotes. 
   
   // if (BMP180pressure.begin())
-  //   Serial.println("BMP180ok");
+  //   CONSOLE_PORT.println("BMP180ok");
   // else
   // {
   //   // Oops, something went wrong, this is usually a connection problem,
   //   // see the comments at the top of this sketch for the proper connections.
 
-  //   Serial.println("BMP180fail");
+  //   CONSOLE_PORT.println("BMP180fail");
   //   //while(1); // Pause forever.
   // }
 #endif // MOTEINOWEATHER
@@ -424,13 +437,13 @@ void setup() {
 #ifdef TSL2651
   // insert any setup() code for this specific device here.
   #ifdef DEBUGPJ2
-    Serial.println("TSL2651 Setup code start");
+    CONSOLE_PORT.println("TSL2651 Setup code start");
   #endif
   /* Initialise the sensor */
   if(!tsl.begin())
   {
     /* There was a problem detecting the ADXL345 ... check your connections */
-    Serial.print("no TSL2561");
+    CONSOLE_PORT.print("no TSL2561");
     while(1);
   }
   /* Display some basic information on this sensor */
@@ -438,13 +451,13 @@ void setup() {
     displaySensorDetails();
   #endif
 //  #ifdef DEBUG
-//    Serial.println("TSL2651 disp done");
+//    CONSOLE_PORT.println("TSL2651 disp done");
 //  #endif
   /* Setup the sensor gain and integration time */
   configureSensor();
   /* We're ready to go! */
   #ifdef DEBUGPJ2
-    Serial.println("TSL2651 Setup code done");
+    CONSOLE_PORT.println("TSL2651 Setup code done");
   #endif
 #endif // TSL2651
 
@@ -464,19 +477,19 @@ void setup() {
 
 #ifdef RTC
   #ifdef DEBUGPJ2
-    Serial.println("RTC setup");
+    CONSOLE_PORT.println("RTC setup");
   #endif
   if (rtc.begin()) 
     {
-    Serial.println("Found RTC");
+    CONSOLE_PORT.println("Found RTC");
     if (rtc.isrunning()) 
       {
-      Serial.println("RTC is running!");
+      CONSOLE_PORT.println("RTC is running!");
       rtcOk=true;
       }
     else
       { 
-      Serial.println("RTC is NOT running!");
+      CONSOLE_PORT.println("RTC is NOT running!");
       rtcOk=false;
       // xxxx - should trigger the send of an error MQTT msg here.
       }
@@ -484,7 +497,7 @@ void setup() {
   else
     {
     rtcOk=false;
-    Serial.println("Couldn't find RTC");
+    CONSOLE_PORT.println("Couldn't find RTC");
     // xxxx - should trigger the send of an error MQTT msg here.
     }
 #endif
@@ -493,7 +506,7 @@ void setup() {
   #ifdef LCDGENERIC_SFGLCD  // items specific to the SparkFun LCD-09351
     // delay(1200);///wait for the one second spalsh screen before anything is sent to the LCD.
     #ifdef DEBUGPJ2
-      Serial.println("initalising LCD");
+      CONSOLE_PORT.println("initalising LCD");
     #endif
     lcdGen.setBacklight(50); // xxxx should be LCDGENERIC_BRIGHTNESS not set at 50 // 0-100 are the levels from off to full brightness
     lcdGen.setHome();    //set the cursor back to 0,0.
@@ -537,7 +550,7 @@ void setup() {
 
 #ifdef LCDNEXTION_FPS  // dev330 Nextion LCD used on FPS Node specifically
     #ifdef DEBUGPJ2
-      Serial.println("initalising Nextion LCD for FPS");
+      CONSOLE_PORT.println("initalising Nextion LCD for FPS");
     #endif
     
     /* Set the baudrate which is for debug and communicate with Nextion screen. */
@@ -584,27 +597,27 @@ void setup() {
 
 
 #ifdef FINGER
-  Serial.println("FINGER setup() started");
+  CONSOLE_PORT.println("FINGER setup() started");
   // set the data rate for the sensor serial port
   finger.begin(57600);
   if (finger.verifyPassword()) {
-    Serial.println("Found fingerprint sensor!");
+    CONSOLE_PORT.println("Found fingerprint sensor!");
   } else {
-    Serial.println("Did not find fingerprint sensor :(");
+    CONSOLE_PORT.println("Did not find fingerprint sensor :(");
     while (1);  // xxxx - remove after debugging, but maybe send an error?
   }
-  Serial.println("FINGER setup() complete"); 
+  CONSOLE_PORT.println("FINGER setup() complete"); 
 #endif
 
 #ifdef EXTVAR40X
   #ifdef DEBUGPJ2
-      Serial.println("initalising EXTVAR40X");
+      CONSOLE_PORT.println("initalising EXTVAR40X");
   #endif
 #endif  // EXTVAR40X
 
 #ifdef OCEANMIRROR
   #ifdef DEBUGPJ2
-      Serial.println("initalising OCEANMIRROR");
+      CONSOLE_PORT.println("initalising OCEANMIRROR");
   #endif
   Serial1.begin(115200); // Initialise the 2nd hw serial port for inter Arduino serial link
 #endif

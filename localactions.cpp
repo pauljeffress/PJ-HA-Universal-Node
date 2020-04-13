@@ -26,8 +26,8 @@ void localactions(){
   if (extendedbutton1tapped)
     {
     #ifdef DEBUGPJ2
-        Serial.println("===== localactions() =====");
-        Serial.println("extendedbutton1tapped");
+        CONSOLE_PORT.println("===== localactions() =====");
+        CONSOLE_PORT.println("extendedbutton1tapped");
     #endif
     actuator1status = !actuator1status; // toggle the associated actuator flag. Which will be acted on further down.
     if (actuator1status) sendserialtoslave(EXTENDEDACTUATORON, 1); // turn on the associated extended actuator (i.e. LED)
@@ -134,7 +134,7 @@ void localactions(){
                     // as thats best left to the lockout timer code.
     {
     #ifdef DEBUGPJ2
-      Serial.println("localactions(): As a PING detect occured, enabling FPS RUN state machine.");
+      CONSOLE_PORT.println("localactions(): As a PING detect occured, enabling FPS RUN state machine.");
     #endif
     EnableFPSRunModeStateMachine = true; // flag that says FPS RUN MODE state machine should start and stay running until this is no longer true;
     }
@@ -149,7 +149,7 @@ void localactions(){
   if (lastBtn1State == FPS_MODE_DB)
     {
     #ifdef DEBUGPJ2
-      Serial.println("localactions(): BUTTON1, our Mode Switch, is in DB_MODE position, so enabling FPS DB state machine.");
+      CONSOLE_PORT.println("localactions(): BUTTON1, our Mode Switch, is in DB_MODE position, so enabling FPS DB state machine.");
     #endif
     EnableFPSDBModeStateMachine = true; // flag that says FPS DB MODE state machine should start and stay running until this is no longer true;
     #ifdef LCDGENERIC // if we have an LCD....
@@ -183,7 +183,7 @@ void localactions(){
 #endif// OCEANMIRROR
 
 #ifdef LEDSTRIPS_REMOTE // Do this stuff if only if I have LED Strips attached to subordinate MCU attached via Serial to this Node
-  //Serial.print("current200 = "); Serial.print(current200); Serial.print("   serSent200 = "); Serial.println(serSent200);
+  //CONSOLE_PORT.print("current200 = "); CONSOLE_PORT.print(current200); CONSOLE_PORT.print("   serSent200 = "); CONSOLE_PORT.println(serSent200);
   //delay(1000);
   if (current200 != serSent200) // i.e. this DEVice value must have been updated recently, so I need to tell the system attached over Serial.
     {

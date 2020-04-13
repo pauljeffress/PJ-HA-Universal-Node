@@ -32,11 +32,11 @@ void MIRROR_sendSerialToDue(int sendSerDev, float sendparam) {
   sendparamRightByte = (sendparam - sendparamLeftByte)* 10;  // will give us the first digit after the decimal place.
 
   #ifdef DEBUGPJ2
-    Serial.println("===== Sending Serial Frame ======");
-    Serial.println("PJ");
-    Serial.print("sendSerDev="); Serial.print(sendSerDev); Serial.print("  High Byte="); Serial.print(sendSerDevHighByte); Serial.print("  Low Byte="); Serial.println(sendSerDevLowByte );
-    Serial.print("sendparam="); Serial.print(sendparam); Serial.print("  Left Byte="); Serial.print(sendparamLeftByte); Serial.print("  Right Byte="); Serial.println(sendparamRightByte);
-    Serial.println("=================================");
+    CONSOLE_PORT.println("===== Sending Serial Frame ======");
+    CONSOLE_PORT.println("PJ");
+    CONSOLE_PORT.print("sendSerDev="); CONSOLE_PORT.print(sendSerDev); CONSOLE_PORT.print("  High Byte="); CONSOLE_PORT.print(sendSerDevHighByte); CONSOLE_PORT.print("  Low Byte="); CONSOLE_PORT.println(sendSerDevLowByte );
+    CONSOLE_PORT.print("sendparam="); CONSOLE_PORT.print(sendparam); CONSOLE_PORT.print("  Left Byte="); CONSOLE_PORT.print(sendparamLeftByte); CONSOLE_PORT.print("  Right Byte="); CONSOLE_PORT.println(sendparamRightByte);
+    CONSOLE_PORT.println("=================================");
   #endif
   
   // Serial tx the header and data to the Due.

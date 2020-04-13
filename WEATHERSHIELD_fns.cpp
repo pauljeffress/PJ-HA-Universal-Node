@@ -12,10 +12,10 @@ void getWeatherShield()
   //int deviceid = SI7021sensor.getDeviceId();  // PJ 18-6-16 commented out as it
   // was hanging when called and I don't need this value.
   #ifdef DEBUGPJ2
-    Serial.println("*Si7021*");
-    Serial.print("C:");Serial.print(temperature);
-    Serial.print(" H:");Serial.print(humidity);Serial.print("% ");
-  //  Serial.print("DID: ");Serial.print(deviceid); // PJ 18-6-16 commented out see few lines above for reason.
+    CONSOLE_PORT.println("*Si7021*");
+    CONSOLE_PORT.print("C:");CONSOLE_PORT.print(temperature);
+    CONSOLE_PORT.print(" H:");CONSOLE_PORT.print(humidity);CONSOLE_PORT.print("% ");
+  //  CONSOLE_PORT.print("DID: ");CONSOLE_PORT.print(deviceid); // PJ 18-6-16 commented out see few lines above for reason.
   #endif
   
   //*************** READING BATTERY VOLTAGE *********************
@@ -23,8 +23,8 @@ void getWeatherShield()
   pinMode(MOTEINO_WEATHERSHIELD_V_ENABLE_PIN, OUTPUT);
   digitalWrite(MOTEINO_WEATHERSHIELD_V_ENABLE_PIN, LOW);
   #ifdef DEBUGPJ2
-    Serial.print(" BATT:");
-    Serial.println(analogRead(MOTEINO_WEATHERSHIELD_V_VALUE_PIN));
+    CONSOLE_PORT.print(" BATT:");
+    CONSOLE_PORT.println(analogRead(MOTEINO_WEATHERSHIELD_V_VALUE_PIN));
   #endif
   pinMode(MOTEINO_WEATHERSHIELD_V_ENABLE_PIN, INPUT); //put MOTEINO_WEATHERSHIELD_V_ENABLE_PIN in HI-Z mode (to allow mosfet gate pullup to turn it OFF)
   //*************** READING BATTERY VOLTAGE *********************
@@ -43,10 +43,10 @@ void getWeatherShield()
 //   // you will need to know the altitude at which your measurements are taken.
 //   // We're using a constant called ALTITUDE in this sketch:
 //   #ifdef DEBUGPJ2
-//   Serial.println("*BMP180*");
-//   Serial.print("provided alt:");
-//   Serial.print(MOTEINO_WEATHERSHIELD_ALTITUDE);
-//   Serial.println("m");
+//   CONSOLE_PORT.println("*BMP180*");
+//   CONSOLE_PORT.print("provided alt:");
+//   CONSOLE_PORT.print(MOTEINO_WEATHERSHIELD_ALTITUDE);
+//   CONSOLE_PORT.println("m");
 //   #endif
 //   // If you want to measure altitude, and not pressure, you will instead need
 //   // to provide a known baseline pressure. This is shown at the end of the sketch.
@@ -69,9 +69,9 @@ void getWeatherShield()
 //     {
 //       #ifdef DEBUGPJ2
 //       // Print out the measurement:
-//       Serial.print("C: ");
-//       Serial.print(T,2);
-//       Serial.println("deg");
+//       CONSOLE_PORT.print("C: ");
+//       CONSOLE_PORT.print(T,2);
+//       CONSOLE_PORT.println("deg");
 //       #endif
       
 //       // Start a pressure measurement:
@@ -96,11 +96,11 @@ void getWeatherShield()
 //         {
 //           #ifdef DEBUGPJ2
 //           // Print out the measurement:
-//           Serial.print("abs pressure: ");
-//           Serial.print(P,2);
-//           Serial.print(" mb, ");
-//           Serial.print(P*0.0295333727,2);
-//           Serial.println(" inHg");
+//           CONSOLE_PORT.print("abs pressure: ");
+//           CONSOLE_PORT.print(P,2);
+//           CONSOLE_PORT.print(" mb, ");
+//           CONSOLE_PORT.print(P*0.0295333727,2);
+//           CONSOLE_PORT.println(" inHg");
 //           #endif
 //           // The pressure sensor returns abolute pressure, which varies with altitude.
 //           // To remove the effects of altitude, use the sealevel function and your current altitude.
@@ -110,9 +110,9 @@ void getWeatherShield()
 
 //           p0 = BMP180pressure.sealevel(P,MOTEINO_WEATHERSHIELD_ALTITUDE); // we're at 1655 meters (Boulder, CO)
 //           #ifdef DEBUGPJ2
-//           Serial.print("relative (sea-level) pressure: ");
-//           Serial.print(p0,2);
-//           Serial.print(" mb/HPa, ");
+//           CONSOLE_PORT.print("relative (sea-level) pressure: ");
+//           CONSOLE_PORT.print(p0,2);
+//           CONSOLE_PORT.print(" mb/HPa, ");
 //           #endif
 //           // On the other hand, if you want to determine your altitude from the pressure reading,
 //           // use the altitude function along with a baseline pressure (sea-level or other).
@@ -120,26 +120,26 @@ void getWeatherShield()
 //           // Result: a = altitude in m.
 
 // //          a = BMP180pressure.altitude(P,p0);
-// //          Serial.print("computed altitude: ");
-// //          Serial.print(a,0);
-// //          Serial.print(" meters, ");
-// //          Serial.print(a*3.28084,0);
-// //          Serial.println(" feet");
+// //          CONSOLE_PORT.print("computed altitude: ");
+// //          CONSOLE_PORT.print(a,0);
+// //          CONSOLE_PORT.print(" meters, ");
+// //          CONSOLE_PORT.print(a*3.28084,0);
+// //          CONSOLE_PORT.println(" feet");
 //         }
 //         #ifdef DEBUGPJ2
-//         else Serial.println("error retrieving pressure measurement\n");
+//         else CONSOLE_PORT.println("error retrieving pressure measurement\n");
 //         #endif
 //       }
 //       #ifdef DEBUGPJ2
-//       else Serial.println("error starting pressure measurement\n");
+//       else CONSOLE_PORT.println("error starting pressure measurement\n");
 //       #endif
 //     }
 //     #ifdef DEBUGPJ2
-//     else Serial.println("error retrieving temp measurement\n");
+//     else CONSOLE_PORT.println("error retrieving temp measurement\n");
 //     #endif
 //   }
 //   #ifdef DEBUGPJ2
-//   else Serial.println("error starting temp measurement\n");
+//   else CONSOLE_PORT.println("error starting temp measurement\n");
 //   #endif
   
   // put values into the global array.
