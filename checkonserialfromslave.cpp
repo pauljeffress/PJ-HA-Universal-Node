@@ -25,22 +25,22 @@ int  recparam;
   // see if a valid frame has arrived, and read it in. 
   if (Serial1.available()) 
     {
-    Serial.println("Rec'd a char off serial from Uno");
+    CONSOLE_PORT.println("Rec'd a char off serial from Uno");
     firstchar = Serial1.read();
-    Serial.println(firstchar);
+    CONSOLE_PORT.println(firstchar);
     if (firstchar == 0x50) // i.e. "P" - we are correctly at the start of a 4 byte frame
       {
       delay(1000);
       secondchar = Serial1.read();
-      Serial.println(secondchar);
+      CONSOLE_PORT.println(secondchar);
       if (secondchar == 0x4A) // i.e. "J" - we are correctly at the 2nd byte of a 4 byte frame
         {
         recsertype = Serial1.read();
-        Serial.println(recsertype);
+        CONSOLE_PORT.println(recsertype);
         if ((recsertype >= 0) && (recsertype <10)) // quick bounds check
           {
           recparam = Serial1.read();
-          Serial.println(recparam);
+          CONSOLE_PORT.println(recparam);
           validframe = true;
           }
         }
@@ -50,7 +50,7 @@ int  recparam;
   //  if frame was valid then action it
   if (validframe) 
     {
-    Serial.println("====== Frame was valid ======");
+    CONSOLE_PORT.println("====== Frame was valid ======");
     switch(recsertype) 
       {
       case 1:   // HELLO
@@ -58,7 +58,7 @@ int  recparam;
         break;
 
       case 2:   // KEYPRESSED
-        Serial.println("it was a KEYPRESSED event");
+        CONSOLE_PORT.println("it was a KEYPRESSED event");
         if (recparam == 1) extendedbutton1tapped = true;  // this will be acted on and cleared in localactions()
         if (recparam == 2) extendedbutton2tapped = true;  // this will be acted on and cleared in localactions()    
         if (recparam == 3) extendedbutton3tapped = true;  // this will be acted on and cleared in localactions()  

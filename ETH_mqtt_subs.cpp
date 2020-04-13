@@ -11,8 +11,8 @@ void mqtt_subs_senderror() {
     sprintf(buff_topic, "home/eth_nd/nb/node%02d/dev091", NODEID);             // construct MQTT topic and message
     mqttClient.publish(buff_topic,buff_mess);                       // publish ...
     #ifdef DEBUG
-        Serial.print("Syntax error code is: ");
-        Serial.println(error);
+        CONSOLE_PORT.print("Syntax error code is: ");
+        CONSOLE_PORT.println(error);
     #endif
    }
 } // END - mqtt_subs_senderror()

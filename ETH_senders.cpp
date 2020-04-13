@@ -31,7 +31,7 @@ void sendStatusInteger(int sendNodeID, int sendDevID, int sendInt){
 //
 void sendString(int sendNodeID, int sendDevID, char* sendStr){
 int i; 
-      //Serial.println(sendStr);
+      //CONSOLE_PORT.println(sendStr);
       //for (i=0; i<sizeof(sendStr); i++){                  //    copy the string into the buff_Mess (i.e. payload we will send north)
       for (i=0; i<8; i++){                  //    copy the string into the buff_Mess (i.e. payload we will send north)
       buff_mess[i] = (sendStr[i]); }

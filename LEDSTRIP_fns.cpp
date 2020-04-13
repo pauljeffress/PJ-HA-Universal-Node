@@ -24,7 +24,7 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
     #endif
 
     #ifndef LEDSTRIPS_REMOTE  // Do the following initialisation stuff only if LEDs are local.
-      Serial.println("Init Local LEDs"); 
+      CONSOLE_PORT.println("Init Local LEDs"); 
       // LED Strip 1 stuff
       if (LEDStrip1Type) // if LED Strip 1 is a PIXEL LED Strip...
         {
@@ -32,20 +32,20 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
         FastLED.addLeds<WS2811, LEDSTRIP1_DATAPIN, GRB>(pixelledstrip1_leds, LEDSTRIP1_NUMPIXELS);
         // test LED strip...
         #ifdef DEBUGPJ
-          Serial.println("All White");
+          CONSOLE_PORT.println("All White");
         #endif
         fill_solid( pixelledstrip1_leds, LEDSTRIP1_NUMPIXELS, CRGB(50,50,50)); 
         FastLED.show();
         delay(2000);
         #ifdef DEBUGPJ
-          Serial.println("LEDS - off");
+          CONSOLE_PORT.println("LEDS - off");
         #endif
         fill_solid( pixelledstrip1_leds, LEDSTRIP1_NUMPIXELS, CRGB::Black); 
         FastLED.show();
         delay(500);
         // TEST LED Strip by moving a single white led 
         #ifdef DEBUGPJ
-          Serial.println("TEST LED Strip by moving a single white led");
+          CONSOLE_PORT.println("TEST LED Strip by moving a single white led");
         #endif
         for(int whiteLed = 0; whiteLed < LEDSTRIP1_NUMPIXELS; whiteLed = whiteLed + 1) 
           {
@@ -80,7 +80,7 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
       // Insert LED Strip 2 initialisation stuff here - NOT IMPLEMENTED YET
 
     #else   // Do the following initialisation stuff only if LEDs are REMOTE.
-      Serial.println("Init Remote LEDs");
+      CONSOLE_PORT.println("Init Remote LEDs");
       // REMOTE LED Strip 1 initialisation - send commands to subordinate to display initialisation sequence
       // Start by ensuring REMOTE device has all variables correctly initialised. Just in case it has not
       // done that correctly itself.
@@ -95,19 +95,19 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
       sendDevValueToSerial(204, 0, 128, 0.0); // Set Brightness 50% on
       sendDevValueToSerial(201, 0, 250, 0.0); // Set Red on
       #ifdef DEBUGPJ2
-        Serial.println("RED");
+        CONSOLE_PORT.println("RED");
       #endif
       delay(2000);  //pause
       sendDevValueToSerial(201, 0, 0, 0.0); // Set Red off
       sendDevValueToSerial(202, 0, 250, 0.0); // Set Green on
       #ifdef DEBUGPJ2
-        Serial.println("GREEN");
+        CONSOLE_PORT.println("GREEN");
       #endif
       delay(2000);  //pause
       sendDevValueToSerial(202, 0, 0, 0.0); // Set Green off
       sendDevValueToSerial(203, 0, 250, 0.0); // Set Blue on
       #ifdef DEBUGPJ2
-        Serial.println("BLUE");
+        CONSOLE_PORT.println("BLUE");
       #endif
       delay(2000);  //pause
       sendDevValueToSerial(203, 0, 0, 0.0); // Set Blue off
@@ -115,7 +115,7 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
     #endif  
 
   #ifdef DEBUGPJ2
-    Serial.println("LEDs Initialised");
+    CONSOLE_PORT.println("LEDs Initialised");
   #endif
 
   #ifdef RMT_PWR
@@ -130,9 +130,9 @@ void setupLEDStrips() // gets called during setup(), even if LEDSTRIPS_REMOTE
 void setStaticOneColourLEDStrip(int stripnum) // update the strip to use most recently set parameters.
   {
    #ifdef DEBUGPJ2
-    Serial.print("Strip: ");
-    Serial.print(stripnum);
-    Serial.println(" Static One Colour");
+    CONSOLE_PORT.print("Strip: ");
+    CONSOLE_PORT.print(stripnum);
+    CONSOLE_PORT.println(" Static One Colour");
   #endif 
     #ifdef RMT_PWR
       if(LEDStrip1BrightnessValue != 0) RMT_PWROn();  // If required, fire up the RMT_PWR supply for the LEDS.
@@ -153,10 +153,10 @@ void setStaticOneColourLEDStrip(int stripnum) // update the strip to use most re
 void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the required mode for the strip.
   {
    #ifdef DEBUGPJ2
-    Serial.print("Strip: ");
-    Serial.print(stripnum);
-    Serial.print("  Static Pattern Mode: ");
-    Serial.println(stripmode);
+    CONSOLE_PORT.print("Strip: ");
+    CONSOLE_PORT.print(stripnum);
+    CONSOLE_PORT.print("  Static Pattern Mode: ");
+    CONSOLE_PORT.println(stripmode);
    #endif
 
   // set a LED strip to the right mode
@@ -164,7 +164,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
     {
     case (1): // All Off - Black
       #ifdef DEBUGPJ2
-        Serial.println("LED=OFF");
+        CONSOLE_PORT.println("LED=OFF");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       fill_solid( pixelledstrip1_leds, LEDSTRIP1_NUMPIXELS, CRGB::Black); 
@@ -174,7 +174,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
 
     case (2): // White 100%
       #ifdef DEBUGPJ2
-        Serial.println("LED=WHITE100%");
+        CONSOLE_PORT.println("LED=WHITE100%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(250);
@@ -184,7 +184,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
       
     case (3): // White 75%
       #ifdef DEBUGPJ2
-        Serial.println("LED=WHITE75%");
+        CONSOLE_PORT.println("LED=WHITE75%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(196);
@@ -194,7 +194,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
 
     case (4): // White 50%
       #ifdef DEBUGPJ2
-        Serial.println("LED=WHITE50%");
+        CONSOLE_PORT.println("LED=WHITE50%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(128);
@@ -204,7 +204,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
       
     case (5): // White 25%
       #ifdef DEBUGPJ2
-        Serial.println("LED=WHITE25%");
+        CONSOLE_PORT.println("LED=WHITE25%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(64);
@@ -214,7 +214,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
 
     case (6): // Red 100%
       #ifdef DEBUGPJ2
-        Serial.println("LED=Red100%");
+        CONSOLE_PORT.println("LED=Red100%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(250);
@@ -224,7 +224,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
 
     case (7): // Green 100%
       #ifdef DEBUGPJ2
-        Serial.println("LED=Green100%");
+        CONSOLE_PORT.println("LED=Green100%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(250);
@@ -234,7 +234,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
       
     case (8): // Blue 100%
       #ifdef DEBUGPJ2
-        Serial.println("LED=Blue100%");
+        CONSOLE_PORT.println("LED=Blue100%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(250);
@@ -245,7 +245,7 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
   default:  // i.e. we have been sent request to use a mode that we have not implemented.
       send95 = true;  // send message upstream to say request was out of range.
       #ifdef DEBUGPJ2
-        Serial.println("Mode not implemented in setStaticPatternLEDStripMode()");
+        CONSOLE_PORT.println("Mode not implemented in setStaticPatternLEDStripMode()");
       #endif
 
     } // end of switch statement
@@ -254,10 +254,10 @@ void setStaticPatternLEDStripMode(int stripnum, int stripmode)  // action the re
 void setDynamicPatternLEDStripMode(int stripnum, int stripmode)  // action the required mode for the strip.
   {
    #ifdef DEBUGPJ2
-    Serial.print("Strip: ");
-    Serial.print(stripnum);
-    Serial.print("  Dynamic Pattern Mode: ");
-    Serial.println(stripmode);
+    CONSOLE_PORT.print("Strip: ");
+    CONSOLE_PORT.print(stripnum);
+    CONSOLE_PORT.print("  Dynamic Pattern Mode: ");
+    CONSOLE_PORT.println(stripmode);
    #endif
 
   // set a LED strip to the right mode
@@ -265,7 +265,7 @@ void setDynamicPatternLEDStripMode(int stripnum, int stripmode)  // action the r
     {
     case (1): // All Off - Black
       #ifdef DEBUGPJ2
-        Serial.println("LED=OFF");
+        CONSOLE_PORT.println("LED=OFF");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       fill_solid( pixelledstrip1_leds, LEDSTRIP1_NUMPIXELS, CRGB::Black); 
@@ -275,7 +275,7 @@ void setDynamicPatternLEDStripMode(int stripnum, int stripmode)  // action the r
 
     case (2): // Red 100%
       #ifdef DEBUGPJ2
-        Serial.println("LED=RED100%");
+        CONSOLE_PORT.println("LED=RED100%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(250);
@@ -285,7 +285,7 @@ void setDynamicPatternLEDStripMode(int stripnum, int stripmode)  // action the r
       
     case (3): // Green 100%
       #ifdef DEBUGPJ2
-        Serial.println("LED=GREEN100%");
+        CONSOLE_PORT.println("LED=GREEN100%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(250);
@@ -295,7 +295,7 @@ void setDynamicPatternLEDStripMode(int stripnum, int stripmode)  // action the r
 
     case (4): // Blue 100%
       #ifdef DEBUGPJ2
-        Serial.println("LED=WHITE50%");
+        CONSOLE_PORT.println("LED=WHITE50%");
       #endif
       RMT_PWROn(); // Turns on RMT_PWR unit if its not already on.
       FastLED.setBrightness(250);
@@ -306,7 +306,7 @@ void setDynamicPatternLEDStripMode(int stripnum, int stripmode)  // action the r
   default:  // i.e. we have been sent request to use a mode that we have not implemented.
       send95 = true;  // send message upstream to say request was out of range.
       #ifdef DEBUGPJ2
-        Serial.println("Mode not implemented in setDynamicPatternLEDStripMode()");
+        CONSOLE_PORT.println("Mode not implemented in setDynamicPatternLEDStripMode()");
       #endif
 
     } // end of switch statement

@@ -181,9 +181,9 @@ if (send45)
 #ifdef MOTEINOWEATHER
   if (send51 || send54 || send55) 
     {
-      //Serial.println("call getW");
+      //CONSOLE_PORT.println("call getW");
       getWeatherShield();  // if we have to send any of these, get them all first.
-      //Serial.println("back from getW");
+      //CONSOLE_PORT.println("back from getW");
     }
   if (send51)  // pressure
     {
@@ -323,26 +323,26 @@ if (send95)
       if (!rtcOk) // i.e. rtc was not found or was not running at startup
         {
          #ifdef DEBUGPJ2
-          Serial.print("rtcOk = false, so rtc was either not found or was not running at startup");
+          CONSOLE_PORT.print("rtcOk = false, so rtc was either not found or was not running at startup");
           // xxxx - should trigger the send of an error MQTT msg here.
          #endif  
         }
       now = rtc.now();  // if we have to send any of these, get a snapshot of them all first.
       #ifdef DEBUGPJ2
-          Serial.print(now.year(), DEC);
-          Serial.print('/');
-          Serial.print(now.month(), DEC);
-          Serial.print('/');
-          Serial.print(now.day(), DEC);
-          Serial.print(" (");
-          Serial.print(rtcDaysOfTheWeek[now.dayOfTheWeek()]);
-          Serial.print(") ");
-          Serial.print(now.hour(), DEC);
-          Serial.print(':');
-          Serial.print(now.minute(), DEC);
-          Serial.print(':');
-          Serial.print(now.second(), DEC);
-          Serial.println();
+          CONSOLE_PORT.print(now.year(), DEC);
+          CONSOLE_PORT.print('/');
+          CONSOLE_PORT.print(now.month(), DEC);
+          CONSOLE_PORT.print('/');
+          CONSOLE_PORT.print(now.day(), DEC);
+          CONSOLE_PORT.print(" (");
+          CONSOLE_PORT.print(rtcDaysOfTheWeek[now.dayOfTheWeek()]);
+          CONSOLE_PORT.print(") ");
+          CONSOLE_PORT.print(now.hour(), DEC);
+          CONSOLE_PORT.print(':');
+          CONSOLE_PORT.print(now.minute(), DEC);
+          CONSOLE_PORT.print(':');
+          CONSOLE_PORT.print(now.second(), DEC);
+          CONSOLE_PORT.println();
        #endif
     }
   if (send300)  // 300: Unixtime - high 16 bits (Unixtime is a 32bit Arduino 'Long')

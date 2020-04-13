@@ -31,17 +31,17 @@ int FPSgetFingerprintID() {
   switch (p) {
     case FINGERPRINT_OK:
       #ifdef DEBUGPJ2
-        Serial.println("FPS - Image taken");
+        CONSOLE_PORT.println("FPS - Image taken");
       #endif
       break;
     case FINGERPRINT_NOFINGER:
       #ifdef DEBUGPJ2
-        Serial.println("FPS - No finger detected");
+        CONSOLE_PORT.println("FPS - No finger detected");
       #endif
       return FPS_NO_FINGER_DETECT;
     default:
       #ifdef DEBUGPJ2    
-        Serial.println("FPS - Unknown error");
+        CONSOLE_PORT.println("FPS - Unknown error");
       #endif
       return FPS_OTHER_ERROR;
   }
@@ -52,12 +52,12 @@ int FPSgetFingerprintID() {
   switch (p) {
     case FINGERPRINT_OK:
       #ifdef DEBUGPJ2
-        Serial.println("FPS - Image converted");
+        CONSOLE_PORT.println("FPS - Image converted");
       #endif
       break;
     default:
       #ifdef DEBUGPJ2    
-        Serial.println("FPS - Unknown error");
+        CONSOLE_PORT.println("FPS - Unknown error");
       #endif
       return FPS_OTHER_ERROR;
   }
@@ -68,35 +68,35 @@ int FPSgetFingerprintID() {
   if (p == FINGERPRINT_OK) 
     {
     #ifdef DEBUGPJ2  
-      Serial.println("FPS - Found a print match!");
+      CONSOLE_PORT.println("FPS - Found a print match!");
     #endif
     }
     else if (p == FINGERPRINT_PACKETRECIEVEERR) 
           {
           #ifdef DEBUGPJ2
-            Serial.println("FPS - Communication error");
+            CONSOLE_PORT.println("FPS - Communication error");
           #endif
           return FPS_OTHER_ERROR;
           } 
           else if (p == FINGERPRINT_NOTFOUND) 
                 {
                 #ifdef DEBUGPJ2
-                  Serial.println("FPS - Did not find a match");
+                  CONSOLE_PORT.println("FPS - Did not find a match");
                 #endif
                 return FPS_FINGER_NO_MATCH;
                 } 
                 else 
                   {
                   #ifdef DEBUGPJ2
-                    Serial.println("FPS - Unknown error");
+                    CONSOLE_PORT.println("FPS - Unknown error");
                   #endif
                   return FPS_OTHER_ERROR;
                   }   
   
   // if we get to here we have got a succesful match
   #ifdef DEBUGPJ2
-    Serial.print("Found ID #"); Serial.print(finger.fingerID); 
-    Serial.print(" with confidence of "); Serial.println(finger.confidence); 
+    CONSOLE_PORT.print("Found ID #"); CONSOLE_PORT.print(finger.fingerID); 
+    CONSOLE_PORT.print(" with confidence of "); CONSOLE_PORT.println(finger.confidence); 
   #endif
   return finger.fingerID;
 } // END - FPSgetFingerprintID()
@@ -110,19 +110,19 @@ int getFingerprintID() {
   uint8_t p = finger.getImage();
   switch (p) {
     case FINGERPRINT_OK:
-      Serial.println("Image taken");
+      CONSOLE_PORT.println("Image taken");
       break;
     case FINGERPRINT_NOFINGER:
-      Serial.println("No finger detected");
+      CONSOLE_PORT.println("No finger detected");
       return p;
     case FINGERPRINT_PACKETRECIEVEERR:
-      Serial.println("Communication error");
+      CONSOLE_PORT.println("Communication error");
       return p;
     case FINGERPRINT_IMAGEFAIL:
-      Serial.println("Imaging error");
+      CONSOLE_PORT.println("Imaging error");
       return p;
     default:
-      Serial.println("Unknown error");
+      CONSOLE_PORT.println("Unknown error");
       return p;
   }
 
@@ -131,43 +131,43 @@ int getFingerprintID() {
   p = finger.image2Tz();
   switch (p) {
     case FINGERPRINT_OK:
-      Serial.println("Image converted");
+      CONSOLE_PORT.println("Image converted");
       break;
     case FINGERPRINT_IMAGEMESS:
-      Serial.println("Image too messy");
+      CONSOLE_PORT.println("Image too messy");
       return p;
     case FINGERPRINT_PACKETRECIEVEERR:
-      Serial.println("Communication error");
+      CONSOLE_PORT.println("Communication error");
       return p;
     case FINGERPRINT_FEATUREFAIL:
-      Serial.println("Could not find fingerprint features");
+      CONSOLE_PORT.println("Could not find fingerprint features");
       return p;
     case FINGERPRINT_INVALIDIMAGE:
-      Serial.println("Could not find fingerprint features");
+      CONSOLE_PORT.println("Could not find fingerprint features");
       return p;
     default:
-      Serial.println("Unknown error");
+      CONSOLE_PORT.println("Unknown error");
       return p;
   }
   
   // OK converted!
   p = finger.fingerFastSearch();
   if (p == FINGERPRINT_OK) {
-    Serial.println("Found a print match!");
+    CONSOLE_PORT.println("Found a print match!");
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
-    Serial.println("Communication error");
+    CONSOLE_PORT.println("Communication error");
     return p;
   } else if (p == FINGERPRINT_NOTFOUND) {
-    Serial.println("Did not find a match");
+    CONSOLE_PORT.println("Did not find a match");
     return p;
   } else {
-    Serial.println("Unknown error");
+    CONSOLE_PORT.println("Unknown error");
     return p;
   }   
   
   // found a match!
-  //Serial.print("Found ID #"); Serial.print(finger.fingerID); 
-  //Serial.print(" with confidence of "); Serial.println(finger.confidence); 
+  //CONSOLE_PORT.print("Found ID #"); CONSOLE_PORT.print(finger.fingerID); 
+  //CONSOLE_PORT.print(" with confidence of "); CONSOLE_PORT.println(finger.confidence); 
 
 }  // END - getFingerprintID()
 
@@ -187,8 +187,8 @@ int getFingerprintIDez() {
   if (p != FINGERPRINT_OK)  return -1;
   
   // found a match!
-  Serial.print("Found ID #"); Serial.print(finger.fingerID); 
-  Serial.print(" with confidence of "); Serial.println(finger.confidence);
+  CONSOLE_PORT.print("Found ID #"); CONSOLE_PORT.print(finger.fingerID); 
+  CONSOLE_PORT.print(" with confidence of "); CONSOLE_PORT.println(finger.confidence);
   return finger.fingerID; 
 } // END - getFingerprintIDez()
 
@@ -197,7 +197,7 @@ int getFingerprintIDez() {
 void FPSTurnFootlightOn()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("S: FPSTurnFootlightOn");
+		CONSOLE_PORT.println("S: FPSTurnFootlightOn");
 	#endif
 	FPS_FOOTLIGHT_LED_ACTUATOR_STATUS = true;  // set the status of the relevant ACTUATOR. localactions() will do the rest.
 } // END - FPSTurnFootlightOn()
@@ -207,7 +207,7 @@ void FPSTurnFootlightOn()
 void FPSTurnFootlightOff()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("S: FPSTurnFootlightOff");
+		CONSOLE_PORT.println("S: FPSTurnFootlightOff");
 	#endif
 	FPS_FOOTLIGHT_LED_ACTUATOR_STATUS = false;  // set the status of the relevant ACTUATOR. localactions() will do the rest.
 } // END - FPSTurnFootlightOn()
@@ -222,7 +222,7 @@ void FPSTurnFootlightOff()
 void FPSUnlockDoor()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("S: FPSUnlockDoor");
+		CONSOLE_PORT.println("S: FPSUnlockDoor");
 	#endif
 	FPS_DOOR_LATCH_ACTUATOR_STATUS = true;  // set the status of the relevant ACTUATOR. localactions() will do the rest.
 } // END - FPSUnlockDoor()
@@ -232,7 +232,7 @@ void FPSUnlockDoor()
 void FPSLockDoor()
 {
 	#ifdef DEBUGPJ2
-		Serial.println("S: FPSLockDoor");
+		CONSOLE_PORT.println("S: FPSLockDoor");
 	#endif
 	FPS_DOOR_LATCH_ACTUATOR_STATUS = false;  // set the status of the relevant ACTUATOR. localactions() will do the rest.
 } // END - FPSLockDoor()

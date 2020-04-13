@@ -11,8 +11,8 @@ bool receiveData() {
   // if (radio.receiveDone()) // check for received packets
   //   {
   //   #ifdef DEBUGx
-  //     Serial.println();
-  //     Serial.println("<<<rf-rx<<< so starting in receiveData()"); 
+  //     CONSOLE_PORT.println();
+  //     CONSOLE_PORT.println("<<<rf-rx<<< so starting in receiveData()"); 
   //   #endif
     
   
@@ -26,8 +26,8 @@ bool receiveData() {
     {
     CommsLEDStart = true; // set this flag so that the Comms LED will be turned on for a period and managed elsewhere.
     #ifdef DEBUGPJ2
-      Serial.print("Got a RadioHead message for this node from Node: ");
-      Serial.println(from);
+      CONSOLE_PORT.print("Got a RadioHead message for this node from Node: ");
+      CONSOLE_PORT.println(from);
       
     #endif
       
@@ -40,30 +40,30 @@ bool receiveData() {
     if (!validPacket) // Bad message size - wrong message size means trouble
       {
       #ifdef DEBUGPJ2
-        Serial.println();
-        Serial.println("<<<< RF msg received but had invalid home automation message size.");
-        Serial.print("len:");
-        Serial.println(len);
-        Serial.print("expected mes size:");
-        Serial.println(HARFPACKSIZE);
+        CONSOLE_PORT.println();
+        CONSOLE_PORT.println("<<<< RF msg received but had invalid home automation message size.");
+        CONSOLE_PORT.print("len:");
+        CONSOLE_PORT.println(len);
+        CONSOLE_PORT.print("expected mes size:");
+        CONSOLE_PORT.println(HARFPACKSIZE);
       #endif  // DEBUGPJ2
       }
     else  // HA message size is good...    
       {
       #ifdef DEBUGPJ2
-        Serial.println();
-        Serial.println("<<<< RF msg received with correct size.");
-        Serial.print("Inbound Message from Node:");Serial.println(from);
-        Serial.println("=========RF msg data===================");
-        Serial.print("From   NodeID:");Serial.println(mes.nodeID);
-        Serial.print("      devID:");Serial.println(mes.devID);
-        Serial.print("        cmd:");Serial.println(mes.cmd);
-        Serial.print("     intVal:");Serial.println(mes.intVal);
-        Serial.print("  fltintVal:");Serial.println(mes.fltintVal);
-        Serial.print("    payLoad:");
-        for (int i=0; i<32; i++) Serial.print(mes.payLoad[i]);
-        Serial.println(":");
-        Serial.println("=======================================");
+        CONSOLE_PORT.println();
+        CONSOLE_PORT.println("<<<< RF msg received with correct size.");
+        CONSOLE_PORT.print("Inbound Message from Node:");CONSOLE_PORT.println(from);
+        CONSOLE_PORT.println("=========RF msg data===================");
+        CONSOLE_PORT.print("From   NodeID:");CONSOLE_PORT.println(mes.nodeID);
+        CONSOLE_PORT.print("      devID:");CONSOLE_PORT.println(mes.devID);
+        CONSOLE_PORT.print("        cmd:");CONSOLE_PORT.println(mes.cmd);
+        CONSOLE_PORT.print("     intVal:");CONSOLE_PORT.println(mes.intVal);
+        CONSOLE_PORT.print("  fltintVal:");CONSOLE_PORT.println(mes.fltintVal);
+        CONSOLE_PORT.print("    payLoad:");
+        for (int i=0; i<32; i++) CONSOLE_PORT.print(mes.payLoad[i]);
+        CONSOLE_PORT.println(":");
+        CONSOLE_PORT.println("=======================================");
       #endif  // DEBUGPJ2 
       }
         // if (radio.ACKRequested()) radio.sendACK(); // respond to any ACK request // old pre RadioHead code.

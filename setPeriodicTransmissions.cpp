@@ -7,7 +7,7 @@
 void setPeriodicTransmissions()
   {
   #ifdef DEBUGxx
-      Serial.println("Flag periodics");
+      CONSOLE_PORT.println("Flag periodics");
   #endif
   
   #ifndef SLEEPY // no timer if sleepy, just send when woken up

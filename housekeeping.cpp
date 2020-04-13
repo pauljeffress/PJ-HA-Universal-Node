@@ -23,22 +23,22 @@ void housekeeping() {
       StatusLEDonMillis = millis();  // grab a timestamp of when we turned the LED on.
       StatusLEDStatus = true;  // The LED is now on.
       #ifdef DEBUGPJx 
-        Serial.print("ON: ");
-        Serial.println(StatusLEDonMillis);
+        CONSOLE_PORT.print("ON: ");
+        CONSOLE_PORT.println(StatusLEDonMillis);
       #endif
     }
 
     if (StatusLEDStatus)   // i.e. its on, but is it time to turn it off yet?
     {            
     #ifdef DEBUGPJx
-      Serial.print("current: ");
-      Serial.println(millis());
+      CONSOLE_PORT.print("current: ");
+      CONSOLE_PORT.println(millis());
     #endif
     if (millis() - StatusLEDonMillis > STATUS_LED_ON_PERIOD) // has timer expired?
       {
       #ifdef DEBUGPJx
-        Serial.print("OFF: ");
-        Serial.println(millis());
+        CONSOLE_PORT.print("OFF: ");
+        CONSOLE_PORT.println(millis());
       #endif
       digitalWrite(STATUS_LED_PIN, LOW); // Turn the LED off
       StatusLEDStatus = false;  // The LED is now off.
@@ -72,14 +72,14 @@ void housekeeping() {
       lastMinute = millis()/60000;
       upTime++;
       #ifdef DEBUGXX
-        Serial.print("Uptime:");
-        Serial.print(upTime);
-        Serial.print("  CommsLEDonMillis:");
-        Serial.print(CommsLEDonMillis);
-        Serial.print("  millis:");
-        Serial.print(millis());
-        Serial.print("  COMMS_LED_ON_PERIOD:");
-        Serial.println(COMMS_LED_ON_PERIOD);        
+        CONSOLE_PORT.print("Uptime:");
+        CONSOLE_PORT.print(upTime);
+        CONSOLE_PORT.print("  CommsLEDonMillis:");
+        CONSOLE_PORT.print(CommsLEDonMillis);
+        CONSOLE_PORT.print("  millis:");
+        CONSOLE_PORT.print(millis());
+        CONSOLE_PORT.print("  COMMS_LED_ON_PERIOD:");
+        CONSOLE_PORT.println(COMMS_LED_ON_PERIOD);        
       #endif
       }
 
@@ -90,8 +90,8 @@ void housekeeping() {
       rfTxAllowed = true;                   // And allow a tx to happen.
       
       #ifdef DEBUGPJ
-        Serial.print("rfTxAllowed set at:");
-        Serial.println(lastRfTxTime);
+        CONSOLE_PORT.print("rfTxAllowed set at:");
+        CONSOLE_PORT.println(lastRfTxTime);
       #endif
       }
 

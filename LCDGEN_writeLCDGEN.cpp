@@ -14,7 +14,7 @@
 void writeLCDGEN()
 {
   #ifdef DEBUGPJ2
-    Serial.println("S: writeLCDGEN");
+    CONSOLE_PORT.println("S: writeLCDGEN");
   #endif
 
   #ifdef LCDGENERIC_SFGLCD  // items specific to the SparkFun LCD-09351
@@ -39,8 +39,8 @@ void localwriteLCDGEN(int xpos, int ypos, char* theStr)
   // theStr - the string to display at the above coordinates.
   
   #ifdef DEBUGPJ2
-    Serial.println("S: localwriteLCDGEN");
-    Serial.print(">");Serial.print("theStr");Serial.println("<");
+    CONSOLE_PORT.println("S: localwriteLCDGEN");
+    CONSOLE_PORT.print(">");CONSOLE_PORT.print("theStr");CONSOLE_PORT.println("<");
   #endif
 
   #ifdef LCDGENERIC_SFGLCD  // items specific to the SparkFun LCD-09351

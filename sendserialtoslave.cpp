@@ -13,11 +13,11 @@ void sendserialtoslave(uint8_t sendsertype, uint8_t sendparam) {
   // The two bytes are proceeded by  a frame header of "PJ" or 0x50, 0x4A.
   // As the serial connection is full duplex, we just send when we want to. 
 
-  Serial.println("===== Sending Serial Frame ======");
-  Serial.println("PJ");
-  Serial.println(sendsertype);
-  Serial.println(sendparam);
-  Serial.println("=================================");
+  CONSOLE_PORT.println("===== Sending Serial Frame ======");
+  CONSOLE_PORT.println("PJ");
+  CONSOLE_PORT.println(sendsertype);
+  CONSOLE_PORT.println(sendparam);
+  CONSOLE_PORT.println("=================================");
 
   Serial1.write(0x50);  
   Serial1.write(0x4A);

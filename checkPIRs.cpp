@@ -9,7 +9,7 @@
 void checkPIRs() {
 
   #ifdef DEBUGPJx
-	  Serial.println("S: CheckPIRs");
+	  CONSOLE_PORT.println("S: CheckPIRs");
   #endif
 
   int pir1wait;
@@ -38,7 +38,7 @@ void checkPIRs() {
         lastPIR1 = millis(); // take new timestamp
         send41 = true; // set PIR1 message flag
         #ifdef DEBUGPJ2
-          Serial.println("PIR1 state change");
+          CONSOLE_PORT.println("PIR1 state change");
         #endif
         }
       }
@@ -55,7 +55,7 @@ void checkPIRs() {
         lastPIR2 = millis(); // take new timestamp
         send43 = true; // set PIR2 message flag
         #ifdef DEBUGPJ2
-          Serial.println("PIR2 state change");
+          CONSOLE_PORT.println("PIR2 state change");
         #endif
         }
       }
