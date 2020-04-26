@@ -19,7 +19,7 @@ void housekeeping() {
   if (((millis() % STATUS_LED_CYCLE_PERIOD) == 0) &&  !StatusLEDStatus)  // If Status LED is off, check if its time to turn it on
                                                                            // i.e. are we at beginning of cycle
     {
-      digitalWrite(STATUS_LED_PIN, HIGH);
+      digitalWriteHighPower(STATUS_LED_PIN, HIGH_HP);
       StatusLEDonMillis = millis();  // grab a timestamp of when we turned the LED on.
       StatusLEDStatus = true;  // The LED is now on.
       #ifdef DEBUGPJx 
@@ -40,7 +40,7 @@ void housekeeping() {
         CONSOLE_PORT.print("OFF: ");
         CONSOLE_PORT.println(millis());
       #endif
-      digitalWrite(STATUS_LED_PIN, LOW); // Turn the LED off
+      digitalWriteHighPower(STATUS_LED_PIN, LOW); // Turn the LED off
       StatusLEDStatus = false;  // The LED is now off.
       }
     }
@@ -51,7 +51,7 @@ void housekeeping() {
 // Attend to the CommsLED
   if (CommsLEDStart &&  !CommsLEDStatus)  // i.e. its not currently on, but something wants us turn it on.
     {
-    digitalWrite(COMMS_LED_PIN, HIGH);  // Turn the Comms LED on
+    digitalWriteHighPower(COMMS_LED_PIN, HIGH_HP);  // Turn the Comms LED on
     CommsLEDonMillis = millis();  // grab a timestamp of when we turned the LED on.
     CommsLEDStatus = true;  // The LED is now on.
     CommsLEDStart = false;  // Reset the start flag as we have started.
@@ -61,7 +61,7 @@ void housekeeping() {
     {            
     if (millis() - CommsLEDonMillis > COMMS_LED_ON_PERIOD) // has timer expired?
       {
-      digitalWrite(COMMS_LED_PIN, LOW); // Turn the Comms LED off
+      digitalWriteHighPower(COMMS_LED_PIN, LOW); // Turn the Comms LED off
       CommsLEDStatus = false;  // The LED is now off.
       }
     }
