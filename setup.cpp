@@ -14,30 +14,28 @@ void setup() {
     } */
 #endif
 
+
+delay(5000);  // Rather than using "while (!Serial);" a better way to ensure 
+              // Serial is ready on boards like Feathers, that does not block
+              // the whole sketch from running if no USB plugged in. But still gives device
+              // time to get it going so I don't miss first few debug outputs.
+CONSOLE_PORT.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
+#ifdef GENERATE_SERIAL2 && (CONSOLE_PORT == Serial2)
+  // Assign pins 10 & 11 SERCOM functionality
+  pinPeripheral(SERIAL2_TXPIN, PIO_SERCOM);
+  pinPeripheral(SERIAL2_RXPIN, PIO_SERCOM);
+#endif
+
+
 #ifdef DEBUG
-  delay(5000);  // Rather than using "while (!Serial);" a better way to ensure 
-                // Serial is ready on boards like Feathers, that does not block
-                // the whole sketch from running if no USB plugged in. But still gives device
-                // time to get it going so I don't miss first few debug outputs.
-  CONSOLE_PORT.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
   CONSOLE_PORT.println("DEBUG enabled at compile time.");
 #endif
 
 #ifdef DEBUGPJ1
-  delay(5000);  // Rather than using "while (!Serial);" a better way to ensure 
-                // Serial is ready on boards like Feathers, that does not block
-                // the whole sketch from running if no USB plugged in. But still gives device
-                // time to get it going so I don't miss first few debug outputs.
-  CONSOLE_PORT.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
   CONSOLE_PORT.println("DEBUGPJ1 enabled at compile time.");
 #endif
 
 #ifdef DEBUGPJ2
-  delay(5000);  // Rather than using "while (!Serial);" a better way to ensure 
-                // Serial is ready on boards like Feathers, that does not block
-                // the whole sketch from running if no USB plugged in. But still gives device
-                // time to get it going so I don't miss first few debug outputs.
-  CONSOLE_PORT.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduino IDE Serial Monitor
   CONSOLE_PORT.println("DEBUGPJ2 enabled at compile time.");
 #endif
 
@@ -108,46 +106,46 @@ void setup() {
 #endif
   pinMode(STATUS_LED_PIN, OUTPUT);  // set pin for Status indicator
 #ifdef ETHNODETYPE    
-  digitalWrite(MQCON, LOW);         // switch off MQTT connection indicator
+  digitalWriteHighPower(MQCON, LOW);         // switch off MQTT connection indicator
 #endif
-  digitalWrite(COMMS_LED_PIN, LOW); // switch off IP indicator
-  digitalWrite(STATUS_LED_PIN, LOW);         // switch ON Power/Startup indicator
+  digitalWriteHighPower(COMMS_LED_PIN, LOW); // switch off IP indicator
+  digitalWriteHighPower(STATUS_LED_PIN, LOW);         // switch ON Power/Startup indicator
   // test all indicator LEDS - flash all LEDS 3 times. Then leave just STATUS LED on.
   delay(300);
 #ifdef ETHNODETYPE    
-  digitalWrite(MQCON, HIGH);         // switch all LEDS ON
+  digitalWriteHighPower(MQCON, HIGH_HP);         // switch all LEDS ON
 #endif
-  digitalWrite(COMMS_LED_PIN, HIGH);       
-  digitalWrite(STATUS_LED_PIN, HIGH);        
+  digitalWriteHighPower(COMMS_LED_PIN, HIGH_HP);       
+  digitalWriteHighPower(STATUS_LED_PIN, HIGH_HP);        
   delay(300);
 #ifdef ETHNODETYPE    
-  digitalWrite(MQCON, LOW);         // switch all LEDS OFF
+  digitalWriteHighPower(MQCON, LOW);         // switch all LEDS OFF
 #endif
-  digitalWrite(COMMS_LED_PIN, LOW);       
-  digitalWrite(STATUS_LED_PIN, LOW);        
+  digitalWriteHighPower(COMMS_LED_PIN, LOW);       
+  digitalWriteHighPower(STATUS_LED_PIN, LOW);        
   delay(300);
 #ifdef ETHNODETYPE    
-  digitalWrite(MQCON, HIGH);         // switch all LEDS ON
+  digitalWriteHighPower(MQCON, HIGH_HP);         // switch all LEDS ON
 #endif
-  digitalWrite(COMMS_LED_PIN, HIGH);       
-  digitalWrite(STATUS_LED_PIN, HIGH);        
+  digitalWriteHighPower(COMMS_LED_PIN, HIGH_HP);       
+  digitalWriteHighPower(STATUS_LED_PIN, HIGH_HP);        
   delay(300);
 #ifdef ETHNODETYPE    
-  digitalWrite(MQCON, LOW);         // switch all LEDS OFF
+  digitalWriteHighPower(MQCON, LOW);         // switch all LEDS OFF
 #endif
-  digitalWrite(COMMS_LED_PIN, LOW);       
-  digitalWrite(STATUS_LED_PIN, LOW);        
+  digitalWriteHighPower(COMMS_LED_PIN, LOW);       
+  digitalWriteHighPower(STATUS_LED_PIN, LOW);        
   delay(300);
 #ifdef ETHNODETYPE    
-  digitalWrite(MQCON, HIGH);         // switch all LEDS ON
+  digitalWriteHighPower(MQCON, HIGH_HP);         // switch all LEDS ON
 #endif
-  digitalWrite(COMMS_LED_PIN, HIGH);       
-  digitalWrite(STATUS_LED_PIN, HIGH);        
+  digitalWriteHighPower(COMMS_LED_PIN, HIGH_HP);       
+  digitalWriteHighPower(STATUS_LED_PIN, HIGH_HP);        
   delay(300);
 #ifdef ETHNODETYPE    
-  digitalWrite(MQCON, LOW);         // switch all LEDS OFF but leave Power LED ON
+  digitalWriteHighPower(MQCON, LOW);         // switch all LEDS OFF but leave Power LED ON
 #endif
-  digitalWrite(COMMS_LED_PIN, LOW);             
+  digitalWriteHighPower(COMMS_LED_PIN, LOW);             
   delay(300);
   #ifdef DEBUGPJ2
     CONSOLE_PORT.println("Ended LED flash"); 
@@ -166,7 +164,7 @@ void setup() {
         }
   if(mqttCon){          // Connected !
     CONSOLE_PORT.println("con with MQTT server");
-    digitalWrite(MQCON, HIGH);      // switch on MQTT connection indicator LED
+    digitalWriteHighPower(MQCON, HIGH_HP);      // switch on MQTT connection indicator LED
     mqttClient.subscribe(subTopic);     // subscribe to all southbound messages
     }
     else CONSOLE_PORT.println("no con with MQTT server");
