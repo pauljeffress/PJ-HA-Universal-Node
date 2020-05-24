@@ -622,5 +622,18 @@ void rfSendMsg() { // prepares values to be transmitted
     }
 #endif // EXTVAR40X
 
+#ifdef VEML7700
+  if (txOnce && send52) { // visible light
+    #ifdef DEBUG
+      CONSOLE_PORT.println("rfSendMsg: sending dev52 - visible light");
+    #endif
+    mes.devID = 52;
+    mes.fltintVal = fltTofltint(veml.readLux()); // get visible light level from VEML7700
+    txRadio(); txOnce = false; // we have transmitted one variable, don't tx anymore til next time this function is called.
+    send52 = false;
+    mes.fltintVal = 0;  // clear it after use.
+  }
+#endif // VEML7700
+
   
 } // end rfSendMsg()

@@ -123,6 +123,10 @@ void setPeriodicTransmissions()
             send291 = true;
         #endif
 
+        #ifdef VEML7700
+          send52 = true;  // visible light level
+        #endif
+
         
   #ifdef SLEEPY
       }
@@ -142,5 +146,7 @@ void setPeriodicTransmissions()
   }
   }
   #endif
+
+
 
   } // End of setPeriodicTransmissions()

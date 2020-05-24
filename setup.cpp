@@ -619,4 +619,51 @@ CONSOLE_PORT.begin(SERIAL_BAUD); // Initialise the 1st hw serial port for Arduin
   #endif
   Serial1.begin(115200); // Initialise the 2nd hw serial port for inter Arduino serial link
 #endif
+
+#ifdef VEML7700
+  // insert any setup() code for this specific device here.
+  #ifdef DEBUGPJ2
+    CONSOLE_PORT.println("VEML7700 Setup code start");
+  #endif
+  /* Initialise the sensor */
+  if (!veml.begin()) {
+    CONSOLE_PORT.println("Sensor not found");
+    while (1);
+  }
+  CONSOLE_PORT.println("Sensor found");
+
+  veml.setGain(VEML7700_GAIN_1);
+  veml.setIntegrationTime(VEML7700_IT_800MS);
+
+  CONSOLE_PORT.print(F("Gain: "));
+  switch (veml.getGain()) {
+    case VEML7700_GAIN_1: CONSOLE_PORT.println("1"); break;
+    case VEML7700_GAIN_2: CONSOLE_PORT.println("2"); break;
+    case VEML7700_GAIN_1_4: CONSOLE_PORT.println("1/4"); break;
+    case VEML7700_GAIN_1_8: CONSOLE_PORT.println("1/8"); break;
+  }
+
+  CONSOLE_PORT.print(F("Integration Time (ms): "));
+  switch (veml.getIntegrationTime()) {
+    case VEML7700_IT_25MS: CONSOLE_PORT.println("25"); break;
+    case VEML7700_IT_50MS: CONSOLE_PORT.println("50"); break;
+    case VEML7700_IT_100MS: CONSOLE_PORT.println("100"); break;
+    case VEML7700_IT_200MS: CONSOLE_PORT.println("200"); break;
+    case VEML7700_IT_400MS: CONSOLE_PORT.println("400"); break;
+    case VEML7700_IT_800MS: CONSOLE_PORT.println("800"); break;
+  }
+
+  //veml.powerSaveEnable(true);
+  //veml.setPowerSaveMode(VEML7700_POWERSAVE_MODE4);
+
+  veml.setLowThreshold(10000);
+  veml.setHighThreshold(20000);
+  veml.interruptEnable(true);
+  #ifdef DEBUGPJ2
+    CONSOLE_PORT.println("VEML7700 Setup code done");
+  #endif
+#endif // VEML7700
+
+
+
 } // END setup()

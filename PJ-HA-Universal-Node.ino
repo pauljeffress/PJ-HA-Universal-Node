@@ -553,6 +553,13 @@ uint8_t radioDataBuf[RH_MESH_MAX_MESSAGE_LEN]; //RadioHead tx/rx data
   float mirrorDev400, mirrorDev401, mirrorDev402, mirrorDev403, mirrorDev404, mirrorDev405, mirrorDev406, mirrorDev407, mirrorDev408, mirrorDev409 = 0.0;  // default value, easy to troubleshoot. 
 #endif
 
+#ifdef VEML7700
+  // insert any pre setup() code for this specific device here.
+  Adafruit_VEML7700 veml = Adafruit_VEML7700();
+  bool send52 = false;  // northbound message triggers
+#endif // VEML7700
+
+
 // next after here setup() is run and then loop() is run.
 
 

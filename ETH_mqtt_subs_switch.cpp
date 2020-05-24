@@ -877,6 +877,14 @@ int i;
 #endif // EXTVAR40X
 
 
+#ifdef VEML7700
+  case 52: // 052 - visible light from VEML7700 (Real - ReadOnly)
+    if (mes.cmd == 1) send52 = true;
+    break;
+#endif
+
+
+
   default:
       // We really should not get to here unless I forgot to cater for a particular DevID OR that DevID is not supported on this Node???
       CONSOLE_PORT.println(); // make sure I get a new line before printing below messages.

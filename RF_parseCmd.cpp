@@ -507,7 +507,28 @@ switch (mes.devID) // devID indicates device (sensor) type
     break;
     
 #endif // EXVAR40X
-  
+
+
+#ifdef TSL2651
+  case 52: // 052 - visible light from TSL2651 (Real - ReadOnly)
+    if (mes.cmd == 1) send52 = true;
+    else send93 = true;  // tried to write to RO dev
+    break;
+  case 53: // 053 - IR light from TSL2651 (Real - ReadOnly)
+    if (mes.cmd == 1) send53 = true;
+    else send93 = true;  // tried to write to RO dev
+    break;
+#endif
+
+
+#ifdef VEML7700
+  case 52: // light in LUX (Real - ReadOnly)
+  if (mes.cmd == 1) send52 = true;  // cmd == 1 means read
+  else send93 = true;  // tried to write to RO dev
+  break;
+#endif
+
+
   default: send92 = true; // no valid device parsed
   
   } // end of switch statement

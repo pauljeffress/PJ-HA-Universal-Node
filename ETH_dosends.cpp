@@ -452,6 +452,14 @@ if (send95)
     
 #endif // EXTVAR40X
 
+#ifdef VEML7700
+  if (send52)  // visible light
+    {
+     sendReal(NODEID, 52, veml.readLux());  
+     send52 = false;   
+    }
+#endif // VEML7700
+
 
 } // END - dosends()
 

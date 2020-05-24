@@ -97,15 +97,15 @@
 /* NODE CORE CONFIGURATION PARAMETERS 
 ****************************************************/
 
-#define CLIENT_ADDRESS    6       // RadioHead Mesh Addressing
+#define CLIENT_ADDRESS    8       // RadioHead Mesh Addressing
 #define debug_mode 1              // Set debug_mode to 1 for Serial Monitor (RH lib?)
-#define NODEID           06       // unique node ID within the closed network
-#define NODEIDSTRING node06       // as per above.  
-#define COMMS_LED_PIN  17          // RED - Comms traffic IP or RF for/from this node, activity indicator.
+#define NODEID           8       // unique node ID within the closed network
+#define NODEIDSTRING node08       // as per above.  
+#define COMMS_LED_PIN  15          // RED - Comms traffic IP or RF for/from this node, activity indicator.
                                    // DO NOT USE D10-D13 on a Moteino (non mega) as they are in use for RFM69 SPI!
                                    // The onboard RED LED on Feathers is D13.
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-#define STATUS_LED_PIN 18               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
+#define STATUS_LED_PIN 14               // BLUE - Status LED, generally just blinking away so we know node has not crashed.
 #define STATUS_LED_CYCLE_PERIOD 5000   // (mSecs) Under normal circumstances how often should we flash the STATUS LED?
 #define STATUS_LED_ON_PERIOD 100       // (mSecs) How long we keep it on for per blink, in mSec.
 
@@ -167,15 +167,15 @@
 //#define DS18
 //#define SLEEPY //node on batteries? can be used with either DS18 or PIR (not both due watchdog interference)
 
-// #define PIR1          // Have I attached a PIR
-//       #define PIR1PIN 5   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
+#define PIR1          // Have I attached a PIR
+       #define PIR1PIN 19   // IF MEGA DO NOT HANG A LED OFF THIS PIN too. Maga won't detect a transition if you do!
 
-//                            // signal pin from 1st PIR if attached, else ignored.
-//       #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
-//       #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
+                            // signal pin from 1st PIR if attached, else ignored.
+       #define PIRdelay delay(2000) // give the grid time to stabilize for the PIR, otherwise false triggers will occur after a send due to power dip (up to 2s?)
+       #define PIRHOLDOFF 2       // blocking period between button and PIR messages (seconds) xxxx
 
-//#define PIR2          // Have I attached a 2nd PIR
-//   #define PIR2PIN 23         // signal pin from 2nd PIR if attached, else ignored.
+#define PIR2          // Have I attached a 2nd PIR
+   #define PIR2PIN 18         // signal pin from 2nd PIR if attached, else ignored.
 
 //#define BUTTON1       // Have I attached a button (momentary switches)
 //  #define BUTTON1PIN 999      // signal pin from 1st BUTTON
@@ -196,17 +196,17 @@
 //       #define SOILPOWERPIN2 9     // Pin to provide power (Vcc) to the Soil moisture sensor, so its not always on.
 
 #define ACTUATOR1     // Have I attached any actuators (i.e. digital out pins connected to devices)... 
-     #define ACTUATOR1PIN 5    // contol pin for 1st ACTUATOR if attached, else ignored.
+     #define ACTUATOR1PIN 6    // contol pin for 1st ACTUATOR if attached, else ignored.
      #define ACTUATOR1REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 #define ACTUATOR2
-    #define ACTUATOR2PIN 6   // contol pin for 2nd ACTUATOR if attached, else ignored.
+    #define ACTUATOR2PIN 5   // contol pin for 2nd ACTUATOR if attached, else ignored.
     #define ACTUATOR2REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-#define ACTUATOR3
-    #define ACTUATOR3PIN 12   // contol pin for 3rd ACTUATOR if attached, else ignored.
-    #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
-#define ACTUATOR4
-    #define ACTUATOR4PIN 13   // contol pin for 4th ACTUATOR if attached, else ignored.
-    #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+// #define ACTUATOR3
+//     #define ACTUATOR3PIN 12   // contol pin for 3rd ACTUATOR if attached, else ignored.
+//     #define ACTUATOR3REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
+// #define ACTUATOR4
+//     #define ACTUATOR4PIN 13   // contol pin for 4th ACTUATOR if attached, else ignored.
+//     #define ACTUATOR4REVERSE  // define this if you want the output pin of this Actuator to be LOW when ON, rather than HIGH when ON.
 
 //#define SERIALSLAVE   // Has this node got a subordinate sub node under it via hw Serial1 port?
 
@@ -227,11 +227,11 @@
 //   #define MOTEINO_WEATHERSHIELD_V_ENABLE_PIN A3 // The pin the Moteino uses to temporarily enable the voltage divider cct for analog read of the Vin/Batt level as per cct on WeatherShield.
 //   #define MOTEINO_WEATHERSHIELD_V_VALUE_PIN A7 // The pin the Moteino can analog read the Vin/Batt level as per cct on WeatherShield.
 
-#define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
-     #define RMT_PWR_ENA_PIN 14  // The pin to set high when I want to switch on a remote ATX PC power supply
-                                // that is providing the power for the actuator/LED etc, beyond just the 
-                                // power for the Moteino/Arduino itself.
-                                // Chose this pin for now, but may conflict with actuators of other types. 
+// #define RMT_PWR           // PJ - are we using my remote triggered ATX PSU to power main part of this node?
+//      #define RMT_PWR_ENA_PIN 14  // The pin to set high when I want to switch on a remote ATX PC power supply
+//                                 // that is providing the power for the actuator/LED etc, beyond just the 
+//                                 // power for the Moteino/Arduino itself.
+//                                 // Chose this pin for now, but may conflict with actuators of other types. 
 
 //#define PING1x         // Have I got a PING/HC-SR04 distance sensor attached to this node?
 //    #define PING1TRIGGERPIN A12
@@ -285,14 +285,14 @@
 
 //  #define OCEANMIRROR // Do I have my Ocean Mirror attached via Serial to this Node
 
-#define LEDSTRIP
-   #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
-   #define STATIC_PATTERN    1 
-   #define DYNAMIC_PATTERN   2
-   #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
-   #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
+// #define LEDSTRIP
+//    #define STATIC_ONE_COLOUR 0 // see description of DEV2xx's as there are three overall modes.
+//    #define STATIC_PATTERN    1 
+//    #define DYNAMIC_PATTERN   2
+//    #define STATIC_PATTERN_MAX  0   // how many different sub modes of STATIC_PATTERN are configured in my code
+//    #define DYNAMIC_PATTERN_MAX  0  // how many different sub modes of DYNAMIC_PATTERN are configured in my code
   
-  #define LEDSTRIPS_REMOTE         // see DEV299 
+//   #define LEDSTRIPS_REMOTE         // see DEV299 
                                      // If its defined then it means LEDs are on subordinate MCU.
                                      // If its not defined then it means LEDs are on local MCU.
                                      // Need to set this correctly right up front as a number of subsequent LEDSTRIP DEVice
@@ -312,6 +312,9 @@
                                          //       not used if LEDSTRIPS_REMOTE defined
   //#define LEDSTRIP1_DUMB_B_PIN  xx     // What pin are all the DUMBLEDSTRIPs Blue LEDs driven from? Not used for PIXELLEDSTRIPs.
                                          //       not used if LEDSTRIPS_REMOTE defined
+
+
+#define VEML7700                                        
 
 //-------------------------------------------------------------------------
 
@@ -628,6 +631,12 @@ extern bool send320, send321, send322, send323, send324;
 
 #ifdef GENERATE_SERIAL2
   extern Uart Serial2;
+#endif
+
+#ifdef VEML7700   // Light sensor
+  #include "Adafruit_VEML7700.h"
+  extern bool send52;
+  extern Adafruit_VEML7700 veml;
 #endif
 
 #endif // PJ_MY_A_H
