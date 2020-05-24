@@ -313,6 +313,9 @@
   //#define LEDSTRIP1_DUMB_B_PIN  xx     // What pin are all the DUMBLEDSTRIPs Blue LEDs driven from? Not used for PIXELLEDSTRIPs.
                                          //       not used if LEDSTRIPS_REMOTE defined
 
+
+#define VEML7700                                        
+
 //-------------------------------------------------------------------------
 
 
@@ -628,6 +631,12 @@ extern bool send320, send321, send322, send323, send324;
 
 #ifdef GENERATE_SERIAL2
   extern Uart Serial2;
+#endif
+
+#ifdef VEML7700   // Light sensor
+  #include "Adafruit_VEML7700.h"
+  extern bool send52;
+  extern Adafruit_VEML7700 veml;
 #endif
 
 #endif // PJ_MY_A_H
