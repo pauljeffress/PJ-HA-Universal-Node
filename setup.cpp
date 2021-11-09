@@ -131,10 +131,10 @@ void setup() {
   // Make initial connection to MQTT Broker via IP
   Serial.println("MQTT connecting...");
   mqttCon = 0;          // reset connection flag
-  mqttCon = mqttClient.connect(clientName);  // try first time to connect to broker.
+  mqttCon = mqttClient.connect(clientName, "mosquittouser", "mosquittouser");  // try first time to connect to broker.
   while(mqttCon != 1){        // retry MQTT connection every 2 seconds
       Serial.println("con failed...");
-      mqttCon = mqttClient.connect(clientName); // retry connection to broker
+      mqttCon = mqttClient.connect(clientName, "mosquittouser", "mosquittouser"); // retry connection to broker
       delay(2000);          // every 2 seconds
         }
   if(mqttCon){          // Connected !
