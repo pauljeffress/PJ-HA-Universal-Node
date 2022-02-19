@@ -132,11 +132,16 @@ void setup() {
   Serial.println("MQTT connecting...");
   mqttCon = 0;          // reset connection flag
   mqttCon = mqttClient.connect(clientName, "mosquittouser", "mosquittouser");  // try first time to connect to broker.
-  while(mqttCon != 1){        // retry MQTT connection every 2 seconds
-      Serial.println("con failed...");
-      mqttCon = mqttClient.connect(clientName, "mosquittouser", "mosquittouser"); // retry connection to broker
-      delay(2000);          // every 2 seconds
-        }
+    
+    // PJ 19-2-22 I modified the below so it only tries once and then moves on. That way we don't get stuck
+    //            here. It is re attempted regularly in loop() when mqttinbound() is called.
+    
+    //while(mqttCon != 1){          // stay in this WHILE loop and try to reconnect every 2 seconds, until successful connection.
+    //        // xxxx - can get stuck in here if can't re-establish MQTT connection!!!!!!!!!!!
+      mqttCon = mqttClient.connect(clientName, "mosquittouser", "mosquittouser");   // try to connect
+    //  delay(2000);                                // wait 2 secs
+    //  }    
+    
   if(mqttCon){          // Connected !
     Serial.println("con with MQTT server");
     digitalWrite(MQCON, HIGH);      // switch on MQTT connection indicator LED

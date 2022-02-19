@@ -56,8 +56,8 @@ setPeriodicTransmissions();  // tag what parameters are to be sent in the "perio
     //       mqtt_subs() to be called by the PubSub library when a message arrives. A bit of processing
     //       is done in there, like setting sendXX flags etc.  So, all we have to do out here in loop() is
     //       call dosends() to send all flagged messages.
-    dosends(); // do IP/MQTT sends based on status of all the sendXX flags.
+    if (mqttCon)  // if we currently have an MQTT connection then...
+      dosends(); // do IP/MQTT sends based on status of all the sendXX flags.
 #endif
 
 } // end loop()
-
